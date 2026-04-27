@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const Hero: React.FC = () => {
   const [activePopup, setActivePopup] = useState<'menu' | 'social' | null>(null);
-  const [mascotAnimation, setMascotAnimation] = useState<any>({});
   const [isPopupLoading, setIsPopupLoading] = useState(false);
 
   useEffect(() => {
@@ -33,235 +32,139 @@ const Hero: React.FC = () => {
     }
   };
 
-  const handleMascotClick = () => {
-    playSound();
-    setMascotAnimation({
-      rotate: [0, 15, -15, 360],
-      scale: [1, 1.2, 0.8, 1],
-      transition: { duration: 0.6 }
-    });
-    setTimeout(() => setMascotAnimation({}), 700);
-  };
-
   return (
-    <section className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-between bg-smash-brown pt-20 pb-12 px-6">
-      {/* Sky Background Effects */}
+    <section className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center bg-smash-brown px-6">
+      {/* Full Dynamic Background */}
       <div className="absolute inset-0 z-0 overflow-hidden bg-gradient-to-b from-[#1a1110] via-[#2a1a18] to-[#12002b]">
         {/* Animated Radiant Glow */}
         <motion.div 
-          animate={{ 
-            opacity: [0.1, 0.3, 0.1],
-            scale: [1, 1.1, 1],
-          }}
+          animate={{ opacity: [0.1, 0.3, 0.1], scale: [1, 1.1, 1] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(234,59,36,0.3)_0%,transparent_60%)]"
+          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(234,59,36,0.25)_0%,transparent_60%)]"
         />
 
-        {/* Parallax Clouds Layer - Far (Slower) */}
-        {[...Array(8)].map((_, i) => (
+        {/* Parallax Clouds Layer - Far */}
+        {[...Array(6)].map((_, i) => (
           <motion.div
             key={`cloud-far-${i}`}
             initial={{ x: -400, y: (i * 15) + "%", opacity: 0 }}
-            animate={{ 
-              x: '120vw', 
-              opacity: [0, 0.05, 0],
-            }}
-            transition={{ 
-              duration: 50 + i * 15, 
-              repeat: Infinity, 
-              delay: i * 8,
-              ease: "linear"
-            }}
+            animate={{ x: '120vw', opacity: [0, 0.06, 0] }}
+            transition={{ duration: 50 + i * 15, repeat: Infinity, delay: i * 8, ease: "linear" }}
             className="absolute w-[600px] h-[400px] bg-smash-cream rounded-full blur-[150px] pointer-events-none"
           />
         ))}
 
-        {/* Parallax Clouds Layer - Near (Faster) */}
-        {[...Array(4)].map((_, i) => (
+        {/* Parallax Clouds Layer - Near */}
+        {[...Array(3)].map((_, i) => (
           <motion.div
             key={`cloud-near-${i}`}
-            initial={{ x: -500, y: (10 + i * 25) + "%", opacity: 0 }}
-            animate={{ 
-              x: '150vw', 
-              opacity: [0, 0.1, 0],
-              scale: [1, 1.5, 1]
-            }}
-            transition={{ 
-              duration: 20 + i * 5, 
-              repeat: Infinity, 
-              delay: i * 4,
-              ease: "linear"
-            }}
+            initial={{ x: -500, y: (20 + i * 30) + "%", opacity: 0 }}
+            animate={{ x: '150vw', opacity: [0, 0.1, 0], scale: [1, 1.3, 1] }}
+            transition={{ duration: 25 + i * 5, repeat: Infinity, delay: i * 5, ease: "linear" }}
             className="absolute w-[400px] h-[250px] bg-white rounded-full blur-[100px] pointer-events-none"
           />
         ))}
 
-        {/* High-Speed Streaks (Primary) */}
-        {Array.from({ length: 50 }).map((_, i) => (
+        {/* High-Speed Streaks */}
+        {Array.from({ length: 40 }).map((_, i) => (
           <motion.div
-            key={`streak-p-${i}`}
+            key={`streak-${i}`}
             initial={{ x: -200, y: Math.random() * 100 + "%", opacity: 0 }}
-            animate={{ 
-              x: '110vw', 
-              opacity: [0, 0.5, 0],
-              scaleX: [1, 2, 1]
-            }}
-            transition={{ 
-              duration: 0.5 + Math.random() * 1, 
-              repeat: Infinity, 
-              delay: Math.random() * 10,
-              ease: "linear"
-            }}
-            className="absolute h-[1px] w-96 bg-gradient-to-r from-transparent via-smash-red/50 to-transparent rotate-[2deg]"
+            animate={{ x: '110vw', opacity: [0, 0.5, 0], scaleX: [1, 2, 1] }}
+            transition={{ duration: 0.6 + Math.random() * 1, repeat: Infinity, delay: Math.random() * 12, ease: "linear" }}
+            className="absolute h-[1px] w-96 bg-gradient-to-r from-transparent via-smash-red/40 to-transparent rotate-[2deg]"
           />
         ))}
 
-        {/* Faster Streaks (Accent) */}
-        {Array.from({ length: 20 }).map((_, i) => (
-          <motion.div
-            key={`streak-a-${i}`}
-            initial={{ x: -300, y: Math.random() * 100 + "%", opacity: 0 }}
-            animate={{ 
-              x: '130vw', 
-              opacity: [0, 1, 0],
-            }}
-            transition={{ 
-              duration: 0.3 + Math.random() * 0.5, 
-              repeat: Infinity, 
-              delay: Math.random() * 5,
-              ease: "linear"
-            }}
-            className="absolute h-[2px] w-[500px] bg-gradient-to-r from-transparent via-white/40 to-transparent rotate-[4deg]"
-          />
-        ))}
-
-        {/* Shimmering Air Particles */}
-        {Array.from({ length: 30 }).map((_, i) => (
-          <motion.div
-            key={`particle-${i}`}
-            initial={{ x: Math.random() * 100 + "%", y: Math.random() * 100 + "%", opacity: 0 }}
-            animate={{ 
-              opacity: [0, 0.8, 0],
-              scale: [0.5, 1.5, 0.5],
-              y: [0, -50, 0]
-            }}
-            transition={{ 
-              duration: 2 + Math.random() * 3, 
-              repeat: Infinity, 
-              delay: Math.random() * 10 
-            }}
-            className="absolute w-1 h-1 bg-white rounded-full blur-[1px] pointer-events-none"
-          />
-        ))}
-
-        {/* Distant Urban Lights (Flickering) */}
-        {[...Array(15)].map((_, i) => (
+        {/* Distant Urban Lights */}
+        {[...Array(12)].map((_, i) => (
           <motion.div
             key={`light-${i}`}
-            initial={{ opacity: 0 }}
-            animate={{ 
-              opacity: [0, 0.6, 0.2, 0.8, 0],
-              scale: [1, 1.2, 1]
-            }}
-            transition={{ 
-              duration: 3 + Math.random() * 4, 
-              repeat: Infinity, 
-              delay: Math.random() * 10 
-            }}
-            style={{ 
-              left: `${Math.random() * 100}%`, 
-              top: `${85 + Math.random() * 15}%` 
-            }}
+            animate={{ opacity: [0, 0.8, 0], scale: [1, 1.5, 1] }}
+            transition={{ duration: 3 + Math.random() * 3, repeat: Infinity, delay: Math.random() * 5 }}
+            style={{ left: `${Math.random() * 100}%`, top: `${85 + Math.random() * 15}%` }}
             className="absolute w-1 h-1 bg-smash-cream rounded-full blur-[1px]"
           />
         ))}
       </div>
 
-      {/* Top Title Section */}
-      <motion.div 
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-        className="relative z-20 text-center"
-      >
-        <h2 className="font-primary text-2xl md:text-4xl text-smash-red mb-2 drop-shadow-lg">
-          Something’s about to smash here…
-        </h2>
-      </motion.div>
+      {/* Slogan at Top */}
+      <div className="relative z-20 flex flex-col items-center gap-4 mt-8">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center"
+        >
+          <h2 className="font-primary text-2xl md:text-4xl text-smash-red uppercase italic drop-shadow-lg tracking-tighter">
+            Something’s about to smash here…
+          </h2>
+        </motion.div>
+      </div>
 
       {/* Center Character Section */}
-      <div className="relative flex-1 flex items-center justify-center w-full max-w-4xl z-10">
+      <div className="relative flex-1 flex items-center justify-center w-full max-w-4xl z-10 py-12">
         <motion.div
-          initial={{ scale: 0, rotate: -30, opacity: 0 }}
+          initial={{ scale: 0, rotate: -20, opacity: 0 }}
           animate={{ 
             scale: 1, 
             rotate: 0, 
             opacity: 1,
             y: [0, -25, 0, -15, 0],
             x: [0, 10, -10, 5, 0],
-            ...mascotAnimation
           }}
           transition={{ 
-            scale: { type: "spring", damping: 15, stiffness: 100, delay: 1.5 },
-            rotate: { type: "spring", damping: 15, stiffness: 100, delay: 1.5 },
+            scale: { type: "spring", damping: 15, stiffness: 100, delay: 0.8 },
+            rotate: { type: "spring", damping: 15, stiffness: 100, delay: 0.8 },
             y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
             x: { duration: 8, repeat: Infinity, ease: "easeInOut" }
           }}
-          onClick={handleMascotClick}
+          onClick={playSound}
           className="cursor-pointer relative group"
         >
           <img 
             src="/brandcharacter/smashbflyingcharacter.svg" 
             alt="Flying Character" 
-            className="w-64 md:w-[500px] drop-shadow-[0_45px_100px_rgba(234,59,36,0.4)] transform transition-all duration-700 group-hover:brightness-110 group-hover:drop-shadow-[0_45px_120px_rgba(234,59,36,0.6)]"
+            className="w-72 md:w-[600px] drop-shadow-[0_45px_100px_rgba(234,59,36,0.4)] transform transition-all duration-700 group-hover:brightness-110 group-hover:drop-shadow-[0_45px_120px_rgba(234,59,36,0.6)]"
           />
-          
-          {/* Action Callout */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2.5 }}
-            className="absolute -top-10 -right-10 bg-smash-red text-white py-2 px-6 font-primary text-sm -rotate-12 border-2 border-white shadow-xl"
-          >
-            COMING SOON!
-          </motion.div>
         </motion.div>
       </div>
 
-      {/* Buttons Section */}
+      {/* Simplified Buttons Section at Bottom */}
       <motion.div 
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2, duration: 0.8 }}
-        className="relative z-20 flex flex-wrap justify-center gap-4 md:gap-8 w-full max-w-3xl"
+        transition={{ delay: 1.2, duration: 0.8 }}
+        className="relative z-20 flex flex-wrap justify-center gap-4 md:gap-6 w-full max-w-2xl px-4 mb-16"
       >
         <motion.button
-          whileHover={{ scale: 1.05, rotate: -2 }}
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setActivePopup('menu')}
-          className="flex-1 min-w-[150px] py-4 px-6 bg-smash-red text-white font-primary text-sm md:text-base border-4 border-white shadow-[6px_6px_0px_#fff] hover:shadow-none transition-all uppercase rounded-[35px]"
+          className="flex-1 min-w-[140px] py-4 px-6 bg-smash-red text-white font-primary text-sm md:text-base border-2 border-white shadow-lg transition-all uppercase rounded-[35px]"
         >
           Menu
         </motion.button>
         
         <motion.button
-          whileHover={{ scale: 1.05, rotate: 2 }}
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setActivePopup('social')}
-          className="flex-1 min-w-[150px] py-4 px-6 bg-white text-smash-red font-primary text-sm md:text-base border-4 border-smash-red shadow-[6px_6px_0px_#ea3b24] hover:shadow-none transition-all uppercase rounded-[35px]"
+          className="flex-1 min-w-[140px] py-4 px-6 bg-white text-smash-red font-primary text-sm md:text-base border-2 border-smash-red shadow-lg transition-all uppercase rounded-[35px]"
         >
-          Social Media
+          Socials
         </motion.button>
 
         <motion.button
-          whileHover={{ scale: 1.05, rotate: -2 }}
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => window.open('https://maps.google.com', '_blank')}
-          className="flex-1 min-w-[150px] py-4 px-6 bg-smash-brown border-4 border-smash-cream text-smash-cream font-primary text-sm md:text-base shadow-[6px_6px_0px_#ebe6d3] hover:shadow-none transition-all uppercase rounded-[35px]"
+          className="flex-1 min-w-[140px] py-4 px-6 bg-transparent border-2 border-smash-cream text-smash-cream font-primary text-sm md:text-base shadow-lg transition-all uppercase rounded-[35px]"
         >
-          Map Direction
+          Location
         </motion.button>
       </motion.div>
+
 
       {/* Popups */}
       <AnimatePresence>
