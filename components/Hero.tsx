@@ -126,6 +126,7 @@ const Hero: React.FC = () => {
             src="/brandcharacter/smashbflyingcharacter.svg" 
             alt="Flying Character" 
             className="w-72 md:w-[600px] drop-shadow-[0_45px_100px_rgba(234,59,36,0.4)] transform transition-all duration-700 group-hover:brightness-110 group-hover:drop-shadow-[0_45px_120px_rgba(234,59,36,0.6)]"
+            loading="eager"
           />
         </motion.div>
       </div>

@@ -45,6 +45,7 @@ const LoadingSequence: React.FC<LoadingSequenceProps> = ({ onComplete }) => {
               src="/Assets/SMASHBlogo-18.svg"
               alt="Smash B Logo"
               className="w-48 md:w-96"
+              loading="eager"
             />
             
             <motion.div
