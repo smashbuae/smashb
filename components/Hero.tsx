@@ -1,18 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Hero: React.FC = () => {
-  const [activePopup, setActivePopup] = useState<'menu' | 'social' | null>(null);
-  const [isPopupLoading, setIsPopupLoading] = useState(false);
-
-  useEffect(() => {
-    if (activePopup) {
-      setIsPopupLoading(true);
-      const timer = setTimeout(() => setIsPopupLoading(false), 800);
-      return () => clearTimeout(timer);
-    }
-  }, [activePopup]);
-
   const playSound = () => {
     try {
       const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -136,146 +126,43 @@ const Hero: React.FC = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.8 }}
-        className="relative z-20 flex flex-wrap justify-center gap-4 md:gap-6 w-full max-w-2xl px-4 mb-16"
+        className="relative z-20 flex flex-wrap justify-center gap-4 md:gap-6 w-full max-w-4xl px-4 mb-16"
       >
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setActivePopup('menu')}
-          className="flex-1 min-w-[140px] py-4 px-6 bg-smash-red text-white font-primary text-sm md:text-base border-2 border-white shadow-lg transition-all uppercase rounded-[35px]"
+        <a 
+          href="https://www.instagram.com/smashb.uae/" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="flex-1 min-w-[140px]"
         >
-          Menu
-        </motion.button>
-        
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setActivePopup('social')}
-          className="flex-1 min-w-[140px] py-4 px-6 bg-white text-smash-red font-primary text-sm md:text-base border-2 border-smash-red shadow-lg transition-all uppercase rounded-[35px]"
-        >
-          Socials
-        </motion.button>
-
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => window.open('https://maps.google.com', '_blank')}
-          className="flex-1 min-w-[140px] py-4 px-6 bg-transparent border-2 border-smash-cream text-smash-cream font-primary text-sm md:text-base shadow-lg transition-all uppercase rounded-[35px]"
-        >
-          Location
-        </motion.button>
-      </motion.div>
-
-
-      {/* Popups */}
-      <AnimatePresence>
-        {activePopup && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
-            onClick={() => setActivePopup(null)}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-full py-4 px-6 bg-smash-red text-white font-primary text-sm md:text-base border-2 border-white shadow-lg transition-all uppercase rounded-[35px]"
           >
-            <motion.div
-              initial={{ scale: 0.8, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.8, y: 20 }}
-              className="bg-smash-brown border-4 border-smash-red p-8 md:p-12 max-w-2xl w-full relative rounded-[35px]"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button 
-                onClick={() => setActivePopup(null)}
-                className="absolute top-4 right-4 text-smash-cream hover:text-smash-red font-primary text-2xl transition-colors z-10"
-                aria-label="Close"
-              >
-                ✕
-              </button>
+            Menu
+          </motion.button>
+        </a>
+        
+        <Link to="/about" className="flex-1 min-w-[140px]">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-full py-4 px-6 bg-white text-smash-red font-primary text-sm md:text-base border-2 border-smash-red shadow-lg transition-all uppercase rounded-[35px]"
+          >
+            About
+          </motion.button>
+        </Link>
 
-              <AnimatePresence mode="wait">
-                {isPopupLoading ? (
-                  <motion.div
-                    key="loader"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="flex flex-col items-center justify-center py-20"
-                  >
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      className="w-12 h-12 border-4 border-smash-red/20 border-t-smash-red rounded-full"
-                    />
-                    <p className="mt-4 font-primary text-smash-cream text-sm tracking-widest animate-pulse">SMASHING...</p>
-                  </motion.div>
-                ) : activePopup === 'menu' ? (
-                  <motion.div 
-                    key="menu"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-center space-y-8"
-                  >
-                    <h3 className="font-primary text-4xl text-smash-red uppercase">Our Smash Menu</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-smash-cream font-description text-left">
-                      <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                        <h4 className="font-primary text-smash-red text-xl mb-2 italic">OG SMASH</h4>
-                        <p className="text-sm opacity-70 leading-relaxed italic">Double patty, smash logic, signature sauce.</p>
-                      </div>
-                      <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                        <h4 className="font-primary text-smash-red text-xl mb-2 italic">B URBAN</h4>
-                        <p className="text-sm opacity-70 leading-relaxed italic">Caramelized onions, street spices, crispy vibes.</p>
-                      </div>
-                      <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                        <h4 className="font-primary text-smash-red text-xl mb-2 italic">VOLCANO B</h4>
-                        <p className="text-sm opacity-70 leading-relaxed italic">Spicy smash, habanero dust, ultimate heat.</p>
-                      </div>
-                      <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                        <h4 className="font-primary text-smash-red text-xl mb-2 italic">SMASH SIDES</h4>
-                        <p className="text-sm opacity-70 leading-relaxed italic">Hand-cut fries, smash-dusted, golden crisp.</p>
-                      </div>
-                    </div>
-                    <button className="px-8 py-3 bg-smash-red text-white font-primary rounded-[35px] uppercase text-sm border-2 border-white">
-                      Download Full Menu (PDF)
-                    </button>
-                  </motion.div>
-                ) : (
-                  <motion.div 
-                    key="social"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-center space-y-12 py-4"
-                  >
-                    <h3 className="font-primary text-4xl text-smash-red uppercase italic">JOIN THE CREW</h3>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      {[
-                        { name: 'Instagram', color: 'bg-[#E1306C]', url: 'https://www.instagram.com/smashb.uae/' },
-                        { name: 'TikTok', color: 'bg-black', url: 'https://www.tiktok.com/@smashbuae' },
-                        { name: 'Facebook', color: 'bg-[#1877F2]', url: 'https://www.facebook.com/smashb.uae/' },
-                        { name: 'Threads', color: 'bg-black', url: 'https://www.threads.net/@smashb.uae' }
-                      ].map((platform) => (
-                        <motion.a
-                          key={platform.name}
-                          whileHover={{ y: -5 }}
-                          href={platform.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex flex-col items-center gap-3"
-                        >
-                          <div className={`w-16 h-16 ${platform.color} rounded-[35px] flex items-center justify-center border-2 border-white shadow-lg`}>
-                            <span className="font-primary text-white text-xs">{platform.name[0]}</span>
-                          </div>
-                          <span className="font-secondary text-sm text-smash-cream">{platform.name}</span>
-                        </motion.a>
-                      ))}
-                    </div>
-                    <p className="font-description text-smash-cream/50 text-sm tracking-widest italic uppercase">@SmashB_UAE</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <Link to="/location" className="flex-1 min-w-[140px]">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="w-full py-4 px-6 bg-transparent border-2 border-smash-cream text-smash-cream font-primary text-sm md:text-base shadow-lg transition-all uppercase rounded-[35px]"
+          >
+            Location
+          </motion.button>
+        </Link>
+      </motion.div>
 
       {/* Footer / Copyright overlay */}
       <div className="absolute bottom-4 left-0 w-full flex justify-between px-10 items-center opacity-40 font-description text-[10px] md:text-xs text-smash-cream uppercase tracking-widest pointer-events-none">

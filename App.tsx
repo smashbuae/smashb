@@ -1,36 +1,42 @@
-import React, { useState } from 'react';
-import Hero from './components/Hero';
-import VibeSection from './components/VibeSection';
-import AnatomySection from './components/AnatomySection';
-import RepBrandSection from './components/RepBrandSection';
-import Footer from './components/Footer';
-import LoadingSequence from './components/LoadingSequence';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Home from './pages/Home';
+import About from './pages/About';
+import Location from './pages/Location';
+import Menu from './pages/Menu';
 
 const App: React.FC = () => {
-  const [introComplete, setIntroComplete] = useState(false);
-
   return (
-    <main className="h-screen w-full bg-smash-cream overflow-hidden relative">
-      {!introComplete && <LoadingSequence onComplete={() => setIntroComplete(true)} />}
-      
-      <div className={`h-full w-full ${introComplete ? "opacity-100 transition-opacity duration-1000" : "opacity-0"}`}>
-        <Hero />
-      </div>
+    <Router>
+      <main className="min-h-screen w-full bg-smash-cream relative selection:bg-smash-red selection:text-white">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/location" element={<Location />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
 
-      <style>{`
-        body, html {
-          margin: 0;
-          padding: 0;
-          height: 100%;
-          overflow: hidden;
-        }
-        
-        ::selection {
-          background: #ea3b24;
-          color: #fff;
-        }
-      `}</style>
-    </main>
+        <style>{`
+          body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+          }
+          
+          ::-webkit-scrollbar {
+            width: 8px;
+          }
+          ::-webkit-scrollbar-track {
+            background: #1a1110;
+          }
+          ::-webkit-scrollbar-thumb {
+            background: #ea3b24;
+            border-radius: 4px;
+          }
+        `}</style>
+      </main>
+    </Router>
   );
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
   return (
@@ -24,19 +25,35 @@ const Footer: React.FC = () => {
           </h2>
 
           <div className="flex flex-wrap justify-center gap-12 font-primary text-sm md:text-lg">
-             {['Menu', 'Locations', 'Our Story', 'Merch'].map((link) => (
-               <a key={link} href="#" className="text-smash-brown hover:text-smash-red transition-colors border-b-4 border-transparent hover:border-smash-red pb-2">
-                 {link}
-               </a>
+             {[
+               { name: 'Menu', path: 'https://www.instagram.com/smashb.uae/', external: true },
+               { name: 'Locations', path: '/location', external: false },
+               { name: 'Our Story', path: '/about', external: false },
+               { name: 'Merch', path: '#', external: false }
+             ].map((link) => (
+               link.external ? (
+                 <a key={link.name} href={link.path} target="_blank" rel="noopener noreferrer" className="text-smash-brown hover:text-smash-red transition-colors border-b-4 border-transparent hover:border-smash-red pb-2">
+                   {link.name}
+                 </a>
+               ) : (
+                 <Link key={link.name} to={link.path} className="text-smash-brown hover:text-smash-red transition-colors border-b-4 border-transparent hover:border-smash-red pb-2">
+                   {link.name}
+                 </Link>
+               )
              ))}
           </div>
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-center pt-12 border-t-2 border-smash-brown/20 gap-8">
           <div className="flex space-x-8">
-            {['Instagram', 'TikTok', 'Facebook', 'Threads'].map((social) => (
-              <a key={social} href="#" className="font-secondary text-2xl text-smash-brown hover:text-smash-red transition-colors tracking-widest">
-                {social}
+            {[
+              { name: 'Instagram', url: 'https://www.instagram.com/smashb.uae/' },
+              { name: 'TikTok', url: 'https://www.tiktok.com/@smashbuae' },
+              { name: 'Facebook', url: 'https://www.facebook.com/smashb.uae/' },
+              { name: 'Threads', url: 'https://www.threads.net/@smashb.uae' }
+            ].map((social) => (
+              <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className="font-secondary text-2xl text-smash-brown hover:text-smash-red transition-colors tracking-widest">
+                {social.name}
               </a>
             ))}
           </div>
