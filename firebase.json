@@ -1,11 +1,14 @@
 {
   "hosting": {
     "public": "dist",
-    "rewrites": [
+    "redirects": [
       {
         "source": "/menu",
-        "destination": "https://www.instagram.com/smashb.uae/"
-      },
+        "destination": "https://www.instagram.com/smashb.uae/",
+        "type": 301
+      }
+    ],
+    "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"

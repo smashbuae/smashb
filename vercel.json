@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/menu",
+      "destination": "https://www.instagram.com/smashb.uae/",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
