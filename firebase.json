@@ -1,0 +1,15 @@
+{
+  "hosting": {
+    "public": "dist",
+    "rewrites": [
+      {
+        "source": "/menu",
+        "destination": "https://www.instagram.com/smashb.uae/"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
