@@ -93,29 +93,28 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Center Character Section */}
-      <div className="relative flex-1 flex items-center justify-center w-full max-w-4xl z-10 py-12">
+      <div className="relative flex-1 flex items-center justify-center w-full max-w-4xl z-10 py-4 min-h-[300px]">
         <motion.div
-          initial={{ scale: 0, rotate: -20, opacity: 0 }}
+          initial={{ scale: 0.8, opacity: 0 }}
           animate={{ 
             scale: 1, 
-            rotate: 0, 
             opacity: 1,
-            y: [0, -25, 0, -15, 0],
-            x: [0, 10, -10, 5, 0],
+            y: [0, -20, 0, -10, 0],
+            x: [0, 8, -8, 4, 0],
           }}
           transition={{ 
-            scale: { type: "spring", damping: 15, stiffness: 100, delay: 0.8 },
-            rotate: { type: "spring", damping: 15, stiffness: 100, delay: 0.8 },
+            scale: { type: "spring", damping: 15, stiffness: 100 },
+            opacity: { duration: 0.6 },
             y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
             x: { duration: 8, repeat: Infinity, ease: "easeInOut" }
           }}
           onClick={playSound}
-          className="cursor-pointer relative group"
+          className="cursor-pointer relative z-10 group"
         >
           <img 
             src="/brandcharacter/smashbflyingcharacter.svg" 
             alt="Flying Character" 
-            className="w-72 md:w-[600px] drop-shadow-[0_45px_100px_rgba(234,59,36,0.4)] transform transition-transform duration-700 group-hover:brightness-110 group-hover:drop-shadow-[0_45px_120px_rgba(234,59,36,0.6)]"
+            className="w-64 md:w-[450px] lg:w-[500px] h-auto drop-shadow-[0_20px_50px_rgba(234,59,36,0.3)] transform transition-all duration-700 group-hover:scale-105 group-hover:brightness-110"
             loading="eager"
           />
         </motion.div>
