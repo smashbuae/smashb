@@ -21,6 +21,8 @@ const App: React.FC = () => {
           body, html {
             margin: 0;
             padding: 0;
+            height: 100%;
+            overflow: hidden;
           }
           
           #root {
