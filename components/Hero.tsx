@@ -95,16 +95,16 @@ const Hero: React.FC = () => {
       {/* Center Character Section */}
       <div className="relative flex-1 flex items-center justify-center w-full max-w-5xl z-30 py-4 min-h-[300px]">
         <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, scale: 0.8 }}
           animate={{ 
+            opacity: 1,
+            scale: 1,
             y: [0, -20, 0, -10, 0],
             x: [0, 8, -8, 4, 0],
           }}
           transition={{ 
-            opacity: { duration: 0.5 },
-            scale: { type: "spring", damping: 12, stiffness: 100 },
+            opacity: { duration: 0.8 },
+            scale: { type: "spring", damping: 15, stiffness: 100 },
             y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
             x: { duration: 8, repeat: Infinity, ease: "easeInOut" }
           }}
@@ -116,10 +116,6 @@ const Hero: React.FC = () => {
             alt="Flying Character" 
             className="w-[280px] md:w-[450px] lg:w-[550px] h-auto drop-shadow-[0_20px_50px_rgba(234,59,36,0.3)] transform transition-all duration-700 group-hover:scale-105 group-hover:brightness-110"
             loading="eager"
-            onError={(e) => {
-              console.error("Image load error:", e);
-              (e.target as HTMLImageElement).style.display = 'none';
-            }}
           />
         </motion.div>
       </div>

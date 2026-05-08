@@ -9,7 +9,7 @@ const Location: React.FC = () => {
     <div className="min-h-screen bg-smash-brown text-smash-cream flex flex-col">
       <nav className="p-6 flex justify-between items-center z-10">
         <Link to="/" className="group">
-          <img src="/Assets/SMASHBlogo-18.svg" alt="Smash B Logo" className="h-12 md:h-16 group-hover:scale-110 transition-transform" />
+          <img src="/assets_static/SMASHBlogo-18.svg" alt="Smash B Logo" className="h-12 md:h-16 group-hover:scale-110 transition-transform" />
         </Link>
         <Link to="/" className="font-primary text-sm uppercase tracking-widest border-2 border-smash-red px-6 py-2 rounded-full hover:bg-smash-red transition-all">
           Back Home
@@ -75,7 +75,7 @@ const Location: React.FC = () => {
           >
              {/* Placeholder for map */}
              <div className="absolute inset-0 flex items-center justify-center grayscale opacity-30">
-               <img src="/Assets/SMASHBlogo-18.svg" alt="Map Overlay" className="w-48" />
+               <img src="/assets_static/SMASHBlogo-18.svg" alt="Map Overlay" className="w-48" />
              </div>
              <iframe 
                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3591.9546059635905!2d55.93032517585!3d25.77202397734185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ef609c2182200af%3A0x6b7724f11488a088!2sAmerican%20University%20of%20Ras%20Al%20Khaimah!5e0!3m2!1sen!2sae!4v1715161800000!5m2!1sen!2sae" 

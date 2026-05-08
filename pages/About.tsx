@@ -10,7 +10,7 @@ const About: React.FC = () => {
       <nav className="p-6 flex justify-between items-center z-10">
         <Link to="/" className="group">
           <img 
-            src="/Assets/SMASHBlogo-18.svg" 
+            src="/assets_static/SMASHBlogo-18.svg" 
             alt="Smash B Logo" 
             className="h-12 md:h-16 group-hover:scale-110 transition-transform" 
           />

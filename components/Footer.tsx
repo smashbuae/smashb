@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
             className="mb-12"
           >
             <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border-8 border-smash-red flex items-center justify-center bg-smash-brown transform -rotate-12 hover:rotate-0 transition-transform duration-500 shadow-2xl">
-               <img src="/Assets/SMASHBlogo-21.svg" alt="SB Monogram" className="w-3/4 h-3/4 object-contain invert" />
+               <img src="/assets_static/SMASHBlogo-21.svg" alt="SB Monogram" className="w-3/4 h-3/4 object-contain invert" />
             </div>
           </motion.div>
 

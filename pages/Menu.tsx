@@ -26,7 +26,7 @@ const Menu: React.FC = () => {
       >
         <div className="flex justify-center">
           <motion.img 
-            src="/Assets/SMASHBlogo-18.svg" 
+            src="/assets_static/SMASHBlogo-18.svg" 
             alt="Smash B" 
             className="h-24 md:h-32"
             animate={{ 
