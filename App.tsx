@@ -21,18 +21,10 @@ const App: React.FC = () => {
           body, html {
             margin: 0;
             padding: 0;
-            min-height: 100%;
           }
           
-          ::-webkit-scrollbar {
-            width: 8px;
-          }
-          ::-webkit-scrollbar-track {
-            background: #1a1110;
-          }
-          ::-webkit-scrollbar-thumb {
-            background: #ea3b24;
-            border-radius: 4px;
+          #root {
+            height: 100%;
           }
         `}</style>
       </main>

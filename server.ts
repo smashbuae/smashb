@@ -10,11 +10,6 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
-  // Direct redirect for menu shortcut (immediate server-side)
-  app.get(["/menu", "/menu/"], (req, res) => {
-    res.redirect(301, "https://www.instagram.com/smashb.uae/");
-  });
-
   // Development mode: Use Vite's middleware
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({

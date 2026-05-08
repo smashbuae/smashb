@@ -126,42 +126,49 @@ const Hero: React.FC = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.8 }}
-        className="relative z-20 flex flex-wrap justify-center gap-4 md:gap-6 w-full max-w-4xl px-4 mb-16"
+        className="relative z-20 flex flex-wrap justify-center gap-4 md:gap-6 w-full max-w-lg px-4 mb-16"
       >
         <a 
           href="https://www.instagram.com/smashb.uae/" 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="flex-1 min-w-[140px]"
+          className="w-full"
         >
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-full py-4 px-6 bg-smash-red text-white font-primary text-sm md:text-base border-2 border-white shadow-lg transition-all uppercase rounded-[35px]"
+            className="w-full py-5 px-8 bg-smash-red text-white font-primary text-lg md:text-xl border-2 border-white shadow-2xl transition-all uppercase rounded-full tracking-wider"
           >
-            Menu
+            Smashed Menu
           </motion.button>
         </a>
-        
-        <Link to="/about" className="flex-1 min-w-[140px]">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-full py-4 px-6 bg-white text-smash-red font-primary text-sm md:text-base border-2 border-smash-red shadow-lg transition-all uppercase rounded-[35px]"
-          >
-            About
-          </motion.button>
-        </Link>
 
-        <Link to="/location" className="flex-1 min-w-[140px]">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-full py-4 px-6 bg-transparent border-2 border-smash-cream text-smash-cream font-primary text-sm md:text-base shadow-lg transition-all uppercase rounded-[35px]"
+        <div className="flex w-full gap-4">
+          <Link to="/location" className="flex-1">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-full py-4 px-6 bg-white text-smash-red font-primary text-sm md:text-base border-2 border-smash-red shadow-lg transition-all uppercase rounded-full"
+            >
+              Location
+            </motion.button>
+          </Link>
+
+          <a 
+            href="https://www.instagram.com/smashb.uae/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex-1"
           >
-            Location
-          </motion.button>
-        </Link>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-full py-4 px-6 bg-transparent border-2 border-white text-white font-primary text-sm md:text-base shadow-lg transition-all uppercase rounded-full"
+            >
+              Social Media
+            </motion.button>
+          </a>
+        </div>
       </motion.div>
 
       {/* Footer / Copyright overlay */}

@@ -1,17 +1,25 @@
 {
   "hosting": {
     "public": "dist",
-    "redirects": [
-      {
-        "source": "/menu",
-        "destination": "https://www.instagram.com/smashb.uae/",
-        "type": 301
-      }
-    ],
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(webm|svg|woff|woff2|png|jpg|jpeg|gif|ico)",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Cache-Control",
+            "value": "max-age=31536000"
+          }
+        ]
       }
     ]
   }

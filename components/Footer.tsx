@@ -59,8 +59,17 @@ const Footer: React.FC = () => {
           </div>
 
           <div className="text-center md:text-right space-y-2">
-            <p className="font-primary text-[10px] text-smash-brown/50">
-              © 2024 SMASH B. ALL RIGHTS RESERVED.
+            <p className="font-primary text-base text-smash-red uppercase tracking-widest font-bold mb-2">
+              Smash Happens
+            </p>
+            <p className="font-primary text-sm text-smash-brown">
+              Location: Near AURAK, Ras Al Khaimah
+            </p>
+            <p className="font-primary text-sm text-smash-brown">
+              Call/WhatsApp: +971 56 353 5819
+            </p>
+            <p className="font-primary text-[10px] text-smash-brown/50 pt-2">
+              © 2026 SMASH B. ALL RIGHTS RESERVED.
             </p>
             <p className="font-secondary text-xl text-smash-brown">
               Brand developed by <span className="text-smash-red font-bold">Artigen Creative Hub</span>
