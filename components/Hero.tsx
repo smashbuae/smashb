@@ -93,29 +93,33 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Center Character Section */}
-      <div className="relative flex-1 flex items-center justify-center w-full max-w-4xl z-10 py-4 min-h-[300px]">
+      <div className="relative flex-1 flex items-center justify-center w-full max-w-5xl z-30 py-4 min-h-[300px]">
         <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
+          initial={{ opacity: 0, scale: 0.5 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
           animate={{ 
-            scale: 1, 
-            opacity: 1,
             y: [0, -20, 0, -10, 0],
             x: [0, 8, -8, 4, 0],
           }}
           transition={{ 
-            scale: { type: "spring", damping: 15, stiffness: 100 },
-            opacity: { duration: 0.6 },
+            opacity: { duration: 0.5 },
+            scale: { type: "spring", damping: 12, stiffness: 100 },
             y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
             x: { duration: 8, repeat: Infinity, ease: "easeInOut" }
           }}
           onClick={playSound}
-          className="cursor-pointer relative z-10 group"
+          className="cursor-pointer relative z-40 group"
         >
           <img 
             src="/brandcharacter/smashbflyingcharacter.svg" 
             alt="Flying Character" 
-            className="w-64 md:w-[450px] lg:w-[500px] h-auto drop-shadow-[0_20px_50px_rgba(234,59,36,0.3)] transform transition-all duration-700 group-hover:scale-105 group-hover:brightness-110"
+            className="w-[280px] md:w-[450px] lg:w-[550px] h-auto drop-shadow-[0_20px_50px_rgba(234,59,36,0.3)] transform transition-all duration-700 group-hover:scale-105 group-hover:brightness-110"
             loading="eager"
+            onError={(e) => {
+              console.error("Image load error:", e);
+              (e.target as HTMLImageElement).style.display = 'none';
+            }}
           />
         </motion.div>
       </div>
