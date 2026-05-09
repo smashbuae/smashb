@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Clock } from 'lucide-react';
+import { MapPin, Phone, Clock, Star } from 'lucide-react';
 
 const Location: React.FC = () => {
   return (
@@ -53,14 +53,14 @@ const Location: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-2">
+            <div className="flex flex-wrap gap-3 md:gap-4 pt-2">
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 href="https://wa.me/971563535819"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-smash-red text-white font-primary px-6 md:px-10 py-3 md:py-4 rounded-[35px] text-xs md:text-sm uppercase tracking-widest border-2 border-white text-center"
+                className="flex-1 min-w-[140px] flex items-center justify-center bg-smash-red text-white font-primary px-4 md:px-8 py-3 md:py-4 rounded-[35px] text-[10px] md:text-xs uppercase tracking-widest border-2 border-white text-center"
               >
                 Order via WhatsApp
               </motion.a>
@@ -71,9 +71,25 @@ const Location: React.FC = () => {
                 href="https://share.google/B4R9Oj37gfchmf9mD"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-white text-smash-red font-primary px-6 md:px-10 py-3 md:py-4 rounded-[35px] text-xs md:text-sm uppercase tracking-widest border-2 border-smash-red text-center"
+                className="flex-1 min-w-[140px] flex items-center justify-center bg-white text-smash-red font-primary px-4 md:px-8 py-3 md:py-4 rounded-[35px] text-[10px] md:text-xs uppercase tracking-widest border-2 border-smash-red text-center"
               >
                 Get Directions
+              </motion.a>
+
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                href="https://g.page/r/CaIBEx4A1OeZEBM/review"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 min-w-[140px] flex flex-col items-center justify-center bg-transparent text-white font-primary px-4 md:px-8 py-3 md:py-4 rounded-[35px] text-[10px] md:text-xs uppercase tracking-widest border-2 border-white/50 text-center gap-1 md:gap-2"
+              >
+                <div className="flex gap-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-3 h-3 md:w-4 md:h-4 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                Review Us
               </motion.a>
             </div>
           </motion.div>
