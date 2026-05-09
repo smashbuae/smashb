@@ -270,7 +270,7 @@ const Hero: React.FC = () => {
 
       {/* Footer / Copyright overlay */}
       <div className="absolute bottom-4 left-0 w-full flex justify-between px-10 items-center opacity-40 font-description text-[10px] md:text-xs text-smash-cream uppercase tracking-widest pointer-events-none">
-        <span>© 2026 SMASH B • CREATED BY ARTIGEN</span>
+        <span>© 2026 SMASH B</span>
         <span>UAE • SMASHING SOON</span>
       </div>
     </section>

@@ -85,9 +85,6 @@ const Footer: React.FC<FooterProps> = ({ showBrandSection = true }) => {
             <p className="font-primary text-[10px] text-smash-brown/50 pt-2">
               © 2026 SMASH B. ALL RIGHTS RESERVED.
             </p>
-            <p className="font-secondary text-xl text-smash-brown">
-              Brand developed by <span className="text-smash-red font-bold">Artigen Creative Hub</span>
-            </p>
           </div>
         </div>
       </div>
