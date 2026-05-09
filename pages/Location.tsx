@@ -55,16 +55,29 @@ const Location: React.FC = () => {
               </div>
             </div>
 
-            <motion.a
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              href="https://wa.me/971563535819"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-smash-red text-white font-primary px-10 py-4 rounded-[35px] uppercase tracking-widest border-2 border-white"
-            >
-              Order via WhatsApp
-            </motion.a>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <motion.a
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                href="https://wa.me/971563535819"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-smash-red text-white font-primary px-10 py-4 rounded-[35px] uppercase tracking-widest border-2 border-white text-center"
+              >
+                Order via WhatsApp
+              </motion.a>
+
+              <motion.a
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                href="https://share.google/B4R9Oj37gfchmf9mD"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-white text-smash-red font-primary px-10 py-4 rounded-[35px] uppercase tracking-widest border-2 border-smash-red text-center"
+              >
+                Get Directions
+              </motion.a>
+            </div>
           </motion.div>
 
           <motion.div

@@ -62,12 +62,20 @@ const Footer: React.FC = () => {
             <p className="font-primary text-base text-smash-red uppercase tracking-widest font-bold mb-2">
               Smash Happens
             </p>
-            <p className="font-primary text-sm text-smash-brown">
+            <a 
+              href="https://share.google/B4R9Oj37gfchmf9mD" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="font-primary text-sm text-smash-brown hover:text-smash-red transition-colors block"
+            >
               Location: Near AURAK, Ras Al Khaimah
-            </p>
-            <p className="font-primary text-sm text-smash-brown">
+            </a>
+            <a 
+              href="tel:+971563535819" 
+              className="font-primary text-sm text-smash-brown hover:text-smash-red transition-colors block"
+            >
               Call/WhatsApp: +971 56 353 5819
-            </p>
+            </a>
             <p className="font-primary text-[10px] text-smash-brown/50 pt-2">
               © 2026 SMASH B. ALL RIGHTS RESERVED.
             </p>
