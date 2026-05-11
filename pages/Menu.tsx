@@ -77,7 +77,7 @@ const Menu: React.FC = () => {
             >
               {/* Decorative Element */}
               <div className="absolute top-0 right-0 p-8 opacity-10">
-                <img src="/SMASHBlogo-18.svg" alt="" className="w-32 h-32 rotate-12 invert" />
+                <img src="/SMASHBlogo-18.svg" alt="" className="w-32 h-32 rotate-12" />
               </div>
 
               <button 

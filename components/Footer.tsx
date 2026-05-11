@@ -23,7 +23,7 @@ const Footer: React.FC<FooterProps> = ({ showBrandSection = true }) => {
               <img 
                 src="/SMASHBlogo-18.svg" 
                 alt="Smash B Logo" 
-                className="h-20 grayscale brightness-0 opacity-80" 
+                className="h-24 md:h-32 hover:scale-105 transition-transform" 
               />
             </motion.div>
             <h2 className="text-4xl md:text-8xl font-primary text-smash-brown leading-tight uppercase mb-12">
