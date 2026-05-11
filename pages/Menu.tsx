@@ -42,6 +42,7 @@ const Menu: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   useEffect(() => {
+    document.title = "Menu | Smash B - Next Level Burgers";
     const hasSeenPopup = localStorage.getItem('smashb_welcome_popup_seen');
     if (!hasSeenPopup) {
       const timer = setTimeout(() => {
