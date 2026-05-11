@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, ExternalLink, X, Download } from 'lucide-react';
+import { MapPin, Phone, ExternalLink, X } from 'lucide-react';
 
 const MENU_DATA = {
   Burgers: [
@@ -214,21 +214,7 @@ const Menu: React.FC = () => {
                 <span className="font-primary text-lg md:text-xl tracking-wider uppercase">Ras Al Khaimah</span>
               </Link>
               
-              <motion.a 
-                href="/SmashB_Menu.pdf" 
-                download="SmashB_Menu.pdf"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="flex items-center gap-4 group bg-smash-red/10 border-2 border-smash-red/30 p-4 rounded-3xl hover:bg-smash-red hover:border-smash-red transition-all mt-6"
-              >
-                <div className="w-12 h-12 rounded-full bg-smash-red flex items-center justify-center text-white">
-                  <Download className="w-6 h-6" />
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-primary text-lg tracking-wider text-smash-cream group-hover:text-white uppercase italic">Download Menu</span>
-                  <span className="text-[10px] uppercase tracking-widest opacity-50 text-smash-cream group-hover:text-white/80">PDF Format (1.2 MB)</span>
-                </div>
-              </motion.a>
+
             </div>
           </div>
 
