@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -6,6 +6,28 @@ import Location from './pages/Location';
 import Menu from './pages/Menu';
 
 const App: React.FC = () => {
+  useEffect(() => {
+    // Explicitly set the favicon to avoid browser caching issues or overrides
+    const setFavicon = () => {
+      const links = document.querySelectorAll("link[rel*='icon']");
+      const iconUrl = "/assets_static/SMASHBlogo-18.svg?v=3";
+      
+      if (links.length > 0) {
+        links.forEach(link => {
+          (link as HTMLLinkElement).href = iconUrl;
+        });
+      } else {
+        const link = document.createElement('link');
+        link.rel = 'icon';
+        link.type = 'image/svg+xml';
+        link.href = iconUrl;
+        document.getElementsByTagName('head')[0].appendChild(link);
+      }
+    };
+    
+    setFavicon();
+  }, []);
+
   return (
     <Router>
       <main className="min-h-screen w-full bg-smash-cream relative selection:bg-smash-red selection:text-white">
