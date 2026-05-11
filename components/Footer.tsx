@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 interface FooterProps {
@@ -14,6 +15,17 @@ const Footer: React.FC<FooterProps> = ({ showBrandSection = true }) => {
       <div className="max-w-7xl mx-auto relative z-10">
         {showBrandSection && (
           <div className="flex flex-col items-center text-center mb-24">
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              className="mb-8"
+            >
+              <img 
+                src="/assets_static/SMASHBlogo-18.svg" 
+                alt="Smash B Logo" 
+                className="h-20 grayscale brightness-0 opacity-80" 
+              />
+            </motion.div>
             <h2 className="text-4xl md:text-8xl font-primary text-smash-brown leading-tight uppercase mb-12">
               Smash it <br /> <span className="text-smash-red animate-pulse">feel it.</span>
             </h2>

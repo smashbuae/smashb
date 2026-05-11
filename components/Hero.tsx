@@ -183,14 +183,13 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Slogan at Top */}
-      <div className="relative z-20 flex flex-col items-center gap-4 mt-8">
+      <div className="absolute top-12 left-0 w-full z-40 px-6 text-center">
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center"
         >
-          <h2 className="font-primary font-bold text-2xl md:text-4xl text-smash-red uppercase italic drop-shadow-lg tracking-tighter">
+          <h2 className="font-primary font-bold text-xl md:text-2xl text-smash-red uppercase italic drop-shadow-lg tracking-tighter">
             Something's about to smash here
           </h2>
         </motion.div>
