@@ -190,8 +190,8 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <h2 className="font-primary text-2xl md:text-4xl text-smash-red uppercase italic drop-shadow-lg tracking-tighter">
-            Something’s about to smash here…
+          <h2 className="font-primary font-bold text-2xl md:text-4xl text-smash-red uppercase italic drop-shadow-lg tracking-tighter">
+            Something's about to smash here
           </h2>
         </motion.div>
       </div>
@@ -231,12 +231,7 @@ const Hero: React.FC = () => {
         transition={{ delay: 1.2, duration: 0.8 }}
         className="relative z-20 flex flex-wrap justify-center gap-4 md:gap-6 w-full max-w-lg px-4 mb-16"
       >
-        <a 
-          href="https://www.instagram.com/smashb.uae/" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="w-full"
-        >
+        <Link to="/menu" className="w-full">
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -244,7 +239,7 @@ const Hero: React.FC = () => {
           >
             Smashed Menu
           </motion.div>
-        </a>
+        </Link>
 
         <div className="flex w-full gap-4">
           <Link to="/location" className="flex-1">
@@ -269,9 +264,8 @@ const Hero: React.FC = () => {
       </motion.div>
 
       {/* Footer / Copyright overlay */}
-      <div className="absolute bottom-4 left-0 w-full flex justify-between px-10 items-center opacity-40 font-description text-[10px] md:text-xs text-smash-cream uppercase tracking-widest pointer-events-none">
+      <div className="absolute bottom-4 left-0 w-full flex justify-center px-10 items-center opacity-40 font-description text-[10px] md:text-xs text-smash-cream uppercase tracking-widest pointer-events-none">
         <span>© 2026 SMASH B</span>
-        <span>UAE • SMASHING SOON</span>
       </div>
     </section>
   );
