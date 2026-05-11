@@ -14,11 +14,11 @@ const MENU_DATA = {
   Loaded: [
     { name: 'Crunch Bomb', description: 'Fried Chicken, French Fries, Sauce', price: 10 },
     { name: 'Beefy Bomb', description: 'Smashed Beef, French Fries, Sauce', price: 12 },
-    { name: 'Fire Bomb', description: 'Spicy Chicken, French Fries, Sauce', price: 15 },
+    { name: 'Fire Bomb', description: 'Nashville Chicken, Jalapeño, Lettuce, Sauce', price: 15 },
   ],
   Sandwiches: [
-    { name: 'Havana', description: 'Beef, French Fries, Sauce', price: 13 },
-    { name: 'Twisted Chick', description: 'Fried Chicken, Lettuce, Jalapeno, Sauce', price: 12 },
+    { name: 'Havana', description: 'Roasted beef , Mustard sauce, Sauce', price: 13 },
+    { name: 'Twisted chick', description: 'Fried Chicken, Lettuce, Jalapeno, Sauce', price: 12 },
   ],
   Milkshakes: [
     { name: 'Mango madness', price: 12 },
