@@ -8,7 +8,7 @@ const Location: React.FC = () => {
     <div className="h-screen bg-smash-brown text-smash-cream flex flex-col overflow-hidden">
       <nav className="p-4 md:p-6 flex justify-between items-center z-10 shrink-0">
         <Link to="/" className="group">
-          <img src="/assets_static/SMASHBlogo-18.svg" alt="Smash B Logo" className="h-10 md:h-16 group-hover:scale-110 transition-transform" />
+          <img src="/SMASHBlogo-18.svg" alt="Smash B Logo" className="h-10 md:h-16 group-hover:scale-110 transition-transform" />
         </Link>
         <Link to="/" className="font-primary text-xs md:text-sm uppercase tracking-widest border-2 border-smash-red px-4 md:px-6 py-2 rounded-full hover:bg-smash-red transition-all">
           Back Home
@@ -101,7 +101,7 @@ const Location: React.FC = () => {
             className="h-[300px] md:h-[400px] lg:h-[500px] flex items-center justify-center relative hidden md:block"
           >
              <div className="w-full h-full bg-white/5 rounded-[35px] border-4 border-smash-red/20 overflow-hidden flex items-center justify-center p-12">
-               <img src="/assets_static/SMASHBlogo-18.svg" alt="Smash B Brand" className="w-full max-w-[300px] drop-shadow-2xl" />
+               <img src="/SMASHBlogo-18.svg" alt="Smash B Brand" className="w-full max-w-[300px] drop-shadow-2xl" />
              </div>
           </motion.div>
         </div>

@@ -21,7 +21,7 @@ const Footer: React.FC<FooterProps> = ({ showBrandSection = true }) => {
               className="mb-8"
             >
               <img 
-                src="/assets_static/SMASHBlogo-18.svg" 
+                src="/SMASHBlogo-18.svg" 
                 alt="Smash B Logo" 
                 className="h-20 grayscale brightness-0 opacity-80" 
               />
@@ -32,13 +32,19 @@ const Footer: React.FC<FooterProps> = ({ showBrandSection = true }) => {
 
             <div className="flex flex-wrap justify-center gap-12 font-primary text-sm md:text-lg">
                {[
-                 { name: 'Menu', path: 'https://www.instagram.com/smashb.uae/', external: true },
+                 { name: 'Menu', path: '/menu', external: false },
                  { name: 'Locations', path: '/location', external: false },
                  { name: 'Our Story', path: '/about', external: false },
                  { name: 'Merch', path: '#', external: false }
                ].map((link) => (
                  link.external ? (
-                   <a key={link.name} href={link.path} target="_blank" rel="noopener noreferrer" className="text-smash-brown hover:text-smash-red transition-colors border-b-4 border-transparent hover:border-smash-red pb-2">
+                   <a 
+                     key={link.name} 
+                     href={link.path} 
+                     target="_blank" 
+                     rel="noopener noreferrer" 
+                     className="text-smash-brown hover:text-smash-red transition-colors border-b-4 border-transparent hover:border-smash-red pb-2"
+                   >
                      {link.name}
                    </a>
                  ) : (

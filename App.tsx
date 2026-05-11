@@ -10,7 +10,7 @@ const App: React.FC = () => {
     // Explicitly set the favicon to avoid browser caching issues or overrides
     const setFavicon = () => {
       const links = document.querySelectorAll("link[rel*='icon']");
-      const iconUrl = "/assets_static/SMASHBlogo-18.svg?v=3";
+      const iconUrl = "/SMASHBlogo-18.svg?v=3";
       
       if (links.length > 0) {
         links.forEach(link => {
@@ -21,7 +21,7 @@ const App: React.FC = () => {
         link.rel = 'icon';
         link.type = 'image/svg+xml';
         link.href = iconUrl;
-        document.getElementsByTagName('head')[0].appendChild(link);
+        document.head.appendChild(link);
       }
     };
     

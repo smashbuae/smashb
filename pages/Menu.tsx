@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, ExternalLink, X } from 'lucide-react';
+import { MapPin, Phone, ExternalLink, X, Download } from 'lucide-react';
 
 const MENU_DATA = {
   Burgers: [
@@ -77,7 +77,7 @@ const Menu: React.FC = () => {
             >
               {/* Decorative Element */}
               <div className="absolute top-0 right-0 p-8 opacity-10">
-                <img src="/assets_static/SMASHBlogo-18.svg" alt="" className="w-32 h-32 rotate-12 invert" />
+                <img src="/SMASHBlogo-18.svg" alt="" className="w-32 h-32 rotate-12 invert" />
               </div>
 
               <button 
@@ -120,7 +120,7 @@ const Menu: React.FC = () => {
       {/* Navigation */}
       <nav className="p-4 md:p-6 flex justify-between items-center z-10 sticky top-0 bg-smash-brown/90 backdrop-blur-md border-b border-smash-red/20">
         <Link to="/" className="group">
-          <img src="/assets_static/SMASHBlogo-18.svg" alt="Smash B Logo" className="h-10 md:h-14 group-hover:scale-110 transition-transform" />
+          <img src="/SMASHBlogo-18.svg" alt="Smash B Logo" className="h-10 md:h-14 group-hover:scale-110 transition-transform" />
         </Link>
         <Link to="/" className="font-primary text-[10px] md:text-xs uppercase tracking-widest border-2 border-smash-red px-4 md:px-6 py-2 rounded-full hover:bg-smash-red transition-all">
           Back Home
@@ -213,6 +213,22 @@ const Menu: React.FC = () => {
                 </div>
                 <span className="font-primary text-lg md:text-xl tracking-wider uppercase">Ras Al Khaimah</span>
               </Link>
+              
+              <motion.a 
+                href="/SmashB_Menu.pdf" 
+                download="SmashB_Menu.pdf"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex items-center gap-4 group bg-smash-red/10 border-2 border-smash-red/30 p-4 rounded-3xl hover:bg-smash-red hover:border-smash-red transition-all mt-6"
+              >
+                <div className="w-12 h-12 rounded-full bg-smash-red flex items-center justify-center text-white">
+                  <Download className="w-6 h-6" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-primary text-lg tracking-wider text-smash-cream group-hover:text-white uppercase italic">Download Menu</span>
+                  <span className="text-[10px] uppercase tracking-widest opacity-50 text-smash-cream group-hover:text-white/80">PDF Format (1.2 MB)</span>
+                </div>
+              </motion.a>
             </div>
           </div>
 
