@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
@@ -57,7 +57,7 @@ const About: React.FC = () => {
           className="relative w-full aspect-video rounded-[35px] overflow-hidden border-4 border-smash-red/20"
         >
           <img 
-            src="/brandcharacter/smashbflyingcharacter.svg" 
+            src="/brandcharacter/smashing.svg" 
             alt="Smash B Mascot" 
             className="w-full h-full object-contain p-12 bg-white/5"
           />
