@@ -4,37 +4,41 @@ import { Link } from 'react-router-dom';
 import { MapPin, Phone, ExternalLink, X } from 'lucide-react';
 
 const MENU_DATA = {
-  Burgers: [
-    { name: 'Solo Smash', description: 'Single Beef Patty, Cheese, Pickle, Caramelized Onion, Sauce', price: 12 },
-    { name: 'Duo Smash', description: 'Double Beef Patty, Cheese, Pickle, Caramelized Onion, Sauce', price: 17 },
-    { name: 'Trio Smash', description: 'Triple Beef Patty, Cheese, Pickle, Caramelized Onion, Sauce', price: 23 },
-    { name: 'Classic Crunch', description: 'Lettuce, Jalapeno, Sauce, Fried Crispy Chicken', price: 12 },
-    { name: 'Classic Spice', description: 'Spicy Sauce, Pickle, Sauce', price: 17 },
+  BURGERS: [
+    { name: 'Solo Smash', description: 'Potato bun, single beef patty, cheese, pickle, caramelized onion, sb sauce.', price: 12 },
+    { name: 'Duo Smash', description: 'Double beef patty, cheese, pickle, caramelized onion, sb sauce.', price: 17 },
+    { name: 'Trio Smash', description: 'Triple beef patty, cheese, pickle, caramelized onion, sb sauce.', price: 23 },
+    { name: 'Classic Crunch', description: 'Fried crispy chicken, jalapeno, iceberg lettuce, sb sauce.', price: 12 },
+    { name: 'Classic Spice', description: 'Fried crispy chicken, nashville sauce, jalapeno, iceberg lettuce, sb sauce', price: 17 },
   ],
-  Loaded: [
-    { name: 'Crunch Bomb', description: 'Fried Chicken, French Fries, Sauce', price: 10 },
-    { name: 'Beefy Bomb', description: 'Smashed Beef, French Fries, Sauce', price: 12 },
-    { name: 'Fire Bomb', description: 'Nashville Chicken, Jalapeño, Lettuce, Sauce', price: 15 },
+  'LOADED FRIES': [
+    { name: 'Crunch Bomb', description: 'Fried chicken, french fries, jalapeno, sb sauce.', price: 10 },
+    { name: 'Beefy Bomb', description: 'Smashed beef, french fries, pickle, sb sauce.', price: 12 },
+    { name: 'Fire Bomb', description: 'Nashville chicken, french fries, jalapeño, sb sauce.', price: 15 },
   ],
-  Sandwiches: [
-    { name: 'Havana', description: 'Roasted beef , Mustard sauce, Sauce', price: 13 },
-    { name: 'Twisted chick', description: 'Fried Chicken, Lettuce, Jalapeno, Sauce', price: 12 },
+  SANDWICHES: [
+    { name: 'Havana', description: 'French baguette, beef patty, roasted beef , mustard sauce, pickle, sb sauce.', price: 13 },
+    { name: 'Twisted Chick', description: 'Tortilla wrap, fried chicken, lettuce, jalapeno, cheese, sbsauce.', price: 12 },
   ],
-  Milkshakes: [
-    { name: 'Mango madness', price: 12 },
-    { name: 'Coco crush', price: 12 },
+  MILKSHAKES: [
+    { name: 'Mango Madness', price: 12 },
+    { name: 'Coco Crush', price: 12 },
     { name: 'Lotus Loaded', price: 12 },
-    { name: 'Oreo overload', price: 12 },
-    { name: 'Smash berry', price: 13 },
-    { name: 'Choco melt', price: 12 },
+    { name: 'Oreo Overload', price: 12 },
+    { name: 'Choco Melt', price: 12 },
+    { name: 'Smash Berry', price: 13 },
   ],
-  Mojitos: [
-    { name: 'Blue wave', price: 10 },
-    { name: 'Pink rush', price: 10 },
-    { name: 'Violet vibe', price: 10 },
-    { name: 'Mint rush', price: 10 },
-    { name: 'Passion storm', price: 10 },
-    { name: 'Midnight berry', price: 12 },
+  MOJITOS: [
+    { name: 'Blue Wave', price: 10 },
+    { name: 'Pink Rush', price: 10 },
+    { name: 'Violet Vibe', price: 10 },
+    { name: 'Mint Rush', price: 10 },
+    { name: 'Passion Storm', price: 10 },
+    { name: 'Midnight Berry', price: 12 },
+  ],
+  'FRESH JUICE': [
+    { name: 'Lemon Mint', price: 10 },
+    { name: 'orange', price: 10 },
   ]
 };
 
@@ -118,7 +122,7 @@ const Menu: React.FC = () => {
         )}
       </AnimatePresence>
       {/* Navigation */}
-      <nav className="p-4 md:p-6 flex justify-between items-center z-10 sticky top-0 bg-smash-brown/90 backdrop-blur-md border-b border-smash-red/20">
+      <nav className="p-4 md:p-6 flex justify-between items-center z-50 sticky top-0 bg-smash-brown/90 backdrop-blur-md border-b border-smash-red/20">
         <Link to="/" className="group">
           <img src="/SMASHBlogo-18.svg" alt="Smash B Logo" className="h-10 md:h-14 group-hover:scale-110 transition-transform" />
         </Link>
@@ -128,69 +132,94 @@ const Menu: React.FC = () => {
       </nav>
 
       {/* Hero Header */}
-      <header className="relative py-12 md:py-20 flex flex-col items-center justify-center overflow-hidden border-b-4 border-smash-red">
-        <div className="absolute inset-0 opacity-10 bg-retro-grid pointer-events-none"></div>
+      <header className="relative pt-20 pb-0 flex flex-col items-center justify-center z-20">
+        <div className="absolute inset-0 opacity-20 bg-retro-grid pointer-events-none overflow-hidden"></div>
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="text-center z-10"
+          className="text-center flex flex-col items-center translate-y-12 md:translate-y-16"
         >
-          <h1 className="font-primary text-6xl md:text-8xl lg:text-9xl text-smash-red uppercase italic tracking-tighter leading-none mb-2">
-            The Menu
-          </h1>
-          <p className="font-secondary font-bold text-2xl md:text-3xl text-smash-cream/80 -rotate-2">
-            Something's about to smash here
-          </p>
+          <img 
+            src="/brandcharacter/Asset 2.svg" 
+            alt="Smash B Menu Character" 
+            className="w-72 md:w-[500px] select-none hover:scale-105 transition-transform duration-500 drop-shadow-2xl" 
+          />
         </motion.div>
       </header>
 
-      {/* Menu Categories */}
-      <main className="flex-1 max-w-7xl mx-auto px-6 py-12 w-full space-y-20">
-        {Object.entries(MENU_DATA).map(([category, items], catIndex) => (
-          <section key={category}>
-            <div className="flex items-center gap-4 mb-8">
-              <h2 className="font-primary text-4xl md:text-5xl text-smash-red uppercase tracking-tighter italic">
-                {category}
-              </h2>
-              <div className="h-1 flex-1 bg-smash-red/20 rounded-full"></div>
-            </div>
+      {/* Menu Categories - PDF Styled Card */}
+      <main className="flex-1 max-w-4xl mx-auto px-4 md:px-6 py-6 w-full relative">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-smash-cream rounded-[40px] md:rounded-[80px] p-8 md:p-16 shadow-2xl border-2 border-smash-brown/10 relative"
+        >
+          {/* Subtle Grain Texture Overlay */}
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] rounded-[40px] md:rounded-[80px] overflow-hidden"></div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-              {items.map((item, index) => (
-                <motion.div
-                  key={item.name}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.05 }}
-                  className="group bg-white/5 border border-white/10 p-6 rounded-[25px] hover:border-smash-red/50 transition-all hover:shadow-[0_0_30px_rgba(234,59,36,0.1)] flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="flex justify-between items-start mb-2 gap-4">
-                      <h3 className="font-primary text-xl md:text-2xl uppercase tracking-wider group-hover:text-smash-red transition-colors">
+          {/* Add-on Sticker */}
+          <motion.div 
+            initial={{ scale: 0, rotate: -20 }}
+            animate={{ scale: 1, rotate: -10 }}
+            transition={{ delay: 0.8, type: 'spring' }}
+            className="absolute -top-8 -right-4 md:-top-16 md:-right-8 z-20"
+          >
+            <div className="relative w-32 h-32 md:w-40 md:h-40 flex items-center justify-center text-center">
+              <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full fill-[#96b8a8] drop-shadow-lg">
+                <path d="M50 0 L60 10 L75 5 L80 20 L95 25 L90 40 L100 50 L90 60 L95 75 L80 80 L75 95 L60 90 L50 100 L40 90 L25 95 L20 80 L5 75 L10 60 L0 50 L10 40 L5 25 L20 20 L25 5 L40 10 Z" />
+              </svg>
+              <div className="relative font-primary leading-none text-white p-2">
+                <div className="text-[10px] md:text-sm uppercase mb-0.5">Add on</div>
+                <div className="text-xs md:text-base uppercase mb-0.5">Soft drinks</div>
+                <div className="text-xs md:text-base uppercase flex items-center justify-center gap-1">
+                  <span>& fries</span>
+                </div>
+                <div className="text-2xl md:text-4xl italic mt-1 drop-shadow-sm flex items-center justify-center gap-0.5">
+                  6<span className="text-xs md:text-lg not-italic">AED</span>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {Object.entries(MENU_DATA).map(([category, items], catIndex) => (
+            <section key={category} className="mb-16 last:mb-0">
+              <div className="mb-8">
+                <h2 className="font-primary text-4xl md:text-6xl text-smash-brown uppercase tracking-tighter">
+                  {category}
+                </h2>
+              </div>
+
+              <div className="space-y-8">
+                {items.map((item, index) => (
+                  <motion.div
+                    key={item.name}
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                    className="flex flex-col"
+                  >
+                    <div className="flex justify-between items-baseline gap-4">
+                      <h3 className="font-primary text-2xl md:text-3xl text-smash-red uppercase tracking-tight">
                         {item.name}
                       </h3>
-                      <span className="font-primary text-lg text-smash-red shrink-0">
-                        {item.price} AED
+                      <div className="flex-1 border-b-2 border-dotted border-smash-brown/20 mx-2 hidden md:block"></div>
+                      <span className="font-primary text-2xl md:text-3xl text-smash-brown shrink-0">
+                        {item.price}
                       </span>
                     </div>
                     {item.description && (
-                      <p className="text-sm md:text-base opacity-60 font-description leading-snug">
+                      <p className="text-sm md:text-lg text-smash-brown/70 font-sans font-medium mt-1 pr-12">
                         {item.description}
                       </p>
                     )}
-                  </div>
-                  
-                  {/* Decorative dot */}
-                  <div className="mt-4 flex justify-end">
-                    <div className="w-1.5 h-1.5 rounded-full bg-smash-red group-hover:scale-150 transition-transform"></div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </section>
-        ))}
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+          ))}
+        </motion.div>
       </main>
 
       {/* Contact & Socials Footer Section */}

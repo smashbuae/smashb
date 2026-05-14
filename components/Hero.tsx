@@ -70,7 +70,7 @@ const Hero: React.FC = () => {
   ];
 
   return (
-    <section className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center bg-smash-brown px-6">
+    <section className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center bg-[#0f0a09] px-6">
       {/* Social Media Popup Modal */}
       <AnimatePresence>
         {showSocials && (
@@ -128,146 +128,138 @@ const Hero: React.FC = () => {
           </div>
         )}
       </AnimatePresence>
-      {/* Full Dynamic Background */}
-      <div className="absolute inset-0 z-0 overflow-hidden bg-gradient-to-b from-[#1a1110] via-[#2a1a18] to-[#12002b]">
-        {/* Animated Radiant Glow */}
+
+      {/* BOXING STAGE BACKGROUND */}
+      <div className="absolute inset-0 z-0 overflow-hidden bg-black">
+        {/* Floor Canvas with Perspective */}
+        <div 
+          className="absolute bottom-0 left-0 w-full h-[40%] bg-smash-brown border-t-8 border-smash-red/30 shadow-[0_-50px_100px_rgba(0,0,0,0.8)]"
+          style={{
+            transform: 'perspective(500px) rotateX(15deg) scale(1.5)',
+            transformOrigin: 'bottom'
+          }}
+        >
+          {/* Floor Texture */}
+          <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/leather.png')]"></div>
+          {/* Center Logo Shadow Area */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 bg-black/40 blur-3xl rounded-full scale-150"></div>
+        </div>
+
+        {/* Spotlights Beams */}
+        <div className="absolute inset-0 flex justify-around items-end pointer-events-none opacity-40">
+          <div className="w-96 h-[800px] bg-gradient-to-t from-smash-red/20 via-smash-red/5 to-transparent blur-[80px] -rotate-12 translate-y-20 origin-bottom"></div>
+          <div className="w-96 h-[800px] bg-gradient-to-t from-smash-red/30 via-smash-red/10 to-transparent blur-[100px] translate-y-20 origin-bottom"></div>
+          <div className="w-96 h-[800px] bg-gradient-to-t from-smash-red/20 via-smash-red/5 to-transparent blur-[80px] rotate-12 translate-y-20 origin-bottom"></div>
+        </div>
+
+        {/* Ring Ropes (Background) */}
+        <div className="absolute top-[40%] left-0 w-full z-0 flex flex-col gap-8 opacity-20 overflow-hidden">
+          <div className="w-full h-2 bg-smash-red shadow-[0_0_20px_rgba(234,59,36,0.8)]"></div>
+          <div className="w-full h-2 bg-smash-red shadow-[0_0_20px_rgba(234,59,36,0.8)]"></div>
+          <div className="w-full h-2 bg-smash-red shadow-[0_0_20px_rgba(234,59,36,0.8)]"></div>
+        </div>
+
+        {/* Ambient Smoke/Vapor */}
         <motion.div 
-          animate={{ opacity: [0.1, 0.3, 0.1], scale: [1, 1.1, 1] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(234,59,36,0.25)_0%,transparent_60%)]"
+          animate={{ opacity: [0.1, 0.2, 0.1], x: [-20, 20, -20] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          className="absolute bottom-0 left-0 w-full h-[60%] bg-gradient-to-t from-white/5 to-transparent blur-[100px]"
         />
-
-        {/* Parallax Clouds Layer - Far */}
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={`cloud-far-${i}`}
-            initial={{ x: -400, y: (i * 15) + "%", opacity: 0 }}
-            animate={{ x: '120vw', opacity: [0, 0.06, 0] }}
-            transition={{ duration: 50 + i * 15, repeat: Infinity, delay: i * 8, ease: "linear" }}
-            className="absolute w-[600px] h-[400px] bg-smash-cream rounded-full blur-[150px] pointer-events-none"
-          />
-        ))}
-
-        {/* Parallax Clouds Layer - Near */}
-        {[...Array(3)].map((_, i) => (
-          <motion.div
-            key={`cloud-near-${i}`}
-            initial={{ x: -500, y: (20 + i * 30) + "%", opacity: 0 }}
-            animate={{ x: '150vw', opacity: [0, 0.1, 0], scale: [1, 1.3, 1] }}
-            transition={{ duration: 25 + i * 5, repeat: Infinity, delay: i * 5, ease: "linear" }}
-            className="absolute w-[400px] h-[250px] bg-white rounded-full blur-[100px] pointer-events-none"
-          />
-        ))}
-
-        {/* High-Speed Streaks */}
-        {Array.from({ length: 40 }).map((_, i) => (
-          <motion.div
-            key={`streak-${i}`}
-            initial={{ x: -200, y: Math.random() * 100 + "%", opacity: 0 }}
-            animate={{ x: '110vw', opacity: [0, 0.5, 0], scaleX: [1, 2, 1] }}
-            transition={{ duration: 0.6 + Math.random() * 1, repeat: Infinity, delay: Math.random() * 12, ease: "linear" }}
-            className="absolute h-[1px] w-96 bg-gradient-to-r from-transparent via-smash-red/40 to-transparent rotate-[2deg]"
-          />
-        ))}
-
-        {/* Distant Urban Lights */}
-        {[...Array(12)].map((_, i) => (
-          <motion.div
-            key={`light-${i}`}
-            animate={{ opacity: [0, 0.8, 0], scale: [1, 1.5, 1] }}
-            transition={{ duration: 3 + Math.random() * 3, repeat: Infinity, delay: Math.random() * 5 }}
-            style={{ left: `${Math.random() * 100}%`, top: `${85 + Math.random() * 15}%` }}
-            className="absolute w-1 h-1 bg-smash-cream rounded-full blur-[1px]"
-          />
-        ))}
       </div>
 
-      {/* Slogan at Top */}
-      <div className="absolute top-12 left-0 w-full z-40 px-6 text-center">
+      {/* Main Content Area */}
+      <div className="relative flex flex-col items-center justify-center h-full w-full z-10 pt-20">
+        
+        {/* STAY SMASHIN Headline */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, scale: 1.5, y: -50 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative z-20 mb-[-40px] md:mb-[-80px]"
         >
-          <h2 className="font-primary font-bold text-xl md:text-2xl text-smash-red uppercase italic drop-shadow-lg tracking-tighter">
-            Something's about to smash here
-          </h2>
+          <h1 className="font-primary text-[50px] md:text-[110px] lg:text-[150px] leading-none text-white uppercase italic tracking-tighter drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] text-center">
+            STAY <span className="text-smash-red">SMASHIN'</span>
+          </h1>
         </motion.div>
-      </div>
 
-      {/* Center Character Section */}
-      <div className="relative flex-1 flex items-center justify-center w-full max-w-5xl z-30 py-4 min-h-[300px]">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ 
-            opacity: 1,
-            scale: 1,
-            y: [0, -20, 0, -10, 0],
-            x: [0, 8, -8, 4, 0],
-          }}
-          transition={{ 
-            opacity: { duration: 0.8 },
-            scale: { type: "spring", damping: 15, stiffness: 100 },
-            y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-            x: { duration: 8, repeat: Infinity, ease: "easeInOut" }
-          }}
-          onClick={playSound}
-          className="cursor-pointer relative z-40 group"
-        >
-          <img 
-            src="/brandcharacter/smashbflyingcharacter.svg" 
-            alt="Flying Character" 
-            className="w-[280px] md:w-[450px] lg:w-[550px] h-auto drop-shadow-[0_20px_50px_rgba(234,59,36,0.3)] transform transition-all duration-700 group-hover:scale-105 group-hover:brightness-110"
-            loading="eager"
-          />
-        </motion.div>
-      </div>
-
-      {/* Simplified Buttons Section at Bottom */}
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-        className="relative z-20 flex flex-wrap justify-center gap-4 md:gap-6 w-full max-w-lg px-4 mb-16"
-      >
-        <Link to="/menu" className="w-full">
+        {/* Character Section */}
+        <div className="relative flex items-center justify-center w-full max-w-5xl py-4">
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="w-full py-5 px-8 bg-smash-red text-white font-primary text-lg md:text-xl border-2 border-white shadow-2xl transition-all uppercase rounded-full tracking-wider text-center cursor-pointer"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ 
+              opacity: 1,
+              scale: [1, 1.02, 1],
+              y: [0, -15, 0],
+            }}
+            transition={{ 
+              opacity: { duration: 0.8 },
+              scale: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+              y: { duration: 5, repeat: Infinity, ease: "easeInOut" }
+            }}
+            onClick={playSound}
+            className="cursor-pointer relative z-30 group"
           >
-            Smashed Menu
+            <img 
+              src="/brandcharacter/smashing.svg" 
+              alt="Smashing Character" 
+              className="w-[280px] md:w-[450px] lg:w-[580px] h-auto drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)] transform transition-all duration-700 group-hover:scale-105 group-hover:brightness-110"
+              loading="eager"
+            />
+            {/* Spotlight Reflection on Floor */}
+            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-full h-20 bg-smash-red/20 blur-3xl -z-10 rounded-full scale-y-50"></div>
           </motion.div>
-        </Link>
+        </div>
 
-        <div className="flex w-full gap-4">
-          <Link to="/location" className="flex-1">
+        {/* Buttons Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 0.8 }}
+          className="flex flex-wrap justify-center gap-4 md:gap-6 w-full max-w-lg px-4 mt-8 mb-20"
+        >
+          <Link to="/menu" className="w-full">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="w-full py-4 px-6 bg-white text-smash-red font-primary text-sm md:text-base border-2 border-smash-red shadow-lg transition-all uppercase rounded-full text-center cursor-pointer"
+              className="w-full py-5 px-8 bg-smash-red text-white font-primary text-xl md:text-2xl border-4 border-white shadow-[0_15px_40px_rgba(234,59,36,0.4)] transition-all uppercase rounded-full tracking-wider text-center cursor-pointer italic font-bold"
             >
-              Location
+              The Menu
             </motion.div>
           </Link>
 
-          <motion.button 
-            onClick={() => setShowSocials(true)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex-1 py-4 px-6 bg-transparent border-2 border-white text-white font-primary text-sm md:text-base shadow-lg transition-all uppercase rounded-full"
-          >
-            Social Media
-          </motion.button>
-        </div>
-      </motion.div>
+          <div className="flex w-full gap-4">
+            <Link to="/location" className="flex-1">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full py-4 px-6 bg-white text-smash-red font-primary text-sm md:text-base border-2 border-smash-red shadow-lg transition-all uppercase rounded-full text-center cursor-pointer font-bold"
+              >
+                Find Us
+              </motion.div>
+            </Link>
+
+            <motion.button 
+              onClick={() => setShowSocials(true)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex-1 py-4 px-6 bg-transparent border-2 border-white text-white font-primary text-sm md:text-base shadow-lg transition-all uppercase rounded-full font-bold"
+            >
+              Socials
+            </motion.button>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Floor Edge Light */}
+      <div className="absolute bottom-0 w-full h-1 bg-gradient-to-r from-transparent via-smash-red/50 to-transparent z-40"></div>
 
       {/* Footer / Copyright overlay */}
       <div className="absolute bottom-4 left-0 w-full flex justify-center px-10 items-center opacity-40 font-description text-[10px] md:text-xs text-smash-cream uppercase tracking-widest pointer-events-none">
-        <span>© 2026 SMASH B</span>
+        <span>© 2026 SMASH B • ALL RIGHTS RESERVED</span>
       </div>
     </section>
   );
+
 };
 
 export default Hero;
