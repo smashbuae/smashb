@@ -40,7 +40,7 @@ const Location: React.FC = () => {
                 <Clock className="text-smash-red w-6 h-6 md:w-8 md:h-8 mt-1 shrink-0" />
                 <div>
                   <h3 className="font-primary text-xl md:text-2xl uppercase tracking-wider mb-1 md:mb-2">Operating Hours</h3>
-                  <p className="font-description text-sm md:text-base opacity-70">Daily: 12:00 PM - 12:00 AM<br />Smashed daily for the late-night crave.</p>
+                  <p className="font-description text-sm md:text-base opacity-70">Daily: 1:00 PM - 12:00 AM<br />Smashed daily for the late-night crave.</p>
                 </div>
               </div>
 
