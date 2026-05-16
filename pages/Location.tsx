@@ -62,7 +62,7 @@ const Location: React.FC = () => {
                 rel="noopener noreferrer"
                 className="flex-1 min-w-[140px] flex items-center justify-center bg-smash-red text-white font-primary px-4 md:px-8 py-3 md:py-4 rounded-[35px] text-[10px] md:text-xs uppercase tracking-widest border-2 border-white text-center"
               >
-                Order via WhatsApp
+                WhatsApp
               </motion.a>
 
               <motion.a
