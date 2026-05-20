@@ -3,7 +3,34 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { MessageCircle, X } from 'lucide-react';
 
+const HERO_LANGUAGES = {
+  en: {
+    staySmashin: "SMASH",
+    staySmashinRed: "HAPPENS",
+    theMenu: "The Menu",
+    findUs: "Find Us",
+    socials: "Socials",
+    joinFam: "Join the",
+    joinFamRed: "Smash Fam",
+    tagUs: "@smashb.uae • tag us to be featured",
+    rights: "© 2026 SMASH B • ALL RIGHTS RESERVED"
+  },
+  ar: {
+    staySmashin: "سماش",
+    staySmashinRed: "يحدث",
+    theMenu: "المنيو",
+    findUs: "موقعنا",
+    socials: "حساباتنا",
+    joinFam: "انضم إلى",
+    joinFamRed: "عائلة سماش",
+    tagUs: "smashb.uae.ae • تاق لنا لتظهر معنا",
+    rights: "© ٢٠٢٦ سماش بي • جميع الحقوق محفوظة"
+  }
+};
+
 const Hero: React.FC = () => {
+  const language = 'en' as any;
+  const dir = 'ltr' as any;
   const [showSocials, setShowSocials] = useState(false);
 
   const playSound = () => {
@@ -66,6 +93,16 @@ const Hero: React.FC = () => {
       url: 'https://www.threads.net/@smashb.uae', 
       color: 'hover:bg-[#000000]' 
     },
+    { 
+      name: 'Snapchat', 
+      icon: (
+        <svg viewBox="0 0 16 16" fill="currentColor" className="w-6 h-6">
+          <path d="M12.002.003c-.22 0-.44.02-.66.06a3.666 3.666 0 0 0-2.3 1.34 7.03 7.03 0 0 0-.85 1.5c-.15.35-.35.53-.59.53a4.57 4.57 0 0 1-1.46-.33c-.32-.15-.6-.15-.81.02a2.43 2.43 0 0 0-.6 1.05c-.12.44-.06.88.17 1.33.22.45.31.86.27 1.25s-.24.73-.61 1c-.38.28-.75.56-1.12.83-.37.28-.59.61-.64.97-.05.37.06.7.32.99.26.29.67.43 1.25.43.27 0 .54-.05.81-.13a7.84 7.84 0 0 1 1.57-.3c.42-.04.75-.02.99.07.24.09.44.27.59.54.15.27.2.66.15 1.15-.05.5-.18.96-.39 1.4s-.47.88-.78 1.3c-.31.42-.65.86-1.01 1.32-.36.46-.57.94-.61 1.44a2.9 2.9 0 0 0 .15 1.28c.16.44.47.79.92 1.05.45.26.97.35 1.57.26 1.14-.17 2.22-.52 3.23-1.04 1.01-.52 1.35-.83 1.03-.94-.32-.11-.84-.13-1.57-.04-1.14.13-2.12.01-2.95-.35-.83-.36-1.1-.96-.82-1.8.1-.31.32-.59.66-.85.34-.26.81-.46 1.42-.61a29 29 0 0 1 3.23-.46c1.17-.08 1.93-.01 2.27.23.33.24.49.62.47 1.14l-.07.98c-.02.32-.01.59.04.81.05.22.18.39.4.5s.49.12.83.02c.34-.1.71-.38 1.11-.84.4-.46.77-.96 1.11-1.5.34-.54.5-.96.47-1.28a1.27 1.27 0 0 0-.3-.89c-.29-.31-.72-.51-1.3-.61-.58-.1-1.28-.1-2.09-.01l-1.03.1c-.24.02-.45-.06-.63-.22a.96.96 0 0 1-.3-.68l-.07-.98c-.02-.32-.11-.59-.27-.81s-.41-.39-.77-.5c-.36-.11-.8-.13-1.33-.04c-.53.09-.99.12-1.38.08-.39-.04-.66-.2-.82-.47-.16-.27-.14-.66.06-1.15.2-.49.52-1.01.95-1.57.43-.56.88-1.08 1.34-1.57s.82-1.03 1.08-1.62c.26-.59.34-1.15.24-1.69-.1-.54-.42-1-.96-1.39a3.7 3.7 0 0 0-2.38-.85h-.112z"/>
+        </svg>
+      ), 
+      url: 'https://snapchat.com/t/d5zYuanj', 
+      color: 'hover:bg-[#FFFC00] hover:text-black hover:border-[#FFFC00]' 
+    },
     { name: 'WhatsApp', icon: <MessageCircle className="w-6 h-6" />, url: 'https://wa.me/971563535819', color: 'hover:bg-green-500' },
   ];
 
@@ -96,32 +133,32 @@ const Hero: React.FC = () => {
                 <X className="w-5 h-5" />
               </button>
 
-              <h3 className="font-primary text-3xl text-smash-brown text-center uppercase italic tracking-tighter mb-8 pt-4">
-                Join the <span className="text-smash-red">Smash Fam</span>
+              <h3 className={`${language === 'ar' ? 'font-arabic-heading text-4xl' : 'font-primary text-3xl'} text-smash-brown text-center uppercase italic tracking-tighter mb-8 pt-4`}>
+                {HERO_LANGUAGES[language].joinFam} <span className="text-smash-red">{HERO_LANGUAGES[language].joinFamRed}</span>
               </h3>
 
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 gap-4" dir={dir}>
                 {socials.map((social) => (
                   <motion.a
                     key={social.name}
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    whileHover={{ scale: 1.02, x: 5 }}
+                    whileHover={{ scale: 1.02, x: dir === 'rtl' ? -5 : 5 }}
                     whileTap={{ scale: 0.98 }}
                     className={`flex items-center gap-4 p-4 rounded-full bg-white border-2 border-smash-brown/10 text-smash-brown transition-all ${social.color} hover:text-white group`}
                   >
                     <div className="w-10 h-10 flex items-center justify-center rounded-full bg-smash-red/10 group-hover:bg-white/20">
                       {social.icon}
                     </div>
-                    <span className="font-primary text-xl uppercase tracking-wider">{social.name}</span>
+                    <span className={`${language === 'ar' ? 'font-arabic-heading text-[17px]' : 'font-primary text-xl'} uppercase tracking-wider`}>{language === 'ar' && social.name === 'Instagram' ? 'إنستغرام' : language === 'ar' && social.name === 'TikTok' ? 'تيك توك' : language === 'ar' && social.name === 'Facebook' ? 'فيسبوك' : language === 'ar' && social.name === 'Snapchat' ? 'سناب شات' : language === 'ar' && social.name === 'WhatsApp' ? 'واتساب' : social.name}</span>
                   </motion.a>
                 ))}
               </div>
 
               <div className="mt-8 text-center">
-                <p className="font-description text-xs text-smash-brown/60 uppercase tracking-widest italic">
-                  @smashb.uae • tag us to be featured
+                <p className={`${language === 'ar' ? 'font-arabic-desc' : 'font-description'} text-xs text-smash-brown/60 uppercase tracking-widest italic`}>
+                  {HERO_LANGUAGES[language].tagUs}
                 </p>
               </div>
             </motion.div>
@@ -177,8 +214,8 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative z-20 mb-[-40px] md:mb-[-80px]"
         >
-          <h1 className="font-primary text-[50px] md:text-[110px] lg:text-[150px] leading-none text-white uppercase italic tracking-tighter drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] text-center">
-            STAY <span className="text-smash-red">SMASHIN'</span>
+          <h1 className={`${language === 'ar' ? 'font-arabic-heading text-[60px] md:text-[120px] lg:text-[160px]' : 'font-primary text-[50px] md:text-[110px] lg:text-[150px]'} leading-none text-white uppercase italic tracking-tighter drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] text-center`}>
+            {HERO_LANGUAGES[language].staySmashin} <span className="text-smash-red">{HERO_LANGUAGES[language].staySmashinRed}</span>
           </h1>
         </motion.div>
 
@@ -215,15 +252,16 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 0.8 }}
-          className="flex flex-wrap justify-center gap-4 md:gap-6 w-full max-w-lg px-4 mt-8 mb-20"
+          className="flex flex-col justify-center gap-4 w-full max-w-sm px-4 mt-8 mb-20 relative z-30"
+          dir={dir}
         >
           <Link to="/menu" className="w-full">
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="w-full py-5 px-8 bg-smash-red text-white font-primary text-xl md:text-2xl border-4 border-white shadow-[0_15px_40px_rgba(234,59,36,0.4)] transition-all uppercase rounded-full tracking-wider text-center cursor-pointer italic font-bold"
+              className={`w-full py-5 px-8 bg-smash-red text-white ${language === 'ar' ? 'font-arabic-heading text-2xl' : 'font-primary text-xl md:text-2xl'} border-4 border-white shadow-[0_15px_40px_rgba(234,59,36,0.4)] transition-all uppercase rounded-full tracking-wider text-center cursor-pointer italic font-bold`}
             >
-              The Menu
+              {HERO_LANGUAGES[language].theMenu}
             </motion.div>
           </Link>
 
@@ -232,9 +270,9 @@ const Hero: React.FC = () => {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="w-full py-4 px-6 bg-white text-smash-red font-primary text-sm md:text-base border-2 border-smash-red shadow-lg transition-all uppercase rounded-full text-center cursor-pointer font-bold"
+                className={`w-full py-4 px-6 bg-white text-smash-red ${language === 'ar' ? 'font-arabic-heading text-lg' : 'font-primary text-sm md:text-base'} border-2 border-smash-red shadow-lg transition-all uppercase rounded-full text-center cursor-pointer font-bold`}
               >
-                Find Us
+                {HERO_LANGUAGES[language].findUs}
               </motion.div>
             </Link>
 
@@ -242,9 +280,9 @@ const Hero: React.FC = () => {
               onClick={() => setShowSocials(true)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex-1 py-4 px-6 bg-transparent border-2 border-white text-white font-primary text-sm md:text-base shadow-lg transition-all uppercase rounded-full font-bold"
+              className={`flex-1 py-4 px-6 bg-transparent border-2 border-white text-white ${language === 'ar' ? 'font-arabic-heading text-lg' : 'font-primary text-sm md:text-base'} shadow-lg transition-all uppercase rounded-full font-bold`}
             >
-              Socials
+              {HERO_LANGUAGES[language].socials}
             </motion.button>
           </div>
         </motion.div>
@@ -255,7 +293,7 @@ const Hero: React.FC = () => {
 
       {/* Footer / Copyright overlay */}
       <div className="absolute bottom-4 left-0 w-full flex justify-center px-10 items-center opacity-40 font-description text-[10px] md:text-xs text-smash-cream uppercase tracking-widest pointer-events-none">
-        <span>© 2026 SMASH B • ALL RIGHTS RESERVED</span>
+        <span className={language === 'ar' ? 'font-arabic-desc' : 'font-description'}>{HERO_LANGUAGES[language].rights}</span>
       </div>
     </section>
   );

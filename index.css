@@ -16,6 +16,8 @@
   font-style: normal;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Lalezar&family=Zain:wght@300;400;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Almarai:wght@300;400;700;800&family=Tajawal:wght@300;400;500;700;800;900&display=swap');
 @import url('https://fonts.cdnfonts.com/css/untalin');
 @import "tailwindcss";
 
@@ -24,6 +26,8 @@
   --font-secondary: "Clash Display", sans-serif;
   --font-accent: "Untalin", cursive;
   --font-description: "Clash Display", sans-serif;
+  --font-arabic-heading: "Lalezar", "Baloo Bhaijaan 2", "Zain", "Cairo", sans-serif;
+  --font-arabic-desc: "Baloo Bhaijaan 2", "Zain", "Almarai", "Cairo", sans-serif;
   
   /* Fallbacks */
   --font-sans: "Clash Display", "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -36,8 +40,26 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     @apply bg-[#12002b] text-white font-description;
+    /* Custom scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #3f2825;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ea3b24;
+      border-radius: 5px;
+      border: 2px solid #3f2825;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ff5039;
+    }
   }
 }
 
@@ -63,3 +85,16 @@
 .animate-flicker {
   animation: flicker 2.5s infinite alternate;
 }
+
+.font-arabic-heading {
+  font-family: "Lalezar", "Baloo Bhaijaan 2", "Zain", "Cairo", "Almarai", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.font-arabic-desc {
+  font-family: "Baloo Bhaijaan 2", "Zain", "Almarai", "Cairo", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+

@@ -2,5 +2,5 @@
   "name": "Smash B - UAE",
   "description": "High-energy landing page for Smash B, the next level of smash burgers in the UAE. Bold flavors, urban energy, and premium ingredients.",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

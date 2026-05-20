@@ -6,6 +6,7 @@ import About from './pages/About';
 import Location from './pages/Location';
 import Menu from './pages/Menu';
 import LoadingSequence from './components/LoadingSequence';
+import { LanguageProvider } from './LanguageContext';
 
 const AnimatedRoutes: React.FC<{ onHomeLoad: () => void }> = ({ onHomeLoad }) => {
   const location = useLocation();
@@ -45,7 +46,7 @@ const App: React.FC = () => {
     // Explicitly set the favicon to avoid browser caching issues or overrides
     const setFavicon = () => {
       const links = document.querySelectorAll("link[rel*='icon']");
-      const iconUrl = "/SMASHBlogo-18.svg";
+      const iconUrl = "/SMASHBlogo-19.svg";
       
       if (links.length > 0) {
         links.forEach(link => {
@@ -69,30 +70,32 @@ const App: React.FC = () => {
   };
 
   return (
-    <Router>
-      <main className="min-h-screen w-full bg-[#0f0a09] relative selection:bg-smash-red selection:text-white">
-        <AnimatePresence>
-          {isInitialLoading ? (
-            <LoadingSequence key="global-loader" onComplete={handleLoadingComplete} />
-          ) : (
-            <AnimatedRoutes onHomeLoad={() => {}} />
-          )}
-        </AnimatePresence>
+    <LanguageProvider>
+      <Router>
+        <main className="min-h-screen w-full bg-[#0f0a09] relative selection:bg-smash-red selection:text-white">
+          <AnimatePresence>
+            {isInitialLoading ? (
+              <LoadingSequence key="global-loader" onComplete={handleLoadingComplete} />
+            ) : (
+              <AnimatedRoutes onHomeLoad={() => {}} />
+            )}
+          </AnimatePresence>
 
-        <style>{`
-          body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            background-color: #0f0a09;
-          }
-          
-          #root {
-            height: 100%;
-          }
-        `}</style>
-      </main>
-    </Router>
+          <style>{`
+            body, html {
+              margin: 0;
+              padding: 0;
+              height: 100%;
+              background-color: #0f0a09;
+            }
+            
+            #root {
+              height: 100%;
+            }
+          `}</style>
+        </main>
+      </Router>
+    </LanguageProvider>
   );
 };
 

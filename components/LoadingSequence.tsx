@@ -103,7 +103,7 @@ const LoadingSequence: React.FC<LoadingSequenceProps> = ({ onComplete }) => {
                 damping: 12,
                 stiffness: 120
               }}
-              src="/SMASHBlogo-18.svg"
+              src="/SMASHBlogo-19.svg"
               alt="Smash B Logo"
               className="w-64 md:w-[450px] relative z-10 drop-shadow-[0_0_30px_rgba(234,59,36,0.5)]"
               loading="eager"
