@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Clock, Star } from 'lucide-react';
+import { useLanguage } from '../LanguageContext';
 
 const LOCATION_LANGUAGES = {
   en: {
@@ -15,7 +16,8 @@ const LOCATION_LANGUAGES = {
     contactText: "Call: +971 56 353 5819",
     whatsapp: "WhatsApp",
     getDirections: "Get Directions",
-    reviewUs: "Review Us",
+    reviewUs: "Rate Us",
+    orderTalabat: "Order on Talabat",
   },
   ar: {
     backHome: "الرئيسية",
@@ -29,12 +31,12 @@ const LOCATION_LANGUAGES = {
     whatsapp: "واتساب",
     getDirections: "احصل على الاتجاهات",
     reviewUs: "قيّم حسابنا",
+    orderTalabat: "اطلب عبر طلبات",
   }
 };
 
 const Location: React.FC = () => {
-  const language = 'en' as any;
-  const dir = 'ltr' as any;
+  const { language, dir } = useLanguage();
 
   return (
     <div className="h-screen bg-smash-brown text-smash-cream flex flex-col overflow-hidden" dir={dir}>
@@ -112,6 +114,18 @@ const Location: React.FC = () => {
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                href="https://www.talabat.com/uae/smash-b"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex-1 min-w-[140px] flex items-center justify-center gap-3 bg-[#ff5a00] text-white ${language === 'ar' ? 'font-arabic-heading text-base' : 'font-primary text-[10px] md:text-xs'} px-4 md:px-8 py-3 md:py-4 rounded-[35px] uppercase tracking-widest border-2 border-white hover:border-[#ff5a00] transition-all text-center`}
+              >
+                <img src="/icons8-talabat.svg" alt="Talabat" className="w-10 h-10 md:w-12 md:h-12 object-contain rounded-md shrink-0" />
+                <span>{LOCATION_LANGUAGES[language].orderTalabat}</span>
+              </motion.a>
+
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 href="https://share.google/B4R9Oj37gfchmf9mD"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -126,14 +140,16 @@ const Location: React.FC = () => {
                 href="https://g.page/r/CaIBEx4A1OeZEBM/review"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex-1 min-w-[140px] flex flex-col items-center justify-center bg-transparent text-white ${language === 'ar' ? 'font-arabic-heading text-base' : 'font-primary text-[10px] md:text-xs'} px-4 md:px-8 py-3 md:py-4 rounded-[35px] uppercase tracking-widest border-2 border-white/50 text-center gap-1 md:gap-2`}
+                className="flex-1 min-w-[140px] flex flex-col items-center justify-center bg-transparent text-white px-4 md:px-8 py-3 md:py-4 rounded-[35px] border-2 border-white/50 text-center gap-1 md:gap-2"
               >
-                <div className="flex gap-1 justify-center">
+                <div className="flex gap-1 justify-center items-center">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3 h-3 md:w-4 md:h-4 fill-yellow-400 text-yellow-400" />
+                    <Star key={i} className="w-4 h-4 md:w-5 md:h-5 fill-yellow-400 text-yellow-400" />
                   ))}
                 </div>
-                <span>{LOCATION_LANGUAGES[language].reviewUs}</span>
+                <span className={`${language === 'ar' ? 'font-arabic-heading text-sm' : 'font-primary text-[10px] md:text-sm'} uppercase tracking-widest leading-none`}>
+                  {LOCATION_LANGUAGES[language].reviewUs}
+                </span>
               </motion.a>
             </div>
           </motion.div>
