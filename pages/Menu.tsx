@@ -47,6 +47,7 @@ const MENU_DATA = {
 const MENU_LANGUAGES = {
   en: {
     categories: {
+      ALL: 'All',
       BURGERS: 'Burgers',
       'LOADED FRIES': 'Loaded Fries',
       SANDWICHES: 'Sandwiches',
@@ -128,6 +129,7 @@ const MENU_LANGUAGES = {
   },
   ar: {
     categories: {
+      ALL: 'الكل',
       BURGERS: 'البرجر',
       'LOADED FRIES': 'لودد فرايز',
       SANDWICHES: 'ساندويتش',
@@ -212,6 +214,7 @@ const MENU_LANGUAGES = {
 const Menu: React.FC = () => {
   const [showPopup, setShowPopup] = useState(false);
   const { language, setLanguage } = useLanguage();
+  const [activeCategory, setActiveCategory] = useState<string>('ALL');
 
   useEffect(() => {
     document.title = language === 'ar' ? "قائمة الطعام | سماش بي" : "Menu | Smash B - Next Level Burgers";
@@ -347,12 +350,12 @@ const Menu: React.FC = () => {
       </header>
 
       {/* Menu Categories - PDF Styled Card */}
-      <main className="flex-1 max-w-4xl mx-auto px-4 md:px-6 py-6 w-full relative">
+      <main className="flex-1 max-w-4xl mx-auto px-4 md:px-6 py-6 w-full relative -mt-6 md:-mt-10">
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           dir={language === 'ar' ? 'rtl' : 'ltr'}
-          className="bg-smash-cream rounded-[40px] md:rounded-[80px] p-8 md:p-16 shadow-2xl border-2 border-smash-brown/10 relative"
+          className="bg-smash-cream rounded-[40px] md:rounded-[80px] pt-24 pb-8 px-6 md:pt-28 md:pb-16 md:px-16 shadow-2xl border-2 border-smash-brown/10 relative"
         >
           {/* Subtle Grain Texture Overlay */}
           <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')] rounded-[40px] md:rounded-[80px] overflow-hidden"></div>
@@ -386,7 +389,29 @@ const Menu: React.FC = () => {
             </div>
           </motion.div>
 
-          {Object.entries(MENU_DATA).map(([category, items], catIndex) => (
+          {/* Category Navigation Buttons */}
+          <div className="flex flex-wrap justify-center gap-1.5 md:gap-2.5 px-6 sm:px-14 md:px-0 mb-12 pb-8 border-b-2 border-smash-brown/10 select-none relative z-30">
+            {['ALL', ...Object.keys(MENU_DATA)].map((cat) => {
+              const isActive = activeCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-3.5 py-1.5 md:px-5 md:py-2 text-[10px] md:text-xs font-primary uppercase tracking-widest italic rounded-full border-2 transition-all duration-300 pointer-events-auto ${
+                    isActive
+                      ? 'bg-smash-red border-smash-red text-white shadow-[0_4px_12px_rgba(206,35,46,0.30)] scale-105 font-bold cursor-default'
+                      : 'bg-smash-brown/5 border-smash-brown/15 text-smash-brown/70 hover:text-smash-red hover:border-smash-red/30 hover:bg-smash-brown/10 cursor-pointer'
+                  }`}
+                >
+                  {MENU_LANGUAGES[language].categories[cat]}
+                </button>
+              );
+            })}
+          </div>
+
+          {Object.entries(MENU_DATA)
+            .filter(([category]) => activeCategory === 'ALL' || activeCategory === category)
+            .map(([category, items], catIndex) => (
             <section key={category} className="mb-16 last:mb-0">
               <div className="mb-8">
                 <h2 className={`text-4xl md:text-6xl text-smash-brown ${
