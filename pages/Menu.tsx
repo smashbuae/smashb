@@ -23,24 +23,24 @@ const MENU_DATA = {
     { name: 'Twisted Chick', description: 'Tortilla wrap, fried chicken, lettuce, jalapeno, cheese, sbsauce.', price: 12, image: '/Twisted-Chick.png' },
   ],
   MILKSHAKES: [
-    { name: 'Mango Madness', price: 12 },
-    { name: 'Coco Crush', price: 12 },
-    { name: 'Lotus Loaded', price: 12 },
-    { name: 'Oreo Overload', price: 12 },
-    { name: 'Choco Melt', price: 12 },
-    { name: 'Smash Berry', price: 13 },
+    { name: 'Mango Madness', price: 12, image: '/Mango-madness.png' },
+    { name: 'Coco Crush', price: 12, image: '/Coco-crush.png' },
+    { name: 'Lotus Loaded', price: 12, image: '/Lotus-loaded.png' },
+    { name: 'Oreo Overload', price: 12, image: '/Oreo-overload.png' },
+    { name: 'Choco Melt', price: 12, image: '/Choco-melt.png' },
+    { name: 'Smash Berry', price: 13, image: '/Smash-Berry.png' },
   ],
   MOJITOS: [
-    { name: 'Blue Wave', price: 10 },
-    { name: 'Pink Rush', price: 10 },
-    { name: 'Violet Vibe', price: 10 },
-    { name: 'Mint Rush', price: 10 },
-    { name: 'Passion Storm', price: 10 },
-    { name: 'Midnight Berry', price: 12 },
+    { name: 'Blue Wave', price: 10, image: '/Blue-wave.png' },
+    { name: 'Pink Rush', price: 10, image: '/Pink-rush.png' },
+    { name: 'Violet Vibe', price: 10, image: '/Violet-Vibe.png' },
+    { name: 'Mint Rush', price: 10, image: '/Mint-Rush.png' },
+    { name: 'Passion Storm', price: 10, image: '/Passion-storm.png' },
+    { name: 'Midnight Berry', price: 12, image: '/Midnight-Berry.png' },
   ],
   'FRESH JUICE': [
-    { name: 'Lemon Mint', price: 10 },
-    { name: 'orange', price: 10 },
+    { name: 'Lemon Mint', price: 10, image: '/lemon-mint.png' },
+    { name: 'orange', price: 10, image: '/orange-juice.png' },
   ]
 };
 
@@ -401,6 +401,7 @@ const Menu: React.FC = () => {
                   const itemTranslation = MENU_LANGUAGES[language].items[item.name] || {};
                   const displayName = itemTranslation.name || item.name;
                   const displayDescription = itemTranslation.description || item.description;
+                  const isBeverage = category === 'MILKSHAKES' || category === 'MOJITOS' || category === 'FRESH JUICE';
 
                   return (
                     <motion.div
@@ -409,14 +410,14 @@ const Menu: React.FC = () => {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.05 }}
-                      className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start py-6 border-b border-smash-brown/10 last:border-b-0"
+                      className={`flex flex-col sm:flex-row gap-4 sm:gap-6 ${isBeverage ? 'items-center' : 'items-start'} py-6 border-b border-smash-brown/10 last:border-b-0`}
                     >
                       {item.image && (
                         <div className="w-full sm:w-28 sm:h-28 aspect-video sm:aspect-square overflow-hidden shrink-0 bg-transparent flex items-center justify-center relative">
                           <img 
                             src={item.image} 
                             alt={displayName} 
-                            className="w-full h-full object-contain"
+                            className={`object-contain ${item.name === 'Havana' ? 'w-[80%] h-[80%]' : 'w-full h-full'}`}
                             referrerPolicy="no-referrer"
                             loading="lazy"
                           />
