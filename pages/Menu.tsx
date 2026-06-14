@@ -217,7 +217,18 @@ const Menu: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('ALL');
 
   useEffect(() => {
-    document.title = language === 'ar' ? "قائمة الطعام | سماش بي" : "Menu | Smash B - Next Level Burgers";
+    document.title = language === 'ar' 
+      ? "أفضل برجر سماش في رأس الخيمة: قائمة الطعام | سماش بي" 
+      : "Best Smash Burger in Ras Al Khaimah: Menu | Smash B";
+      
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', language === 'ar' 
+        ? "هل تشتهي أفضل برجر سماش في رأس الخيمة؟ استعرض قائمتنا من برجر السماش والبطاطس المقرمشة والعصائر الطازجة. تفضل بزيارتنا أو اطلب وجبتك أونلاين الآن!" 
+        : "Craving the best smash burger in Ras Al Khaimah? See our menu of smashed burgers, loaded fries, and fresh juices. Visit us & grab yours or order online now!"
+      );
+    }
+
     const hasSeenPopup = localStorage.getItem('smashb_welcome_popup_seen');
     if (!hasSeenPopup) {
       const timer = setTimeout(() => {

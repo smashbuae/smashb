@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
+import { useLanguage } from '../LanguageContext';
 
 const ABOUT_LANGUAGES = {
   en: {
@@ -21,8 +22,21 @@ const ABOUT_LANGUAGES = {
 };
 
 const About: React.FC = () => {
-  const language = 'en' as any;
-  const dir = 'ltr' as any;
+  const { language, dir } = useLanguage();
+
+  useEffect(() => {
+    document.title = language === 'ar' 
+      ? "شغف برجر السماش وثقافة الشارع في الإمارات | سماش بي" 
+      : "Smashed Burger Passion & UAE Street Culture | Smash B";
+      
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', language === 'ar' 
+        ? "اكتشف فن برجر السماش المثالي في سماش بي رأس الخيمة. تعرف على مكوناتنا الطازجة الفاخرة وشغفنا بالنكهات الاستثنائية. انضم إلينا اليوم تفضل بزيارتنا!" 
+        : "Discover the art of the perfect smashed burger at Smash B in RAK. Learn about our fresh premium ingredients and passion for next-level flavors. Join us today!"
+      );
+    }
+  }, [language]);
 
   return (
     <div className="min-h-screen bg-smash-brown text-smash-cream flex flex-col" dir={dir}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Clock, Star } from 'lucide-react';
@@ -37,6 +37,20 @@ const LOCATION_LANGUAGES = {
 
 const Location: React.FC = () => {
   const { language, dir } = useLanguage();
+
+  useEffect(() => {
+    document.title = language === 'ar' 
+      ? "مطعم برجر قريب مني في رأس الخيمة | موقعنا والاتجاهات" 
+      : "Burger Near Me Ras Al Khaimah | Location & Directions";
+      
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute('content', language === 'ar' 
+        ? "جائع وتبحث عن برجر لذيذ وقريب منك في رأس الخيمة؟ ابحث عن سماش بي بالقرب من AURAK لتناول الطعام داخل المطعم، تيك أواي، أو توصيل سريع. اطلب الآن!" 
+        : "Hungry for a juicy burger near me in Ras Al Khaimah? Find Smash B near AURAK for dine-in, takeaway, or speedy delivery. Order online or visit our spot today!"
+      );
+    }
+  }, [language]);
 
   return (
     <div className="h-screen bg-smash-brown text-smash-cream flex flex-col overflow-hidden" dir={dir}>
