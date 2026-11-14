@@ -12,13 +12,21 @@ const LanguageContext = createContext<LanguageContextProps | undefined>(undefine
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>(() => {
-    const saved = localStorage.getItem('smashb_language');
-    return (saved === 'ar' || saved === 'en') ? saved : 'en';
+    try {
+      const saved = localStorage.getItem('smashb_language');
+      return saved === 'ar' || saved === 'en' ? saved : 'en';
+    } catch {
+      return 'en';
+    }
   });
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
-    localStorage.setItem('smashb_language', lang);
+    try {
+      localStorage.setItem('smashb_language', lang);
+    } catch {
+      // Ignore storage failures in restricted contexts
+    }
   };
 
   const dir = language === 'ar' ? 'rtl' : 'ltr';

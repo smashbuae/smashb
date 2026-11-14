@@ -1,6 +1,6 @@
 {
   "name": "Smash B - UAE",
-  "description": "High-energy landing page for Smash B, the next level of smash burgers in the UAE. Bold flavors, urban energy, and premium ingredients.",
+  "description": "Smash B is a smash burger shop near AURAK in Ras Al Khaimah serving fresh smash burgers, loaded fries, and drinks from AED 12.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

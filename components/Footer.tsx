@@ -51,9 +51,9 @@ const Footer: React.FC<FooterProps> = ({ showBrandSection = true }) => {
               className="mb-8"
             >
               <img 
-                src="/SMASHBlogo-19.svg" 
+                src="/logos/smashb-logo-3.svg" 
                 alt="Smash B Logo" 
-                className="h-24 md:h-32 hover:scale-105 transition-transform brightness-0 invert" 
+                className="h-24 md:h-32 hover:scale-105 transition-transform" 
               />
             </motion.div>
             <h2 className={`text-4xl md:text-8xl ${language === 'ar' ? 'font-arabic-heading' : 'font-primary'} text-smash-cream leading-tight uppercase mb-12`}>
@@ -94,7 +94,7 @@ const Footer: React.FC<FooterProps> = ({ showBrandSection = true }) => {
               { name: 'TikTok', url: 'https://www.tiktok.com/@smashbuae' },
               { name: 'Facebook', url: 'https://www.facebook.com/smashb.uae/' },
               { name: 'Threads', url: 'https://www.threads.net/@smashb.uae' },
-              { name: 'Snapchat', url: 'https://snapchat.com/t/d5zYuanj' }
+              { name: 'Snapchat', url: 'https://snapchat.com/t/cbTUmbL0' }
             ].map((social) => (
               <a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className="font-secondary text-2xl text-smash-cream hover:text-white transition-colors tracking-widest">
                 {social.name}

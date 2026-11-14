@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
 
   // Development mode: Use Vite's middleware
   if (process.env.NODE_ENV !== "production") {
@@ -22,8 +22,8 @@ async function startServer() {
     const distPath = path.join(process.cwd(), "dist");
     app.use(express.static(distPath));
     
-    // Redirect all requests to index.html for SPA routing
-    app.get("*", (req, res) => {
+    // Redirect all requests to index.html for SPA routing (Express 5 syntax)
+    app.get("/{*splat}", (req, res) => {
       res.sendFile(path.join(distPath, "index.html"));
     });
   }
