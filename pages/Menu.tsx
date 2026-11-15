@@ -354,11 +354,11 @@ const Menu: React.FC = () => {
 
   return (
     <div
-      className="min-h-screen bg-[#F5F1E8] text-[#432724] font-body selection:bg-[#FF1C00] selection:text-[#F5F1E8]"
+      className="min-h-screen bg-[#EBE5D0] text-[#432724] font-body selection:bg-[#FF1C00] selection:text-[#EBE5D0]"
       dir={dir}
     >
       {/* TOP NOTIFICATION RIBBON */}
-      <div className="w-full bg-[#FF1C00] text-[#F5F1E8] py-2 px-4 text-center font-bold text-xs md:text-sm tracking-wide flex items-center justify-center gap-2">
+      <div className="w-full bg-[#FF1C00] text-[#EBE5D0] py-2 px-4 text-center font-bold text-xs md:text-sm tracking-wide flex items-center justify-center gap-2">
         <Sparkles className="w-4 h-4 shrink-0 text-[#A5C7A5]" />
         <span>
           {isAr
@@ -368,7 +368,7 @@ const Menu: React.FC = () => {
       </div>
 
       {/* HEADER / NAVIGATION (Matches Home) */}
-      <header className="sticky top-0 z-40 bg-[#F5F1E8]/95 backdrop-blur-sm border-b border-[#432724]/20 px-4 md:px-8 py-3.5 transition-all">
+      <header className="sticky top-0 z-40 bg-[#EBE5D0]/95 backdrop-blur-sm border-b border-[#432724]/20 px-4 md:px-8 py-3.5 transition-all">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <Link to={isAr ? '/ar' : '/'} className="flex items-center gap-2 group">
             <img
@@ -385,7 +385,7 @@ const Menu: React.FC = () => {
               to={isAr ? '/ar' : '/'}
               data-smash-shape="compact"
               data-smash-stroke="thin"
-              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#F5F1E8] text-[#432724] transition-colors whitespace-nowrap tap-target"
+              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-colors whitespace-nowrap tap-target"
             >
               {MENU_LANGUAGES[language].ui.backHome}
             </Link>
@@ -394,7 +394,7 @@ const Menu: React.FC = () => {
               to="/our-story"
               data-smash-shape="compact"
               data-smash-stroke="thin"
-              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#F5F1E8] text-[#432724] transition-colors whitespace-nowrap tap-target"
+              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-colors whitespace-nowrap tap-target"
             >
               {MENU_LANGUAGES[language].ui.ourStory}
             </Link>
@@ -404,7 +404,7 @@ const Menu: React.FC = () => {
               aria-label="Switch Language"
               data-smash-shape="compact"
               data-smash-stroke="thin"
-              className="text-[11px] sm:text-xs md:text-sm font-bold uppercase px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#F5F1E8] text-[#432724] transition-all whitespace-nowrap tap-target flex items-center justify-center gap-1"
+              className="text-[11px] sm:text-xs md:text-sm font-bold uppercase px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-all whitespace-nowrap tap-target flex items-center justify-center gap-1"
             >
               <span>{isAr ? 'English' : 'العربية'}</span>
             </button>
@@ -416,7 +416,7 @@ const Menu: React.FC = () => {
               onClick={() => trackTalabatClick('menu_header')}
               data-smash-shape="btn"
               data-smash-stroke="none"
-              className="hidden md:inline-flex items-center gap-2 bg-[#FF1C00] text-[#F5F1E8] font-bold text-xs uppercase px-6 py-2.5 smash-btn tap-target"
+              className="hidden md:inline-flex items-center gap-2 bg-[#FF1C00] text-[#EBE5D0] font-bold text-xs uppercase px-6 py-2.5 smash-btn tap-target"
             >
               <span>{isAr ? 'اطلب عبر طلبات' : 'Order on Talabat'}</span>
             </a>
@@ -456,7 +456,7 @@ const Menu: React.FC = () => {
                 <span
                   data-smash-shape="badge"
                   data-smash-stroke="none"
-                  className="inline-flex items-center gap-1 px-4 py-1.5 text-xs font-black uppercase tracking-wider bg-[#FF1C00] text-[#F5F1E8] smash-btn"
+                  className="inline-flex items-center gap-1 px-4 py-1.5 text-xs font-black uppercase tracking-wider bg-[#FF1C00] text-[#EBE5D0] smash-btn"
                 >
                   {isAr ? 'حلال 100%' : '100% Halal'}
                 </span>
@@ -494,7 +494,7 @@ const Menu: React.FC = () => {
                   onClick={() => trackTalabatClick('menu_hero')}
                   data-smash-shape="btn"
                   data-smash-stroke="none"
-                  className="smash-btn bg-[#FF1C00] text-[#F5F1E8] font-bold text-sm md:text-base uppercase px-7 py-3.5 flex items-center justify-center gap-2 tap-target"
+                  className="smash-btn bg-[#FF1C00] text-[#EBE5D0] font-bold text-sm md:text-base uppercase px-7 py-3.5 flex items-center justify-center gap-2 tap-target"
                 >
                   <img
                     src="/icons8-talabat.svg"
@@ -530,7 +530,7 @@ const Menu: React.FC = () => {
       </section>
 
       {/* CATEGORY FILTER & MENU ITEMS */}
-      <section className="py-10 md:py-14 px-4 md:px-8 bg-[#F5F1E8] border-b border-[#432724]/15">
+      <section className="py-10 md:py-14 px-4 md:px-8 bg-[#EBE5D0] border-b border-[#432724]/15">
         <div className="max-w-6xl mx-auto space-y-10">
           {/* Category Filter Tabs */}
           <div className="flex flex-wrap items-center justify-center gap-2.5 md:gap-3 pb-6 border-b border-[#432724]/15">
@@ -545,8 +545,8 @@ const Menu: React.FC = () => {
                   data-smash-stroke={isActive ? 'none' : 'thin'}
                   className={`smash-btn px-5 py-2.5 text-xs md:text-sm font-bold uppercase tracking-wider transition-all tap-target cursor-pointer ${
                     isActive
-                      ? 'bg-[#FF1C00] text-[#F5F1E8]'
-                      : 'bg-[#F5F1E8] text-[#432724]'
+                      ? 'bg-[#FF1C00] text-[#EBE5D0]'
+                      : 'bg-[#EBE5D0] text-[#432724]'
                   }`}
                 >
                   {MENU_LANGUAGES[language].categories[cat]}
@@ -568,7 +568,7 @@ const Menu: React.FC = () => {
                 <div
                   data-smash-shape="square"
                   data-smash-stroke="none"
-                  className="w-10 h-10 smash-box bg-[#FF1C00] text-[#F5F1E8] flex items-center justify-center font-primary text-sm shrink-0"
+                  className="w-10 h-10 smash-box bg-[#FF1C00] text-[#EBE5D0] flex items-center justify-center font-primary text-sm shrink-0"
                 >
                   +6
                 </div>
@@ -584,7 +584,7 @@ const Menu: React.FC = () => {
               <span
                 data-smash-shape="badge"
                 data-smash-stroke="none"
-                className="bg-[#FF1C00] text-[#F5F1E8] smash-btn px-4 py-1.5 font-primary text-sm uppercase shrink-0"
+                className="bg-[#FF1C00] text-[#EBE5D0] smash-btn px-4 py-1.5 font-primary text-sm uppercase shrink-0"
               >
                 + {isAr ? '6 درهم' : 'AED 6'}
               </span>
@@ -624,7 +624,7 @@ const Menu: React.FC = () => {
                           key={item.name}
                           data-smash-shape="card"
                           data-smash-stroke="card"
-                          className="smash-box bg-[#F5F1E8] p-6 sm:p-7 flex flex-col justify-between transition-transform hover:-translate-y-1"
+                          className="smash-box bg-[#EBE5D0] p-6 sm:p-7 flex flex-col justify-between transition-transform hover:-translate-y-1"
                         >
                           <div>
                             <div
@@ -646,7 +646,7 @@ const Menu: React.FC = () => {
                                 <span
                                   data-smash-shape="badge"
                                   data-smash-stroke="none"
-                                  className="absolute top-4 left-4 sm:top-5 sm:left-5 z-30 bg-[#FF1C00] text-[#F5F1E8] font-bold text-[10px] uppercase px-3.5 py-1 smash-btn"
+                                  className="absolute top-4 left-4 sm:top-5 sm:left-5 z-30 bg-[#FF1C00] text-[#EBE5D0] font-bold text-[10px] uppercase px-3.5 py-1 smash-btn"
                                 >
                                   {badgeText}
                                 </span>
@@ -678,7 +678,7 @@ const Menu: React.FC = () => {
                             onClick={() => trackTalabatClick(`menu_${slug}`)}
                             data-smash-shape="btn"
                             data-smash-stroke="none"
-                            className={`smash-btn w-full bg-[#FF1C00] text-[#F5F1E8] text-xs font-bold uppercase py-3 px-5 flex items-center justify-center gap-2 tap-target ${
+                            className={`smash-btn w-full bg-[#FF1C00] text-[#EBE5D0] text-xs font-bold uppercase py-3 px-5 flex items-center justify-center gap-2 tap-target ${
                               !displayDescription ? 'mt-3' : ''
                             }`}
                           >
@@ -702,7 +702,7 @@ const Menu: React.FC = () => {
       </section>
 
       {/* FOOTER (Matches Home) */}
-      <footer className="bg-[#F5F1E8] text-[#432724] pt-12 pb-24 md:pb-12 px-4 md:px-8">
+      <footer className="bg-[#EBE5D0] text-[#432724] pt-12 pb-24 md:pb-12 px-4 md:px-8">
         <div className="max-w-6xl mx-auto space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b-2 border-[#432724] pb-8">
             <div className="md:col-span-5 space-y-3">
@@ -811,7 +811,7 @@ const Menu: React.FC = () => {
       {/* STICKY ORDER BAR ON MOBILE */}
       <aside
         aria-label="Quick Order Bar"
-        className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#F5F1E8]/98 backdrop-blur border-t border-[#432724]/25 px-3 py-2.5 shadow-[0_-4px_12px_rgba(67,39,36,0.12)] flex items-center gap-2"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#EBE5D0]/98 backdrop-blur border-t border-[#432724]/25 px-3 py-2.5 shadow-[0_-4px_12px_rgba(67,39,36,0.12)] flex items-center gap-2"
       >
         <a
           href={appendUtmParams(TALABAT_URL)}
@@ -820,7 +820,7 @@ const Menu: React.FC = () => {
           onClick={() => trackTalabatClick('menu_sticky_mobile')}
           data-smash-shape="btn"
           data-smash-stroke="none"
-          className="flex-[1.35] smash-btn bg-[#FF1C00] text-[#F5F1E8] font-bold text-[11px] sm:text-xs uppercase py-3 px-4 flex items-center justify-center gap-1.5 whitespace-nowrap tap-target"
+          className="flex-[1.35] smash-btn bg-[#FF1C00] text-[#EBE5D0] font-bold text-[11px] sm:text-xs uppercase py-3 px-4 flex items-center justify-center gap-1.5 whitespace-nowrap tap-target"
         >
           <img
             src="/icons8-talabat.svg"
@@ -850,7 +850,7 @@ const Menu: React.FC = () => {
           onClick={() => trackCallClick('menu_sticky_mobile')}
           data-smash-shape="square"
           data-smash-stroke="thin"
-          className="w-11 h-11 smash-box bg-[#F5F1E8] text-[#FF1C00] flex items-center justify-center shrink-0 tap-target"
+          className="w-11 h-11 smash-box bg-[#EBE5D0] text-[#FF1C00] flex items-center justify-center shrink-0 tap-target"
           aria-label="Call Smash B"
         >
           <Phone className="w-4 h-4 text-[#FF1C00]" />

@@ -205,10 +205,10 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F1E8] text-[#432724] font-body selection:bg-[#FF1C00] selection:text-[#F5F1E8]" dir={dir}>
+    <div className="min-h-screen bg-[#EBE5D0] text-[#432724] font-body selection:bg-[#FF1C00] selection:text-[#EBE5D0]" dir={dir}>
       
       {/* TOP NOTIFICATION / BRAND RIBBON */}
-      <div className="w-full bg-[#FF1C00] text-[#F5F1E8] py-2 px-4 text-center font-bold text-xs md:text-sm tracking-wide flex items-center justify-center gap-2">
+      <div className="w-full bg-[#FF1C00] text-[#EBE5D0] py-2 px-4 text-center font-bold text-xs md:text-sm tracking-wide flex items-center justify-center gap-2">
         <Sparkles className="w-4 h-4 shrink-0 text-[#A5C7A5]" />
         <span>
           {isAr
@@ -218,7 +218,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
       </div>
 
       {/* HEADER / NAVIGATION */}
-      <header className="sticky top-0 z-40 bg-[#F5F1E8]/95 backdrop-blur-sm border-b border-[#432724]/20 px-4 md:px-8 py-3.5 transition-all">
+      <header className="sticky top-0 z-40 bg-[#EBE5D0]/95 backdrop-blur-sm border-b border-[#432724]/20 px-4 md:px-8 py-3.5 transition-all">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <Link to={isAr ? "/ar" : "/"} className="flex items-center gap-2 group">
             <img 
@@ -235,7 +235,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
               to="/menu" 
               data-smash-shape="compact"
               data-smash-stroke="thin"
-              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#F5F1E8] text-[#432724] transition-colors whitespace-nowrap tap-target"
+              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-colors whitespace-nowrap tap-target"
             >
               {isAr ? "قائمة الطعام" : "View Menu"}
             </Link>
@@ -244,7 +244,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
               to="/our-story" 
               data-smash-shape="compact"
               data-smash-stroke="thin"
-              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#F5F1E8] text-[#432724] transition-colors whitespace-nowrap tap-target"
+              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-colors whitespace-nowrap tap-target"
             >
               {isAr ? "قصتنا" : "Our Story"}
             </Link>
@@ -255,7 +255,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
               aria-label="Switch Language"
               data-smash-shape="compact"
               data-smash-stroke="thin"
-              className="text-[11px] sm:text-xs md:text-sm font-bold uppercase px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#F5F1E8] text-[#432724] transition-all whitespace-nowrap tap-target flex items-center justify-center gap-1"
+              className="text-[11px] sm:text-xs md:text-sm font-bold uppercase px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-all whitespace-nowrap tap-target flex items-center justify-center gap-1"
             >
               <span>{isAr ? "English" : "العربية"}</span>
             </button>
@@ -267,7 +267,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
               onClick={() => trackTalabatClick('header')}
               data-smash-shape="btn"
               data-smash-stroke="none"
-              className="hidden md:inline-flex items-center gap-2 bg-[#FF1C00] text-[#F5F1E8] font-bold text-xs uppercase px-6 py-2.5 smash-btn tap-target"
+              className="hidden md:inline-flex items-center gap-2 bg-[#FF1C00] text-[#EBE5D0] font-bold text-xs uppercase px-6 py-2.5 smash-btn tap-target"
             >
               <span>{isAr ? "اطلب عبر طلبات" : "Order on Talabat"}</span>
             </a>
@@ -287,7 +287,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
               {/* Badges line: Price Tag & Location */}
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-2">
 
-                <span data-smash-shape="badge" data-smash-stroke="none" className="inline-flex items-center gap-1 px-4 py-1.5 text-xs font-black uppercase tracking-wider bg-[#FF1C00] text-[#F5F1E8] smash-btn">
+                <span data-smash-shape="badge" data-smash-stroke="none" className="inline-flex items-center gap-1 px-4 py-1.5 text-xs font-black uppercase tracking-wider bg-[#FF1C00] text-[#EBE5D0] smash-btn">
                   {isAr ? "من 12 درهم فقط" : "From AED 12"}
                 </span>
 
@@ -333,7 +333,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
                   onClick={() => trackTalabatClick('hero_primary')}
                   data-smash-shape="btn"
                   data-smash-stroke="none"
-                  className="smash-btn bg-[#FF1C00] text-[#F5F1E8] font-bold text-sm md:text-base uppercase px-7 py-3.5 flex items-center justify-center gap-2 tap-target"
+                  className="smash-btn bg-[#FF1C00] text-[#EBE5D0] font-bold text-sm md:text-base uppercase px-7 py-3.5 flex items-center justify-center gap-2 tap-target"
                 >
                   <img src="/icons8-talabat.svg" alt="Talabat" width={22} height={22} className="w-5 h-5 object-contain rounded" />
                   <span>{isAr ? "اطلب عبر طلبات" : "Order on Talabat"}</span>
@@ -379,7 +379,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
       </section>
 
       {/* 2. BEST SELLERS SECTION */}
-      <section id="best-sellers" className="py-12 md:py-16 px-4 md:px-8 bg-[#F5F1E8] border-b border-[#432724]/15">
+      <section id="best-sellers" className="py-12 md:py-16 px-4 md:px-8 bg-[#EBE5D0] border-b border-[#432724]/15">
         <div className="max-w-6xl mx-auto space-y-8">
           
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-[#432724]/20 pb-4">
@@ -413,7 +413,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
                 key={item.id}
                 data-smash-shape="card"
                 data-smash-stroke="card"
-                className="smash-box bg-[#F5F1E8] p-6 sm:p-7 flex flex-col justify-between transition-transform hover:-translate-y-1"
+                className="smash-box bg-[#EBE5D0] p-6 sm:p-7 flex flex-col justify-between transition-transform hover:-translate-y-1"
               >
                 <div>
                   {/* Clean borderless Sage-tinted squircle backdrop so burger cutouts pop without pattern clutter */}
@@ -426,7 +426,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
                       className="w-full h-full object-contain transform transition-transform hover:scale-105 relative z-10"
                       loading="lazy"
                     />
-                    <span data-smash-shape="badge" data-smash-stroke="none" className="absolute top-4 left-4 sm:top-5 sm:left-5 z-30 bg-[#FF1C00] text-[#F5F1E8] font-bold text-[10px] uppercase px-3.5 py-1 smash-btn">
+                    <span data-smash-shape="badge" data-smash-stroke="none" className="absolute top-4 left-4 sm:top-5 sm:left-5 z-30 bg-[#FF1C00] text-[#EBE5D0] font-bold text-[10px] uppercase px-3.5 py-1 smash-btn">
                       {isAr ? item.badgeAr : item.badgeEn}
                     </span>
                   </div>
@@ -455,7 +455,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
                   onClick={() => trackTalabatClick(`bestseller_${item.id}`)}
                   data-smash-shape="btn"
                   data-smash-stroke="none"
-                  className="smash-btn w-full bg-[#FF1C00] text-[#F5F1E8] text-xs font-bold uppercase py-3 px-5 flex items-center justify-center gap-2 tap-target"
+                  className="smash-btn w-full bg-[#FF1C00] text-[#EBE5D0] text-xs font-bold uppercase py-3 px-5 flex items-center justify-center gap-2 tap-target"
                 >
                   <img src="/icons8-talabat.svg" alt="Talabat" width={16} height={16} className="w-4 h-4 object-contain rounded" />
                   <span>{isAr ? "اطلب الآن عبر طلبات" : "Order on Talabat"}</span>
@@ -488,9 +488,9 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
             {/* Point 1: The Patty Smash */}
-            <div data-smash-shape="card" data-smash-stroke="card" className="smash-box p-6 sm:p-7 bg-[#F5F1E8] flex flex-col justify-between">
+            <div data-smash-shape="card" data-smash-stroke="card" className="smash-box p-6 sm:p-7 bg-[#EBE5D0] flex flex-col justify-between">
               <div className="space-y-3">
-                <div data-smash-shape="square" data-smash-stroke="none" className="w-12 h-12 smash-box bg-[#FF1C00] text-[#F5F1E8] flex items-center justify-center font-primary text-xl">
+                <div data-smash-shape="square" data-smash-stroke="none" className="w-12 h-12 smash-box bg-[#FF1C00] text-[#EBE5D0] flex items-center justify-center font-primary text-xl">
                   01
                 </div>
                 <h3 className="font-primary text-2xl uppercase tracking-tight text-[#432724]">
@@ -509,7 +509,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
             </div>
 
             {/* Point 2: The Potato Bun */}
-            <div data-smash-shape="card" data-smash-stroke="card" className="smash-box p-6 sm:p-7 bg-[#F5F1E8] flex flex-col justify-between">
+            <div data-smash-shape="card" data-smash-stroke="card" className="smash-box p-6 sm:p-7 bg-[#EBE5D0] flex flex-col justify-between">
               <div className="space-y-3">
                 <div data-smash-shape="square" data-smash-stroke="none" className="w-12 h-12 smash-box bg-[#A5C7A5] text-[#432724] flex items-center justify-center font-primary text-xl">
                   02
@@ -530,9 +530,9 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
             </div>
 
             {/* Point 3: SB Sauce */}
-            <div data-smash-shape="card" data-smash-stroke="card" className="smash-box p-6 sm:p-7 bg-[#F5F1E8] flex flex-col justify-between">
+            <div data-smash-shape="card" data-smash-stroke="card" className="smash-box p-6 sm:p-7 bg-[#EBE5D0] flex flex-col justify-between">
               <div className="space-y-3">
-                <div data-smash-shape="square" data-smash-stroke="none" className="w-12 h-12 smash-box bg-[#FF1C00] text-[#F5F1E8] flex items-center justify-center font-primary text-xl">
+                <div data-smash-shape="square" data-smash-stroke="none" className="w-12 h-12 smash-box bg-[#FF1C00] text-[#EBE5D0] flex items-center justify-center font-primary text-xl">
                   03
                 </div>
                 <h3 className="font-primary text-2xl uppercase tracking-tight text-[#432724]">
@@ -555,7 +555,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
       </section>
 
       {/* 4. FIND US SECTION */}
-      <section id="find-us" className="py-12 md:py-16 px-4 md:px-8 bg-[#F5F1E8] border-b border-[#432724]/15">
+      <section id="find-us" className="py-12 md:py-16 px-4 md:px-8 bg-[#EBE5D0] border-b border-[#432724]/15">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
@@ -576,7 +576,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
 
               <div className="space-y-4">
                 {/* Location */}
-                <div data-smash-shape="wide" data-smash-stroke="thin" className="flex items-start gap-3 p-4 sm:p-5 smash-wide-box bg-[#F5F1E8]">
+                <div data-smash-shape="wide" data-smash-stroke="thin" className="flex items-start gap-3 p-4 sm:p-5 smash-wide-box bg-[#EBE5D0]">
                   <MapPin className="w-5 h-5 text-[#FF1C00] shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-bold text-sm uppercase text-[#432724]">
@@ -589,7 +589,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
                 </div>
 
                 {/* Hours */}
-                <div data-smash-shape="wide" data-smash-stroke="thin" className="flex items-start gap-3 p-4 sm:p-5 smash-wide-box bg-[#F5F1E8]">
+                <div data-smash-shape="wide" data-smash-stroke="thin" className="flex items-start gap-3 p-4 sm:p-5 smash-wide-box bg-[#EBE5D0]">
                   <Clock className="w-5 h-5 text-[#FF1C00] shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-bold text-sm uppercase text-[#432724]">
@@ -602,7 +602,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
                 </div>
 
                 {/* Phone & WhatsApp */}
-                <div data-smash-shape="wide" data-smash-stroke="thin" className="flex items-start gap-3 p-4 sm:p-5 smash-wide-box bg-[#F5F1E8]">
+                <div data-smash-shape="wide" data-smash-stroke="thin" className="flex items-start gap-3 p-4 sm:p-5 smash-wide-box bg-[#EBE5D0]">
                   <Phone className="w-5 h-5 text-[#FF1C00] shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-bold text-sm uppercase text-[#432724]">
@@ -624,7 +624,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
                   onClick={() => trackDirectionsClick('find_us_section')}
                   data-smash-shape="btn"
                   data-smash-stroke="none"
-                  className="smash-btn bg-[#FF1C00] text-[#F5F1E8] font-bold text-xs md:text-sm uppercase px-6 py-3.5 flex items-center gap-2 tap-target"
+                  className="smash-btn bg-[#FF1C00] text-[#EBE5D0] font-bold text-xs md:text-sm uppercase px-6 py-3.5 flex items-center gap-2 tap-target"
                 >
                   <Navigation className="w-4 h-4" />
                   <span>{isAr ? "افتح في خرائط Google" : "Open in Google Maps"}</span>
@@ -635,7 +635,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
                   onClick={() => trackCallClick('find_us_section')}
                   data-smash-shape="btn"
                   data-smash-stroke="thin"
-                  className="smash-btn bg-[#F5F1E8] text-[#432724] font-bold text-xs md:text-sm uppercase px-6 py-3.5 flex items-center gap-2 tap-target"
+                  className="smash-btn bg-[#EBE5D0] text-[#432724] font-bold text-xs md:text-sm uppercase px-6 py-3.5 flex items-center gap-2 tap-target"
                 >
                   <Phone className="w-4 h-4 text-[#FF1C00]" />
                   <span>{isAr ? "اتصل بنا الآن" : "Call +971 56 353 5819"}</span>
@@ -646,7 +646,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
             {/* Visual Location Card with Official SB Pose & Red/Cream Pattern Frame */}
             <div className="lg:col-span-6 flex justify-center">
               <div data-smash-shape="card" data-smash-stroke="card" className="relative w-full max-w-md smash-box p-7 smash-pattern-red-cream flex flex-col items-center text-center">
-                <div data-smash-shape="photo" data-smash-stroke="thin" className="w-full bg-[#F5F1E8] smash-box p-6 flex flex-col items-center">
+                <div data-smash-shape="photo" data-smash-stroke="thin" className="w-full bg-[#EBE5D0] smash-box p-6 flex flex-col items-center">
                   <img 
                     src="/brandcharacter/SMASH_B Social-24.svg" 
                     alt="Smash B Location Character" 
@@ -670,7 +670,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
       </section>
 
       {/* 5. REVIEWS SECTION (Real Google Reviews only; No invented quotes) */}
-      <section className="py-12 md:py-16 px-4 md:px-8 bg-[#F5F1E8] border-b border-[#432724]/15">
+      <section className="py-12 md:py-16 px-4 md:px-8 bg-[#EBE5D0] border-b border-[#432724]/15">
         <div className="max-w-4xl mx-auto text-center space-y-6">
           
           <div className="inline-flex items-center gap-1.5 text-[#FF1C00] text-xs font-black uppercase tracking-widest">
@@ -702,9 +702,9 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
               onClick={() => trackReviewClick('reviews_leave_review')}
               data-smash-shape="btn"
               data-smash-stroke="none"
-              className="smash-btn bg-[#FF1C00] text-[#F5F1E8] font-bold text-xs md:text-sm uppercase px-7 py-3.5 flex items-center justify-center gap-2 tap-target"
+              className="smash-btn bg-[#FF1C00] text-[#EBE5D0] font-bold text-xs md:text-sm uppercase px-7 py-3.5 flex items-center justify-center gap-2 tap-target"
             >
-              <Star className="w-4 h-4 fill-[#F5F1E8]" />
+              <Star className="w-4 h-4 fill-[#EBE5D0]" />
               <span>{isAr ? "أضف تقييمك على Google" : "Leave a Google Review"}</span>
             </a>
 
@@ -715,7 +715,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
               onClick={() => trackReviewClick('reviews_read_reviews')}
               data-smash-shape="btn"
               data-smash-stroke="thin"
-              className="smash-btn bg-[#F5F1E8] text-[#432724] font-bold text-xs md:text-sm uppercase px-7 py-3.5 flex items-center justify-center gap-2 tap-target"
+              className="smash-btn bg-[#EBE5D0] text-[#432724] font-bold text-xs md:text-sm uppercase px-7 py-3.5 flex items-center justify-center gap-2 tap-target"
             >
               <ExternalLink className="w-4 h-4 text-[#FF1C00]" />
               <span>{isAr ? "اقرأ التقييمات على Google" : "Read Reviews on Google"}</span>
@@ -726,7 +726,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
       </section>
 
       {/* 6. FAQ SECTION (6 Questions in Plain Text) */}
-      <section id="faq" className="py-12 md:py-16 px-4 md:px-8 bg-[#F5F1E8] border-b border-[#432724]/15">
+      <section id="faq" className="py-12 md:py-16 px-4 md:px-8 bg-[#EBE5D0] border-b border-[#432724]/15">
         <div className="max-w-4xl mx-auto space-y-8">
           
           <div className="text-center space-y-2">
@@ -751,7 +751,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
                   key={index}
                   data-smash-shape="wide"
                   data-smash-stroke="thin"
-                  className="smash-wide-box bg-[#F5F1E8] overflow-hidden transition-all"
+                  className="smash-wide-box bg-[#EBE5D0] overflow-hidden transition-all"
                 >
                   <button
                     onClick={() => setOpenFaqIndex(isOpen ? null : index)}
@@ -776,7 +776,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
       </section>
 
       {/* 7. FOOTER */}
-      <footer className="bg-[#F5F1E8] text-[#432724] pt-12 pb-24 md:pb-12 px-4 md:px-8">
+      <footer className="bg-[#EBE5D0] text-[#432724] pt-12 pb-24 md:pb-12 px-4 md:px-8">
         <div className="max-w-6xl mx-auto space-y-8">
           
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b-2 border-[#432724] pb-8">
@@ -885,7 +885,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
       {/* STICKY ORDER BAR ON MOBILE */}
       <aside 
         aria-label="Quick Order Bar"
-        className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#F5F1E8]/98 backdrop-blur border-t border-[#432724]/25 px-3 py-2.5 shadow-[0_-4px_12px_rgba(67,39,36,0.12)] flex items-center gap-2"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#EBE5D0]/98 backdrop-blur border-t border-[#432724]/25 px-3 py-2.5 shadow-[0_-4px_12px_rgba(67,39,36,0.12)] flex items-center gap-2"
       >
         <a
           href={appendUtmParams(TALABAT_URL)}
@@ -894,7 +894,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
           onClick={() => trackTalabatClick('sticky_mobile')}
           data-smash-shape="btn"
           data-smash-stroke="none"
-          className="flex-[1.35] smash-btn bg-[#FF1C00] text-[#F5F1E8] font-bold text-[11px] sm:text-xs uppercase py-3 px-4 flex items-center justify-center gap-1.5 whitespace-nowrap tap-target"
+          className="flex-[1.35] smash-btn bg-[#FF1C00] text-[#EBE5D0] font-bold text-[11px] sm:text-xs uppercase py-3 px-4 flex items-center justify-center gap-1.5 whitespace-nowrap tap-target"
         >
           <img src="/icons8-talabat.svg" alt="Talabat" width={18} height={18} className="w-4 h-4 object-contain rounded shrink-0" />
           <span>{isAr ? "اطلب عبر طلبات" : "Order on Talabat"}</span>
@@ -918,7 +918,7 @@ export const Home: React.FC<HomeProps> = ({ forcedLang }) => {
           onClick={() => trackCallClick('sticky_mobile')}
           data-smash-shape="square"
           data-smash-stroke="thin"
-          className="w-11 h-11 smash-box bg-[#F5F1E8] text-[#FF1C00] flex items-center justify-center shrink-0 tap-target"
+          className="w-11 h-11 smash-box bg-[#EBE5D0] text-[#FF1C00] flex items-center justify-center shrink-0 tap-target"
           aria-label="Call Smash B"
         >
           <Phone className="w-4 h-4 text-[#FF1C00]" />

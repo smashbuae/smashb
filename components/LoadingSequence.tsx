@@ -64,7 +64,7 @@ const LoadingSequence: React.FC<LoadingSequenceProps> = ({ onComplete }) => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: phase === 'exit' ? 0 : 1, y: 0 }}
             transition={{ delay: 0.18, duration: 0.28 }}
-            className="mt-5 font-primary text-2xl sm:text-3xl md:text-4xl uppercase tracking-wide text-[#F5F1E8]"
+            className="mt-5 font-primary text-2xl sm:text-3xl md:text-4xl uppercase tracking-wide text-[#EBE5D0]"
           >
             Stay <span className="text-[#FF1C00]">Smashin'.</span>
           </motion.p>
@@ -81,7 +81,7 @@ const LoadingSequence: React.FC<LoadingSequenceProps> = ({ onComplete }) => {
         aria-label="Skip intro"
         data-smash-shape="compact"
         data-smash-stroke="none"
-        className="absolute bottom-8 right-6 z-20 smash-btn bg-[#F5F1E8] text-[#432724] font-bold text-xs uppercase px-5 py-2.5 tap-target"
+        className="absolute bottom-8 right-6 z-20 smash-btn bg-[#EBE5D0] text-[#432724] font-bold text-xs uppercase px-5 py-2.5 tap-target"
       >
         Skip
       </button>

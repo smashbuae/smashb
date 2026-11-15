@@ -138,7 +138,7 @@ const App: React.FC = () => {
             </clipPath>
           </defs>
         </svg>
-        <main className="min-h-screen w-full bg-[#F5F1E8] text-[#432724] relative selection:bg-[#FF1C00] selection:text-white">
+        <main className="min-h-screen w-full bg-[#EBE5D0] text-[#432724] relative selection:bg-[#FF1C00] selection:text-white">
           <AppRoutes />
 
           <style>{`
@@ -146,11 +146,11 @@ const App: React.FC = () => {
               margin: 0;
               padding: 0;
               min-height: 100%;
-              background-color: #F5F1E8;
+              background-color: #EBE5D0;
             }
             #root {
               min-height: 100%;
-              background-color: #F5F1E8;
+              background-color: #EBE5D0;
             }
           `}</style>
         </main>

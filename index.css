@@ -39,7 +39,7 @@
 
   /* Strict Brand Palette */
   --color-smash-red: #FF1C00;
-  --color-smash-cream: #F5F1E8;
+  --color-smash-cream: #EBE5D0;
   --color-smash-brown: #432724;
   --color-smash-sage: #A5C7A5;
 }
@@ -47,10 +47,10 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #F5F1E8;
+    background-color: #EBE5D0;
   }
   body {
-    background-color: #F5F1E8;
+    background-color: #EBE5D0;
     color: #432724;
     font-family: "Clash Display", sans-serif;
     margin: 0;
@@ -64,7 +64,7 @@
     width: 8px;
   }
   ::-webkit-scrollbar-track {
-    background: #F5F1E8;
+    background: #EBE5D0;
   }
   ::-webkit-scrollbar-thumb {
     background: #FF1C00;
@@ -76,12 +76,12 @@
   /* Official Smash B Uploaded Pattern (from Smashpattern.svg) - Red & Cream 2-Color Swappable */
   .smash-pattern-red-cream {
     background-color: #FF1C00;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 97.52 97.51'%3E%3Cpath fill='%23F5F1E8' d='M25.8,0s-.01,0-.02,0c-.01,0-.02,0-.03,0C4.47.6.6,4.47,0,25.76c.6,21.29,4.47,25.16,25.76,25.76.08,0,.16,0,.25,0,.11-.02.22-.02.33-.01,20.78-.65,24.59-4.64,25.18-25.74C50.91,4.48,47.05.6,25.8,0Z'/%3E%3Cpath fill='%23F5F1E8' d='M71.81,46s-.01,0-.02,0c-.01,0-.02,0-.03,0-21.29.6-25.16,4.47-25.75,25.76.6,21.29,4.47,25.16,25.76,25.76.08,0,.16,0,.25,0,.11-.02.22-.02.33-.01,20.78-.65,24.59-4.64,25.18-25.74-.6-21.27-4.46-25.15-25.71-25.75Z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 97.52 97.51'%3E%3Cpath fill='%23EBE5D0' d='M25.8,0s-.01,0-.02,0c-.01,0-.02,0-.03,0C4.47.6.6,4.47,0,25.76c.6,21.29,4.47,25.16,25.76,25.76.08,0,.16,0,.25,0,.11-.02.22-.02.33-.01,20.78-.65,24.59-4.64,25.18-25.74C50.91,4.48,47.05.6,25.8,0Z'/%3E%3Cpath fill='%23EBE5D0' d='M71.81,46s-.01,0-.02,0c-.01,0-.02,0-.03,0-21.29.6-25.16,4.47-25.75,25.76.6,21.29,4.47,25.16,25.76,25.76.08,0,.16,0,.25,0,.11-.02.22-.02.33-.01,20.78-.65,24.59-4.64,25.18-25.74-.6-21.27-4.46-25.15-25.71-25.75Z'/%3E%3C/svg%3E");
     background-size: 76px 76px;
   }
 
   .smash-pattern-cream-red {
-    background-color: #F5F1E8;
+    background-color: #EBE5D0;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 97.52 97.51'%3E%3Cpath fill='%23FF1C00' d='M25.8,0s-.01,0-.02,0c-.01,0-.02,0-.03,0C4.47.6.6,4.47,0,25.76c.6,21.29,4.47,25.16,25.76,25.76.08,0,.16,0,.25,0,.11-.02.22-.02.33-.01,20.78-.65,24.59-4.64,25.18-25.74C50.91,4.48,47.05.6,25.8,0Z'/%3E%3Cpath fill='%23FF1C00' d='M71.81,46s-.01,0-.02,0c-.01,0-.02,0-.03,0-21.29.6-25.16,4.47-25.75,25.76.6,21.29,4.47,25.16,25.76,25.76.08,0,.16,0,.25,0,.11-.02.22-.02.33-.01,20.78-.65,24.59-4.64,25.18-25.74-.6-21.27-4.46-25.15-25.71-25.75Z'/%3E%3C/svg%3E");
     background-size: 76px 76px;
   }
@@ -201,7 +201,7 @@ button[data-smash-shape] {
   a.smash-btn.bg-\[\#FF1C00\]:hover,
   button.smash-btn.bg-\[\#FF1C00\]:hover {
     background-color: #C81600 !important;
-    color: #F5F1E8 !important;
+    color: #EBE5D0 !important;
     filter: drop-shadow(0 8px 14px rgba(140, 14, 0, 0.36));
   }
 
@@ -212,11 +212,11 @@ button[data-smash-shape] {
     filter: drop-shadow(0 8px 14px rgba(67, 39, 36, 0.24));
   }
 
-  a.smash-btn.bg-\[\#F5F1E8\]:hover,
-  button.smash-btn.bg-\[\#F5F1E8\]:hover,
-  a[data-smash-shape].bg-\[\#F5F1E8\]:hover,
-  button[data-smash-shape].bg-\[\#F5F1E8\]:hover {
-    background-color: #DFD7C1 !important;
+  a.smash-btn.bg-\[\#EBE5D0\]:hover,
+  button.smash-btn.bg-\[\#EBE5D0\]:hover,
+  a[data-smash-shape].bg-\[\#EBE5D0\]:hover,
+  button[data-smash-shape].bg-\[\#EBE5D0\]:hover {
+    background-color: #D8CEB2 !important;
     color: #432724 !important;
     filter: drop-shadow(0 8px 14px rgba(67, 39, 36, 0.22));
   }
@@ -259,7 +259,7 @@ button[data-smash-shape].smash-hit {
 @media (hover: hover) and (pointer: fine) {
   .smash-wide-box:has(> button):hover {
     transform: translateY(-2px);
-    background-color: #EBE3CE !important;
+    background-color: #DED4B9 !important;
     filter: drop-shadow(0 6px 12px rgba(67, 39, 36, 0.16));
   }
 }
