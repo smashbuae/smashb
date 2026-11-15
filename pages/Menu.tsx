@@ -4,8 +4,7 @@ import {
   Phone,
   ExternalLink,
   Sparkles,
-  MessageCircle,
-  Flame
+  MessageCircle
 } from 'lucide-react';
 import BrandCharacterMenu from '../components/BrandCharacterMenu';
 import { useLanguage } from '../LanguageContext';
@@ -599,15 +598,9 @@ const Menu: React.FC = () => {
               .map(([category, items]) => (
                 <div key={category} className="space-y-6">
                   <div className="flex items-baseline justify-between gap-4 border-b border-[#432724]/20 pb-3">
-                    <div>
-                      <div className="inline-flex items-center gap-1.5 text-[#FF1C00] text-xs font-bold uppercase tracking-wider mb-1">
-                        <Flame className="w-3.5 h-3.5 text-[#FF1C00]" />
-                        <span>{isAr ? 'سماش بي • حلال 100%' : 'Smash B • 100% Halal'}</span>
-                      </div>
-                      <h2 className="font-primary text-3xl sm:text-4xl uppercase tracking-tight text-[#432724]">
-                        {MENU_LANGUAGES[language].categories[category]}
-                      </h2>
-                    </div>
+                    <h2 className="font-primary text-3xl sm:text-4xl uppercase tracking-tight text-[#432724]">
+                      {MENU_LANGUAGES[language].categories[category]}
+                    </h2>
 
                     <span className="text-xs font-bold uppercase tracking-wider text-[#432724]/65 shrink-0">
                       {items.length} {isAr ? 'أصناف' : items.length === 1 ? 'Item' : 'Items'}

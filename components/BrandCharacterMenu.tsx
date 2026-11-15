@@ -12,6 +12,7 @@ const BrandCharacterMenu: React.FC<BrandCharacterMenuProps> = ({ className = '' 
       xmlns="http://www.w3.org/2000/svg" 
       xmlnsXlink="http://www.w3.org/1999/xlink" 
       viewBox="0 0 221.72 163.8"
+      dir="ltr"
       className={className}
     >
       <defs>
@@ -44,6 +45,9 @@ const BrandCharacterMenu: React.FC<BrandCharacterMenuProps> = ({ className = '' 
             fill: #3e2825;
             font-family: 'Gimbot', sans-serif;
             font-size: 30.56px;
+            direction: ltr;
+            unicode-bidi: isolate;
+            text-anchor: start;
           }
 
           .bcm-cls-9 {

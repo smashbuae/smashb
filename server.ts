@@ -1,28 +1,32 @@
 import express from "express";
 import path from "path";
-import { fileURLToPath } from "url";
 import { createServer as createViteServer } from "vite";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
   const PORT = Number(process.env.PORT) || 3000;
 
-  // Development mode: Use Vite's middleware
   if (process.env.NODE_ENV !== "production") {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
+    const vitePromise = createViteServer({
+      server: {
+        middlewareMode: true,
+        hmr: false,
+      },
       appType: "spa",
     });
-    app.use(vite.middlewares);
+
+    app.use(async (req, res, next) => {
+      try {
+        const vite = await vitePromise;
+        vite.middlewares(req, res, next);
+      } catch (err) {
+        next(err);
+      }
+    });
   } else {
-    // Production mode: Serve static files from the dist folder
     const distPath = path.join(process.cwd(), "dist");
     app.use(express.static(distPath));
-    
-    // Redirect all requests to index.html for SPA routing (Express 5 syntax)
+
     app.get("/{*splat}", (req, res) => {
       res.sendFile(path.join(distPath, "index.html"));
     });
@@ -33,4 +37,7 @@ async function startServer() {
   });
 }
 
-startServer();
+startServer().catch((err) => {
+  console.error("Failed to start server:", err);
+  process.exit(1);
+});
