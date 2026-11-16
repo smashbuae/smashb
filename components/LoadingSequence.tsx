@@ -13,11 +13,11 @@ const LoadingSequence: React.FC<LoadingSequenceProps> = ({ onComplete }) => {
   useEffect(() => {
     const exitTimer = setTimeout(() => {
       setPhase('exit');
-    }, 1150);
+    }, 650);
 
     const doneTimer = setTimeout(() => {
       onComplete();
-    }, 1600);
+    }, 950);
 
     return () => {
       clearTimeout(exitTimer);
@@ -35,21 +35,20 @@ const LoadingSequence: React.FC<LoadingSequenceProps> = ({ onComplete }) => {
       <AnimatePresence mode="wait">
         <motion.div
           key="smashb-intro-logo"
-          initial={{ scale: 1.45, opacity: 0, rotate: -4 }}
+          initial={{ scale: 1.25, opacity: 0, rotate: -3 }}
           animate={
             phase === 'exit'
-              ? { scale: 1.28, opacity: 0, rotate: 0 }
+              ? { scale: 1.15, opacity: 0, rotate: 0 }
               : { scale: 1, opacity: 1, rotate: 0 }
           }
           transition={{
-            duration: phase === 'exit' ? 0.42 : 0.45,
+            duration: 0.28,
             type: 'spring',
-            damping: 14,
-            stiffness: 240,
+            damping: 16,
+            stiffness: 260,
           }}
           className="relative z-10 flex flex-col items-center justify-center px-6 text-center"
         >
-          {/* Off-White Outline + Red Smash B Logo */}
           <img
             src="/logos/smashb-logo-4.svg"
             alt="Smash B"
@@ -61,9 +60,9 @@ const LoadingSequence: React.FC<LoadingSequenceProps> = ({ onComplete }) => {
           />
 
           <motion.p
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: phase === 'exit' ? 0 : 1, y: 0 }}
-            transition={{ delay: 0.18, duration: 0.28 }}
+            transition={{ delay: 0.1, duration: 0.2 }}
             className="mt-5 font-primary text-2xl sm:text-3xl md:text-4xl uppercase tracking-wide text-[#EBE5D0]"
           >
             Stay <span className="text-[#FF1C00]">Smashin'.</span>
@@ -71,7 +70,6 @@ const LoadingSequence: React.FC<LoadingSequenceProps> = ({ onComplete }) => {
         </motion.div>
       </AnimatePresence>
 
-      {/* Non-blocking Skip control for immediate user interaction */}
       <button
         type="button"
         onClick={(e) => {

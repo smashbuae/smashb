@@ -1,4 +1,7 @@
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
+
+const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 export type SmashShapeVariant =
   | 'card'
@@ -156,7 +159,7 @@ function applySquircleToElement(el: HTMLElement) {
 }
 
 export function useSmashShapes(deps: unknown[] = []) {
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     let active = true;
     const elements = Array.from(
       document.querySelectorAll<HTMLElement>('[data-smash-shape]')

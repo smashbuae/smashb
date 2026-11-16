@@ -1,35 +1,78 @@
+/// <reference types="vite/client" />
 /**
  * Analytics and Conversion Tracking for Smash B (smashb.ae)
- * 
- * Configured for Google Ads conversion tracking and Google Analytics 4 (GA4).
- * Tracks high-intent customer actions:
- * - talabat_click (Order on Talabat)
- * - whatsapp_click (Order or inquiry via WhatsApp)
- * - call_click (Phone call to shop)
- * - directions_click (Google Maps navigation to outlet near AURAK)
+ *
+ * Google Tag Manager container GTM-TJNTGJM3 is loaded in index.html.
+ * Optional direct GA4 / Google Ads IDs can also be configured via
+ * VITE_GA4_ID and VITE_GADS_ID environment variables.
  */
 
-// Placeholders for Google Analytics 4 and Google Ads IDs
-// Replace these with your actual IDs when ready:
-export const GA4_MEASUREMENT_ID = 'G-XXXXXXXXXX'; // e.g. 'G-1234567890'
-export const GOOGLE_ADS_ID = 'AW-XXXXXXXXX';      // e.g. 'AW-987654321'
-export const GOOGLE_ADS_CONVERSION_LABEL = '';    // e.g. 'AbCdEfGhIjKlMnOpQrS'
+const rawGtmId = (import.meta.env?.VITE_GTM_ID || 'GTM-TJNTGJM3').trim();
+const rawGa4Id = (import.meta.env?.VITE_GA4_ID || '').trim();
+const rawGadsId = (import.meta.env?.VITE_GADS_ID || '').trim();
+const rawGadsLabel = (import.meta.env?.VITE_GADS_CONVERSION_LABEL || '').trim();
+
+const isPlaceholderId = (id: string) =>
+  !id || /^G-X+$/i.test(id) || /^AW-X+$/i.test(id) || /^GTM-X+$/i.test(id);
+
+export const GTM_CONTAINER_ID = isPlaceholderId(rawGtmId) ? '' : rawGtmId;
+export const GA4_MEASUREMENT_ID = isPlaceholderId(rawGa4Id) ? '' : rawGa4Id;
+export const GOOGLE_ADS_ID = isPlaceholderId(rawGadsId) ? '' : rawGadsId;
+export const GOOGLE_ADS_CONVERSION_LABEL = rawGadsLabel;
+
+export const isAnalyticsEnabled = (): boolean =>
+  Boolean(GTM_CONTAINER_ID || GA4_MEASUREMENT_ID || GOOGLE_ADS_ID);
 
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void;
-    dataLayer?: any[];
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
   }
 }
 
-/**
- * Extract UTM and advertising query parameters from current URL to preserve campaign attribution.
- */
+let analyticsInitialized = false;
+
+export function initAnalytics(): void {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
+  if (analyticsInitialized || !isAnalyticsEnabled()) return;
+
+  analyticsInitialized = true;
+  window.dataLayer = window.dataLayer || [];
+  if (typeof window.gtag !== 'function') {
+    window.gtag = function gtag(...args: unknown[]) {
+      window.dataLayer?.push(args);
+    };
+    window.gtag('js', new Date());
+  }
+
+  // Only inject direct gtag.js if VITE_GA4_ID or VITE_GADS_ID is additionally set
+  const directGtagId = GA4_MEASUREMENT_ID || GOOGLE_ADS_ID;
+  if (directGtagId) {
+    if (GA4_MEASUREMENT_ID) {
+      window.gtag('config', GA4_MEASUREMENT_ID);
+    }
+    if (GOOGLE_ADS_ID) {
+      window.gtag('config', GOOGLE_ADS_ID);
+    }
+
+    const existing = document.querySelector<HTMLScriptElement>(
+      'script[data-smash-gtag="true"]'
+    );
+    if (!existing) {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(directGtagId)}`;
+      script.setAttribute('data-smash-gtag', 'true');
+      document.head.appendChild(script);
+    }
+  }
+}
+
 export function getTrackingParams(): Record<string, string> {
   if (typeof window === 'undefined') return {};
   const searchParams = new URLSearchParams(window.location.search);
   const params: Record<string, string> = {};
-  
+
   const trackKeys = [
     'utm_source',
     'utm_medium',
@@ -39,7 +82,7 @@ export function getTrackingParams(): Record<string, string> {
     'gclid',
     'wbraid',
     'gbraid',
-    'fbclid'
+    'fbclid',
   ];
 
   trackKeys.forEach((key) => {
@@ -52,10 +95,8 @@ export function getTrackingParams(): Record<string, string> {
   return params;
 }
 
-/**
- * Append current UTM tracking parameters to an outbound URL
- */
 export function appendUtmParams(targetUrl: string): string {
+  if (typeof window === 'undefined') return targetUrl;
   try {
     const tracking = getTrackingParams();
     if (Object.keys(tracking).length === 0) return targetUrl;
@@ -72,32 +113,26 @@ export function appendUtmParams(targetUrl: string): string {
   }
 }
 
-/**
- * Generic event dispatcher for Google Analytics / Google Ads
- */
-export function trackEvent(eventName: string, params: Record<string, any> = {}) {
+export function trackEvent(eventName: string, params: Record<string, unknown> = {}) {
+  if (!isAnalyticsEnabled() || typeof window === 'undefined') return;
+
   const trackingData = {
     ...getTrackingParams(),
     ...params,
     timestamp: new Date().toISOString(),
   };
 
-  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-    window.gtag('event', eventName, trackingData);
-  } else if (typeof window !== 'undefined' && Array.isArray(window.dataLayer)) {
-    window.dataLayer.push({
-      event: eventName,
-      ...trackingData,
-    });
-  }
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: eventName,
+    ...trackingData,
+  });
 
-  // Developer logging in debug mode
-  if (process.env.NODE_ENV !== 'production') {
-    console.log(`[Analytics Event] ${eventName}:`, trackingData);
+  if ((GA4_MEASUREMENT_ID || GOOGLE_ADS_ID) && typeof window.gtag === 'function') {
+    window.gtag('event', eventName, trackingData);
   }
 }
 
-// Convenience trackers for high-value conversion actions
 export const trackTalabatClick = (placement: string = 'hero') => {
   trackEvent('talabat_click', {
     event_category: 'conversion',

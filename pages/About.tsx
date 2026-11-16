@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   MapPin,
   Phone,
@@ -9,7 +9,7 @@ import {
   MessageCircle,
   Navigation,
   CheckCircle2,
-  Flame
+  Flame,
 } from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
 import {
@@ -17,20 +17,16 @@ import {
   trackTalabatClick,
   trackWhatsAppClick,
   trackCallClick,
-  trackDirectionsClick
+  trackDirectionsClick,
 } from '../analytics';
 import { useSmashShapes } from '../utils/smashShapes';
-
-const TALABAT_URL = 'https://www.talabat.com/uae/smash-b';
-const WHATSAPP_URL = 'https://wa.me/971563535819?text=Hi%20Smash%20B%2C%20I%20would%20like%20to%20order';
-const MAPS_URL = 'https://share.google/B4R9Oj37gfchmf9mD';
-const PHONE_NUMBER = '+971 56 353 5819';
-const PHONE_HREF = 'tel:+971563535819';
+import { BUSINESS_INFO, getPairedPath } from '../data/siteConfig';
+import SeoHead from '../components/SeoHead';
 
 const About: React.FC = () => {
-  const { language, setLanguage } = useLanguage();
+  const { language, dir, saveLanguagePreference } = useLanguage();
+  const location = useLocation();
   const isAr = language === 'ar';
-  const dir = isAr ? 'rtl' : 'ltr';
   const [isOpenNow, setIsOpenNow] = useState<boolean>(true);
 
   useSmashShapes([language, isOpenNow]);
@@ -49,45 +45,19 @@ const About: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    document.title = isAr
-      ? 'قصتنا وفروعنا في رأس الخيمة | سماش بي'
-      : 'Our Story & Locations in Ras Al Khaimah | Smash B';
-
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement('meta');
-      metaDesc.setAttribute('name', 'description');
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.setAttribute(
-      'content',
-      isAr
-        ? 'تعرّف على قصة سماش بي في رأس الخيمة، التزامنا باللحم الحلال 100% في كل الفروع، ومواقعنا قرب AURAK والظيت (قريباً).'
-        : 'Discover Smash B’s story in Ras Al Khaimah, our 100% halal promise across all branches, and our locations near AURAK and Al Dhait (coming soon).'
-    );
-
-    let canonical = document.querySelector('link[rel="canonical"]');
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute('href', 'https://www.smashb.ae/our-story');
-
-    document.documentElement.setAttribute('lang', language);
-    document.documentElement.setAttribute('dir', dir);
-  }, [isAr, language, dir]);
-
-  const toggleLanguage = () => {
-    setLanguage(isAr ? 'en' : 'ar');
-  };
+  const homePath = isAr ? '/ar' : '/';
+  const menuPath = isAr ? '/ar/menu' : '/menu';
+  const storyPath = isAr ? '/ar/our-story' : '/our-story';
+  const locationPath = isAr ? '/ar/location' : '/location';
+  const switchPath = getPairedPath(location.pathname, isAr ? 'en' : 'ar');
 
   return (
     <div
       className="min-h-screen bg-[#EBE5D0] text-[#432724] font-body selection:bg-[#FF1C00] selection:text-[#EBE5D0]"
       dir={dir}
     >
+      <SeoHead pathname={location.pathname} />
+
       {/* TOP NOTIFICATION RIBBON */}
       <div className="w-full bg-[#FF1C00] text-[#EBE5D0] py-2 px-4 text-center font-bold text-xs md:text-sm tracking-wide flex items-center justify-center gap-2">
         <Sparkles className="w-4 h-4 shrink-0 text-[#A5C7A5]" />
@@ -100,8 +70,8 @@ const About: React.FC = () => {
 
       {/* HEADER / NAVIGATION */}
       <header className="sticky top-0 z-40 bg-[#EBE5D0]/95 backdrop-blur-sm border-b border-[#432724]/20 px-4 md:px-8 py-3.5 transition-all">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link to={isAr ? '/ar' : '/'} className="flex items-center gap-2 group">
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-2">
+          <Link to={homePath} className="flex items-center gap-2 group shrink-0">
             <img
               src="/logos/smashb-logo-4.svg"
               alt="Smash B Logo"
@@ -111,37 +81,47 @@ const About: React.FC = () => {
             />
           </Link>
 
-          <div className="flex items-center gap-1.5 sm:gap-2.5 md:gap-3.5">
+          <nav aria-label="Primary Navigation" className="flex items-center gap-1.5 sm:gap-2.5 md:gap-3">
             <Link
-              to={isAr ? '/ar' : '/'}
+              to={homePath}
               data-smash-shape="compact"
               data-smash-stroke="thin"
-              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-colors whitespace-nowrap tap-target"
+              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-4 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-colors whitespace-nowrap tap-target"
             >
               {isAr ? 'الرئيسية' : 'Home'}
             </Link>
 
             <Link
-              to="/menu"
+              to={menuPath}
               data-smash-shape="compact"
               data-smash-stroke="thin"
-              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-colors whitespace-nowrap tap-target"
+              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-4 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-colors whitespace-nowrap tap-target"
             >
               {isAr ? 'قائمة الطعام' : 'View Menu'}
             </Link>
 
-            <button
-              onClick={toggleLanguage}
+            <Link
+              to={locationPath}
+              data-smash-shape="compact"
+              data-smash-stroke="thin"
+              className="hidden sm:inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-4 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-colors whitespace-nowrap tap-target"
+            >
+              {isAr ? 'الموقع' : 'Location'}
+            </Link>
+
+            <Link
+              to={switchPath}
+              onClick={() => saveLanguagePreference(isAr ? 'en' : 'ar')}
               aria-label="Switch Language"
               data-smash-shape="compact"
               data-smash-stroke="thin"
-              className="text-[11px] sm:text-xs md:text-sm font-bold uppercase px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-all whitespace-nowrap tap-target flex items-center justify-center gap-1"
+              className="text-[11px] sm:text-xs md:text-sm font-bold uppercase px-2.5 sm:px-4 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-all whitespace-nowrap tap-target flex items-center justify-center gap-1"
             >
               <span>{isAr ? 'English' : 'العربية'}</span>
-            </button>
+            </Link>
 
             <a
-              href={appendUtmParams(TALABAT_URL)}
+              href={appendUtmParams(BUSINESS_INFO.talabatUrl)}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackTalabatClick('story_header')}
@@ -151,7 +131,7 @@ const About: React.FC = () => {
             >
               <span>{isAr ? 'اطلب عبر طلبات' : 'Order on Talabat'}</span>
             </a>
-          </div>
+          </nav>
         </div>
       </header>
 
@@ -161,15 +141,6 @@ const About: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-7 space-y-5 text-center lg:text-start">
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-1">
-                <span
-                  data-smash-shape="badge"
-                  data-smash-stroke="none"
-                  className="inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-bold uppercase bg-[#A5C7A5] text-[#432724] smash-btn"
-                >
-                  <CheckCircle2 className="w-3.5 h-3.5 text-[#432724]" />
-                  <span>{isAr ? 'حلال 100% دائماً' : '100% Halal'}</span>
-                </span>
-
                 <span
                   data-smash-shape="badge"
                   data-smash-stroke="none"
@@ -203,14 +174,14 @@ const About: React.FC = () => {
                 </p>
                 <p>
                   {isAr
-                    ? 'نضغط كل شريحة لحم طازجة على الصاج الساخن لتحصل على حواف مقرمشة وعصارة غنية داخل خبز البطاطس الطري مع صوص إس بي الخاص. والأهم: حلال 100%. كل شريحة، في كل مرة، وعبر جميع فروعنا.'
-                    : 'Every patty is pressed razor-thin on blazing hot steel for crispy caramelized lace edges, tucked into toasted potato buns with our signature SB sauce. Most importantly: 100% halal. Every patty, every time, across all branches.'}
+                    ? 'نضغط كل شريحة لحم طازجة على الصاج الساخن لتحصل على حواف مقرمشة وعصارة غنية داخل خبز البطاطس الطري مع صوص إس بي الخاص.'
+                    : 'Every patty is pressed razor-thin on blazing hot steel for crispy caramelized lace edges, tucked into toasted potato buns with our signature SB sauce.'}
                 </p>
               </div>
 
               <div className="pt-2 flex flex-col sm:flex-row flex-wrap gap-3 justify-center lg:justify-start">
                 <Link
-                  to="/menu"
+                  to={menuPath}
                   data-smash-shape="btn"
                   data-smash-stroke="none"
                   className="smash-btn bg-[#FF1C00] text-[#EBE5D0] font-bold text-sm md:text-base uppercase px-7 py-3.5 flex items-center justify-center gap-2 tap-target"
@@ -220,7 +191,7 @@ const About: React.FC = () => {
                 </Link>
 
                 <a
-                  href={appendUtmParams(WHATSAPP_URL)}
+                  href={appendUtmParams(BUSINESS_INFO.whatsappUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackWhatsAppClick('story_whatsapp')}
@@ -234,7 +205,7 @@ const About: React.FC = () => {
               </div>
             </div>
 
-            {/* Right Column: Official SB Flying Character Pose (Open Background, Scaled Up) */}
+            {/* Right Column: Official SB Flying Character Pose */}
             <div className="lg:col-span-5 flex items-center justify-center">
               <img
                 src="/brandcharacter/smashbflyingcharacter.svg"
@@ -243,32 +214,34 @@ const About: React.FC = () => {
                 height={302}
                 className="w-72 sm:w-96 lg:w-full max-w-[400px] h-auto object-contain drop-shadow-[0_8px_0_rgba(67,39,36,0.18)]"
                 loading="eager"
+                decoding="sync"
+                fetchPriority="high"
               />
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. OUR LOCATIONS SECTION (AURAK + Al Dhait Soon) */}
+      {/* 2. OUR LOCATIONS SECTION (One active outlet near AURAK + Al Dhait coming soon) */}
       <section className="py-12 md:py-16 px-4 md:px-8 bg-[#A5C7A5]/25 border-b border-[#432724]/15">
         <div className="max-w-6xl mx-auto space-y-10">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-[#FF1C00]">
               <Flame className="w-3.5 h-3.5" />
-              {isAr ? 'فروعنا في رأس الخيمة' : 'Our Branches'}
+              {isAr ? 'فروعنا في رأس الخيمة' : 'Our Outlets'}
             </span>
             <h2 className="font-primary text-3xl sm:text-4xl md:text-5xl uppercase tracking-tight text-[#432724]">
               {isAr ? 'مواقع سماش بي' : 'Locations'}
             </h2>
             <p className="text-xs md:text-sm text-[#432724]/85">
               {isAr
-                ? 'حلال 100%. كل شريحة، في كل مرة، وعبر جميع فروعنا.'
-                : '100% halal. Every patty, every time, across all branches.'}
+                ? 'نخدمكم حالياً من فرعنا الواحد بالقرب من AURAK في رأس الخيمة، مع افتتاح فرع الظيت قريباً.'
+                : 'Serving freshly smashed burgers from our one active outlet near AURAK, with Al Dhait coming soon.'}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Branch 1: American University of Ras Al Khaimah (AURAK) */}
+            {/* Outlet 1: American University of Ras Al Khaimah (AURAK) */}
             <article
               data-smash-shape="card"
               data-smash-stroke="card"
@@ -298,14 +271,14 @@ const About: React.FC = () => {
                   </span>
 
                   <span className="text-xs font-bold uppercase text-[#FF1C00]">
-                    {isAr ? 'الفرع الرئيسي' : 'Flagship Outlet'}
+                    {isAr ? 'الفرع النشط حالياً' : 'Active Outlet'}
                   </span>
                 </div>
 
                 <h3 className="font-primary text-2xl sm:text-3xl uppercase tracking-tight text-[#432724]">
                   {isAr
-                    ? 'الجامعة الأمريكية في رأس الخيمة (AURAK)'
-                    : 'American University of Ras Al Khaimah'}
+                    ? 'بالقرب من الجامعة الأمريكية في رأس الخيمة (AURAK)'
+                    : 'Near American University of Ras Al Khaimah (AURAK)'}
                 </h3>
 
                 <div className="space-y-3 text-xs md:text-sm text-[#432724]/85">
@@ -327,7 +300,9 @@ const About: React.FC = () => {
                   </p>
                   <p className="flex items-start gap-2.5">
                     <Phone className="w-4 h-4 text-[#FF1C00] shrink-0 mt-0.5" />
-                    <span dir="ltr" className="font-mono inline-block">{PHONE_NUMBER}</span>
+                    <span dir="ltr" className="font-mono inline-block">
+                      {BUSINESS_INFO.telephoneDisplay}
+                    </span>
                   </p>
                 </div>
 
@@ -349,7 +324,7 @@ const About: React.FC = () => {
 
               <div className="flex flex-wrap gap-3 pt-2">
                 <a
-                  href={appendUtmParams(MAPS_URL)}
+                  href={appendUtmParams(BUSINESS_INFO.mapsShortUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackDirectionsClick('story_aurak_maps')}
@@ -361,16 +336,15 @@ const About: React.FC = () => {
                   <span>{isAr ? 'افتح في خرائط Google' : 'Open in Google Maps'}</span>
                 </a>
 
-                <a
-                  href={PHONE_HREF}
-                  onClick={() => trackCallClick('story_aurak_call')}
+                <Link
+                  to={locationPath}
                   data-smash-shape="btn"
                   data-smash-stroke="thin"
                   className="smash-btn bg-[#EBE5D0] text-[#432724] font-bold text-xs md:text-sm uppercase px-6 py-3 flex items-center gap-2 tap-target"
                 >
-                  <Phone className="w-4 h-4 text-[#FF1C00]" />
-                  <span>{isAr ? 'اتصل بنا' : 'Call'}</span>
-                </a>
+                  <MapPin className="w-4 h-4 text-[#FF1C00]" />
+                  <span>{isAr ? 'تفاصيل الموقع' : 'Location Details'}</span>
+                </Link>
               </div>
             </article>
 
@@ -391,7 +365,7 @@ const About: React.FC = () => {
                   </span>
 
                   <span className="text-xs font-bold uppercase text-[#432724]/70">
-                    {isAr ? 'فرع جديد قيد التجهيز' : 'Upcoming Branch'}
+                    {isAr ? 'فرع جديد قيد التجهيز' : 'Coming Soon'}
                   </span>
                 </div>
 
@@ -401,8 +375,8 @@ const About: React.FC = () => {
 
                 <p className="text-xs md:text-sm leading-relaxed text-[#432724]/85">
                   {isAr
-                    ? 'قريباً نصل إلى منطقة الظيت في رأس الخيمة بنفس الطعم الأصيل، الصاج الساخن، واللحم الحلال 100%.'
-                    : 'Expanding soon to Al Dhait in Ras Al Khaimah with the exact same razor-crisp smash burgers, potato buns, SB sauce, and 100% halal promise.'}
+                    ? 'قريباً نصل إلى منطقة الظيت في رأس الخيمة بنفس الطعم الأصيل، الصاج الساخن، وصوص إس بي الخاص.'
+                    : 'Opening soon in Al Dhait, Ras Al Khaimah with the exact same razor-crisp smash burgers, toasted potato buns, and signature SB sauce.'}
                 </p>
 
                 <div
@@ -417,6 +391,7 @@ const About: React.FC = () => {
                     height={72}
                     className="w-16 h-16 object-contain shrink-0"
                     loading="lazy"
+                    decoding="async"
                   />
                   <div className="space-y-1">
                     <div className="font-primary text-base uppercase text-[#432724]">
@@ -433,7 +408,7 @@ const About: React.FC = () => {
 
               <div className="pt-2">
                 <a
-                  href="https://www.instagram.com/smashb.uae/"
+                  href={BUSINESS_INFO.profiles.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                   data-smash-shape="btn"
@@ -459,6 +434,8 @@ const About: React.FC = () => {
                 alt="Smash B - Ras Al Khaimah"
                 width={56}
                 height={56}
+                loading="lazy"
+                decoding="async"
                 className="h-14 w-auto object-contain"
               />
               <p className="font-bold text-sm text-[#FF1C00] uppercase tracking-wide">
@@ -466,8 +443,8 @@ const About: React.FC = () => {
               </p>
               <p className="text-xs text-[#432724]/80 leading-relaxed max-w-sm">
                 {isAr
-                  ? 'سماش بي هو متجر برجر سماش في رأس الخيمة يقدم برجر اللحم والدجاج الطازج حلال 100%، بطاطا لودد، ومشروبات منعشة بالقرب من جامعة AURAK.'
-                  : 'Smash B is a 100% halal smash burger shop in Ras Al Khaimah, serving fresh seared burgers, loaded fries, and refreshing drinks near AURAK.'}
+                  ? 'سماش بي هو متجر برجر سماش في رأس الخيمة يقدم برجر اللحم والدجاج الطازج، بطاطا لودد، ومشروبات منعشة بالقرب من جامعة AURAK.'
+                  : 'Smash B is a smash burger shop in Ras Al Khaimah, serving fresh seared burgers, loaded fries, and refreshing drinks near AURAK.'}
               </p>
             </div>
 
@@ -476,7 +453,9 @@ const About: React.FC = () => {
                 {isAr ? 'معلومات التواصل' : 'Contact & Location'}
               </h4>
               <p className="text-xs text-[#432724]/85">
-                <strong className="block text-[#432724]">{isAr ? 'سماش بي (Smash B)' : 'Smash B'}</strong>
+                <strong className="block text-[#432724]">
+                  {isAr ? 'سماش بي (Smash B)' : 'Smash B'}
+                </strong>
                 {isAr
                   ? 'بالقرب من الجامعة الأمريكية في رأس الخيمة (AURAK)، رأس الخيمة، الإمارات العربية المتحدة'
                   : 'Near American University of Ras Al Khaimah (AURAK), Ras Al Khaimah, United Arab Emirates'}
@@ -484,12 +463,12 @@ const About: React.FC = () => {
               <p className="text-xs text-[#432724]/85 font-mono pt-1">
                 {isAr ? 'الهاتف / واتساب:' : 'Phone / WhatsApp:'}{' '}
                 <a
-                  href={PHONE_HREF}
+                  href={BUSINESS_INFO.telephoneHref}
                   onClick={() => trackCallClick('story_footer')}
                   dir="ltr"
                   className="inline-block underline font-bold text-[#FF1C00]"
                 >
-                  {PHONE_NUMBER}
+                  {BUSINESS_INFO.telephoneDisplay}
                 </a>
               </p>
               <p className="text-xs text-[#432724]/85">
@@ -505,7 +484,7 @@ const About: React.FC = () => {
               </h4>
               <div className="flex flex-col">
                 <a
-                  href="https://www.instagram.com/smashb.uae/"
+                  href={BUSINESS_INFO.profiles.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-bold uppercase hover:text-[#FF1C00] transition-colors inline-flex items-center gap-1.5 leading-relaxed"
@@ -514,7 +493,7 @@ const About: React.FC = () => {
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
                 <a
-                  href="https://www.tiktok.com/@smashbuae"
+                  href={BUSINESS_INFO.profiles.tiktok}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-bold uppercase hover:text-[#FF1C00] transition-colors inline-flex items-center gap-1.5 leading-relaxed"
@@ -523,7 +502,7 @@ const About: React.FC = () => {
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
                 <a
-                  href="https://snapchat.com/t/cbTUmbL0"
+                  href={BUSINESS_INFO.profiles.snapchat}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-bold uppercase hover:text-[#FF1C00] transition-colors inline-flex items-center gap-1.5 leading-relaxed"
@@ -538,18 +517,21 @@ const About: React.FC = () => {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#432724]/70">
             <p>
               {isAr
-                ? `© ${new Date().getFullYear()} سماش بي. جميع الحقوق محفوظة.`
-                : `© ${new Date().getFullYear()} Smash B. All rights reserved.`}
+                ? '© 2026 سماش بي. جميع الحقوق محفوظة.'
+                : '© 2026 Smash B. All rights reserved.'}
             </p>
             <div className="flex items-center gap-4">
-              <Link to={isAr ? '/ar' : '/'} className="hover:underline">
+              <Link to={homePath} className="hover:underline">
                 {isAr ? 'الرئيسية' : 'Home'}
               </Link>
-              <Link to="/menu" className="hover:underline">
+              <Link to={menuPath} className="hover:underline">
                 {isAr ? 'القائمة' : 'Menu'}
               </Link>
-              <Link to="/our-story" className="hover:underline">
+              <Link to={storyPath} className="hover:underline">
                 {isAr ? 'قصتنا' : 'Our Story'}
+              </Link>
+              <Link to={locationPath} className="hover:underline">
+                {isAr ? 'الموقع' : 'Location'}
               </Link>
             </div>
           </div>
@@ -562,7 +544,7 @@ const About: React.FC = () => {
         className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#EBE5D0]/98 backdrop-blur border-t border-[#432724]/25 px-3 py-2.5 shadow-[0_-4px_12px_rgba(67,39,36,0.12)] flex items-center gap-2"
       >
         <a
-          href={appendUtmParams(TALABAT_URL)}
+          href={appendUtmParams(BUSINESS_INFO.talabatUrl)}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackTalabatClick('story_sticky_mobile')}
@@ -581,7 +563,7 @@ const About: React.FC = () => {
         </a>
 
         <a
-          href={appendUtmParams(WHATSAPP_URL)}
+          href={appendUtmParams(BUSINESS_INFO.whatsappUrl)}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackWhatsAppClick('story_sticky_mobile')}
@@ -594,7 +576,7 @@ const About: React.FC = () => {
         </a>
 
         <a
-          href={PHONE_HREF}
+          href={BUSINESS_INFO.telephoneHref}
           onClick={() => trackCallClick('story_sticky_mobile')}
           data-smash-shape="square"
           data-smash-stroke="thin"

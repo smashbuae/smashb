@@ -1,302 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   Phone,
-  ExternalLink,
   Sparkles,
-  MessageCircle
+  MessageCircle,
+  ExternalLink,
 } from 'lucide-react';
 import BrandCharacterMenu from '../components/BrandCharacterMenu';
+import OptimizedMenuImage from '../components/OptimizedMenuImage';
+import SeoHead from '../components/SeoHead';
 import { useLanguage } from '../LanguageContext';
 import {
   appendUtmParams,
   trackTalabatClick,
   trackWhatsAppClick,
-  trackCallClick
+  trackCallClick,
 } from '../analytics';
 import { useSmashShapes } from '../utils/smashShapes';
-
-const TALABAT_URL = 'https://www.talabat.com/uae/smash-b';
-const WHATSAPP_URL = 'https://wa.me/971563535819?text=Hi%20Smash%20B%2C%20I%20would%20like%20to%20order';
-const PHONE_NUMBER = '+971 56 353 5819';
-const PHONE_HREF = 'tel:+971563535819';
-
-interface MenuItem {
-  name: string;
-  description?: string;
-  price: number;
-  image: string;
-  badgeEn?: string;
-  badgeAr?: string;
-}
-
-const MENU_DATA: Record<string, MenuItem[]> = {
-  BURGERS: [
-    {
-      name: 'Solo Smash',
-      description: 'Potato bun, single beef patty, cheese, pickle, caramelized onion, sb sauce.',
-      price: 12,
-      image: '/solo-smash.png',
-      badgeEn: 'Starter Icon',
-      badgeAr: 'الأكثر توفيراً',
-    },
-    {
-      name: 'Duo Smash',
-      description: 'Double beef patty, cheese, pickle, caramelized onion, sb sauce.',
-      price: 17,
-      image: '/duo-smash.png',
-      badgeEn: '#1 Best Seller',
-      badgeAr: 'الأكثر طلباً',
-    },
-    {
-      name: 'Trio Smash',
-      description: 'Triple beef patty, cheese, pickle, caramelized onion, sb sauce.',
-      price: 23,
-      image: '/trio-smash.png',
-      badgeEn: 'Max Smashed',
-      badgeAr: 'الحجم الأقصى',
-    },
-    {
-      name: 'Classic Crunch',
-      description: 'Fried crispy chicken, jalapeno, iceberg lettuce, sb sauce.',
-      price: 12,
-      image: '/classic-crunch.png',
-      badgeEn: 'Crispy Gold',
-      badgeAr: 'كرسبي ذهبي',
-    },
-    {
-      name: 'Classic Spice',
-      description: 'Fried crispy chicken, nashville sauce, jalapeno, iceberg lettuce, sb sauce.',
-      price: 17,
-      image: '/classic-spice.png',
-      badgeEn: 'Nashville Heat',
-      badgeAr: 'حار مميز',
-    },
-  ],
-  'LOADED FRIES': [
-    {
-      name: 'Crunch Bomb',
-      description: 'Fried chicken, french fries, jalapeno, sb sauce.',
-      price: 10,
-      image: '/crunch-bomb.png',
-      badgeEn: 'Quick Crave',
-      badgeAr: 'قرمشة سريعة',
-    },
-    {
-      name: 'Beefy Bomb',
-      description: 'Smashed beef, french fries, pickle, sb sauce.',
-      price: 12,
-      image: '/beefy-bomb.png',
-      badgeEn: 'Loaded Favorite',
-      badgeAr: 'لودد مميز',
-    },
-    {
-      name: 'Fire Bomb',
-      description: 'Nashville chicken, french fries, jalapeño, sb sauce.',
-      price: 15,
-      image: '/fire-bomb.png',
-      badgeEn: 'Spicy Hit',
-      badgeAr: 'نكهة حارة',
-    },
-  ],
-  SANDWICHES: [
-    {
-      name: 'Havana',
-      description: 'French baguette, beef patty, roasted beef, mustard sauce, pickle, sb sauce.',
-      price: 13,
-      image: '/Havana.png',
-    },
-    {
-      name: 'Twisted Chick',
-      description: 'Tortilla wrap, fried chicken, lettuce, jalapeno, cheese, sb sauce.',
-      price: 12,
-      image: '/Twisted-Chick.png',
-    },
-  ],
-  MILKSHAKES: [
-    { name: 'Mango Madness', price: 12, image: '/Mango-madness.png' },
-    { name: 'Coco Crush', price: 12, image: '/Coco-crush.png' },
-    { name: 'Lotus Loaded', price: 12, image: '/Lotus-loaded.png' },
-    { name: 'Oreo Overload', price: 12, image: '/Oreo-overload.png' },
-    { name: 'Choco Melt', price: 12, image: '/Choco-melt.png' },
-    { name: 'Smash Berry', price: 13, image: '/Smash-Berry.png' },
-  ],
-  MOJITOS: [
-    { name: 'Blue Wave', price: 10, image: '/Blue-wave.png' },
-    { name: 'Pink Rush', price: 10, image: '/Pink-rush.png' },
-    { name: 'Violet Vibe', price: 10, image: '/Violet-Vibe.png' },
-    { name: 'Mint Rush', price: 10, image: '/Mint-Rush.png' },
-    { name: 'Passion Storm', price: 10, image: '/Passion-storm.png' },
-    { name: 'Midnight Berry', price: 12, image: '/Midnight-Berry.png' },
-  ],
-  'FRESH JUICE': [
-    { name: 'Lemon Mint', price: 10, image: '/lemon-mint.png' },
-  ],
-};
-
-const MENU_LANGUAGES: Record<'en' | 'ar', {
-  categories: Record<string, string>;
-  items: Record<string, { name: string; description?: string }>;
-  ui: {
-    addOnTitle: string;
-    addOnDesc: string;
-    aed: string;
-    backHome: string;
-    ourStory: string;
-  };
-}> = {
-  en: {
-    categories: {
-      ALL: 'All',
-      BURGERS: 'Burgers',
-      'LOADED FRIES': 'Loaded Fries',
-      SANDWICHES: 'Sandwiches',
-      MILKSHAKES: 'Milkshakes',
-      MOJITOS: 'Mojitos',
-      'FRESH JUICE': 'Fresh Juice',
-    },
-    items: {
-      'Solo Smash': {
-        name: 'Solo Smash',
-        description: 'Potato bun, single beef patty, cheese, pickle, caramelized onion, sb sauce.',
-      },
-      'Duo Smash': {
-        name: 'Duo Smash',
-        description: 'Double beef patty, cheese, pickle, caramelized onion, sb sauce.',
-      },
-      'Trio Smash': {
-        name: 'Trio Smash',
-        description: 'Triple beef patty, cheese, pickle, caramelized onion, sb sauce.',
-      },
-      'Classic Crunch': {
-        name: 'Classic Crunch',
-        description: 'Fried crispy chicken, jalapeno, iceberg lettuce, sb sauce.',
-      },
-      'Classic Spice': {
-        name: 'Classic Spice',
-        description: 'Fried crispy chicken, nashville sauce, jalapeno, iceberg lettuce, sb sauce.',
-      },
-      'Crunch Bomb': {
-        name: 'Crunch Bomb',
-        description: 'Fried chicken, french fries, jalapeno, sb sauce.',
-      },
-      'Beefy Bomb': {
-        name: 'Beefy Bomb',
-        description: 'Smashed beef, french fries, pickle, sb sauce.',
-      },
-      'Fire Bomb': {
-        name: 'Fire Bomb',
-        description: 'Nashville chicken, french fries, jalapeño, sb sauce.',
-      },
-      Havana: {
-        name: 'Havana',
-        description: 'French baguette, beef patty, roasted beef, mustard sauce, pickle, sb sauce.',
-      },
-      'Twisted Chick': {
-        name: 'Twisted Chick',
-        description: 'Tortilla wrap, fried chicken, lettuce, jalapeno, cheese, sb sauce.',
-      },
-      'Mango Madness': { name: 'Mango Madness' },
-      'Coco Crush': { name: 'Coco Crush' },
-      'Lotus Loaded': { name: 'Lotus Loaded' },
-      'Oreo Overload': { name: 'Oreo Overload' },
-      'Choco Melt': { name: 'Choco Melt' },
-      'Smash Berry': { name: 'Smash Berry' },
-      'Blue Wave': { name: 'Blue Wave' },
-      'Pink Rush': { name: 'Pink Rush' },
-      'Violet Vibe': { name: 'Violet Vibe' },
-      'Mint Rush': { name: 'Mint Rush' },
-      'Passion Storm': { name: 'Passion Storm' },
-      'Midnight Berry': { name: 'Midnight Berry' },
-      'Lemon Mint': { name: 'Lemon Mint' },
-    },
-    ui: {
-      addOnTitle: 'Make It a Combo',
-      addOnDesc: 'Add soft drinks & fries to any burger or sandwich for AED 6.',
-      aed: 'AED',
-      backHome: 'Home',
-      ourStory: 'Our Story',
-    },
-  },
-  ar: {
-    categories: {
-      ALL: 'الكل',
-      BURGERS: 'البرجر',
-      'LOADED FRIES': 'لودد فرايز',
-      SANDWICHES: 'ساندويتش',
-      MILKSHAKES: 'ميلك شيك',
-      MOJITOS: 'موهيتو',
-      'FRESH JUICE': 'عصائر فريش',
-    },
-    items: {
-      'Solo Smash': {
-        name: 'سولو سماش',
-        description: 'خبز البطاطس، شريحة لحم بقري، جبنة، مخلل، بصل مكرمل، صوص إس بي.',
-      },
-      'Duo Smash': {
-        name: 'دو سماش',
-        description: 'شريحتين لحم بقري، جبنة، مخلل، بصل مكرمل، صوص إس بي.',
-      },
-      'Trio Smash': {
-        name: 'تريو سماش',
-        description: 'ثلاث شرائح لحم بقري، جبنة، مخلل، بصل مكرمل، صوص إس بي.',
-      },
-      'Classic Crunch': {
-        name: 'كلاسيك كرنش',
-        description: 'دجاج مقلي مقرمش، هالبينو، خس آيسبرغ، صوص إس بي.',
-      },
-      'Classic Spice': {
-        name: 'كلاسيك سبايس',
-        description: 'دجاج مقلي مقرمش، صوص ناشفيل، هالبينو، خس آيسبرغ، صوص إس بي.',
-      },
-      'Crunch Bomb': {
-        name: 'كرانش بومب',
-        description: 'دجاج مقلي، بطاطس مقلية، هالبينو، صوص إس بي.',
-      },
-      'Beefy Bomb': {
-        name: 'بيفي بومب',
-        description: 'لحم بقري سماش، بطاطس مقلية، مخلل، صوص إس بي.',
-      },
-      'Fire Bomb': {
-        name: 'فاير بومب',
-        description: 'دجاج ناشفيل، بطاطس مقلية، هالبينو، صوص إس بي.',
-      },
-      Havana: {
-        name: 'هافانا',
-        description: 'خبز باجيت فرنسي، شريحة لحم بقري، لحم بقري روست، صوص الخردل، مخلل، صوص إس بي.',
-      },
-      'Twisted Chick': {
-        name: 'تويستد تشيك',
-        description: 'خبز تورتيلا، دجاج مقلي، خس، هالبينو، جبنة، صوص إس بي.',
-      },
-      'Mango Madness': { name: 'مانجو مادنس' },
-      'Coco Crush': { name: 'كوكو كرش' },
-      'Lotus Loaded': { name: 'لوتس لودد' },
-      'Oreo Overload': { name: 'أوريو أوفرلود' },
-      'Choco Melt': { name: 'شوكو ميلت' },
-      'Smash Berry': { name: 'سماش بيري' },
-      'Blue Wave': { name: 'بلو ويف' },
-      'Pink Rush': { name: 'بينك راش' },
-      'Violet Vibe': { name: 'فايولت فايب' },
-      'Mint Rush': { name: 'مينت راش' },
-      'Passion Storm': { name: 'باشن ستورم' },
-      'Midnight Berry': { name: 'ميدنايت بيري' },
-      'Lemon Mint': { name: 'ليمون ونعناع' },
-    },
-    ui: {
-      addOnTitle: 'اجعلها وجبة كاملة',
-      addOnDesc: 'أضف مشروب غازي وبطاطس إلى أي برجر أو ساندويتش مقابل 6 درهم فقط.',
-      aed: 'درهم',
-      backHome: 'الرئيسية',
-      ourStory: 'قصتنا',
-    },
-  },
-};
+import { MENU_DATA, MENU_LANGUAGES, MENU_CATEGORY_ANCHORS } from '../data/menuData';
+import { BUSINESS_INFO, getPairedPath } from '../data/siteConfig';
 
 const Menu: React.FC = () => {
-  const { language, setLanguage } = useLanguage();
+  const { language, dir, saveLanguagePreference } = useLanguage();
+  const location = useLocation();
   const isAr = language === 'ar';
-  const dir = isAr ? 'rtl' : 'ltr';
 
   const [activeCategory, setActiveCategory] = useState<string>('ALL');
   const [isOpenNow, setIsOpenNow] = useState<boolean>(true);
@@ -318,45 +45,19 @@ const Menu: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    document.title = isAr
-      ? 'قائمة الطعام | سماش بي'
-      : 'Smash B Full Menu | Burgers, Loaded Fries & Shakes';
-
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement('meta');
-      metaDesc.setAttribute('name', 'description');
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.setAttribute(
-      'content',
-      isAr
-        ? 'استعرض قائمة طعام سماش بي الكاملة: برجر سماش من 12 درهم، بطاطا لودد، ساندويتشات، ميلك شيك، وموهيتو محضر طازجاً على الطلب.'
-        : 'Explore the full Smash B menu: smash burgers from AED 12, loaded fries, toasted sandwiches, milkshakes, mojitos & fresh lemon mint juice made hot to order.'
-    );
-
-    let canonical = document.querySelector('link[rel="canonical"]');
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute('href', 'https://www.smashb.ae/menu');
-
-    document.documentElement.setAttribute('lang', language);
-    document.documentElement.setAttribute('dir', dir);
-  }, [isAr, language, dir]);
-
-  const toggleLanguage = () => {
-    setLanguage(isAr ? 'en' : 'ar');
-  };
+  const homePath = isAr ? '/ar' : '/';
+  const menuPath = isAr ? '/ar/menu' : '/menu';
+  const storyPath = isAr ? '/ar/our-story' : '/our-story';
+  const locationPath = isAr ? '/ar/location' : '/location';
+  const switchPath = getPairedPath(location.pathname, isAr ? 'en' : 'ar');
 
   return (
     <div
       className="min-h-screen bg-[#EBE5D0] text-[#432724] font-body selection:bg-[#FF1C00] selection:text-[#EBE5D0]"
       dir={dir}
     >
+      <SeoHead pathname={location.pathname} />
+
       {/* TOP NOTIFICATION RIBBON */}
       <div className="w-full bg-[#FF1C00] text-[#EBE5D0] py-2 px-4 text-center font-bold text-xs md:text-sm tracking-wide flex items-center justify-center gap-2">
         <Sparkles className="w-4 h-4 shrink-0 text-[#A5C7A5]" />
@@ -367,10 +68,10 @@ const Menu: React.FC = () => {
         </span>
       </div>
 
-      {/* HEADER / NAVIGATION (Matches Home) */}
+      {/* HEADER / NAVIGATION */}
       <header className="sticky top-0 z-40 bg-[#EBE5D0]/95 backdrop-blur-sm border-b border-[#432724]/20 px-4 md:px-8 py-3.5 transition-all">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link to={isAr ? '/ar' : '/'} className="flex items-center gap-2 group">
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-2">
+          <Link to={homePath} className="flex items-center gap-2 group shrink-0">
             <img
               src="/logos/smashb-logo-4.svg"
               alt="Smash B Logo"
@@ -380,37 +81,47 @@ const Menu: React.FC = () => {
             />
           </Link>
 
-          <div className="flex items-center gap-1.5 sm:gap-2.5 md:gap-3.5">
+          <nav aria-label="Primary Navigation" className="flex items-center gap-1.5 sm:gap-2.5 md:gap-3">
             <Link
-              to={isAr ? '/ar' : '/'}
+              to={homePath}
               data-smash-shape="compact"
               data-smash-stroke="thin"
-              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-colors whitespace-nowrap tap-target"
+              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-4 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-colors whitespace-nowrap tap-target"
             >
               {MENU_LANGUAGES[language].ui.backHome}
             </Link>
 
             <Link
-              to="/our-story"
+              to={storyPath}
               data-smash-shape="compact"
               data-smash-stroke="thin"
-              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-colors whitespace-nowrap tap-target"
+              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-4 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-colors whitespace-nowrap tap-target"
             >
               {MENU_LANGUAGES[language].ui.ourStory}
             </Link>
 
-            <button
-              onClick={toggleLanguage}
+            <Link
+              to={locationPath}
+              data-smash-shape="compact"
+              data-smash-stroke="thin"
+              className="hidden sm:inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide sm:tracking-wider px-2.5 sm:px-4 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-colors whitespace-nowrap tap-target"
+            >
+              {MENU_LANGUAGES[language].ui.location}
+            </Link>
+
+            <Link
+              to={switchPath}
+              onClick={() => saveLanguagePreference(isAr ? 'en' : 'ar')}
               aria-label="Switch Language"
               data-smash-shape="compact"
               data-smash-stroke="thin"
-              className="text-[11px] sm:text-xs md:text-sm font-bold uppercase px-2.5 sm:px-5 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-all whitespace-nowrap tap-target flex items-center justify-center gap-1"
+              className="text-[11px] sm:text-xs md:text-sm font-bold uppercase px-2.5 sm:px-4 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] transition-all whitespace-nowrap tap-target flex items-center justify-center gap-1"
             >
               <span>{isAr ? 'English' : 'العربية'}</span>
-            </button>
+            </Link>
 
             <a
-              href={appendUtmParams(TALABAT_URL)}
+              href={appendUtmParams(BUSINESS_INFO.talabatUrl)}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackTalabatClick('menu_header')}
@@ -420,7 +131,7 @@ const Menu: React.FC = () => {
             >
               <span>{isAr ? 'اطلب عبر طلبات' : 'Order on Talabat'}</span>
             </a>
-          </div>
+          </nav>
         </div>
       </header>
 
@@ -488,7 +199,7 @@ const Menu: React.FC = () => {
 
               <div className="pt-1 flex flex-col sm:flex-row flex-wrap gap-3 justify-center lg:justify-start">
                 <a
-                  href={appendUtmParams(TALABAT_URL)}
+                  href={appendUtmParams(BUSINESS_INFO.talabatUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackTalabatClick('menu_hero')}
@@ -507,7 +218,7 @@ const Menu: React.FC = () => {
                 </a>
 
                 <a
-                  href={appendUtmParams(WHATSAPP_URL)}
+                  href={appendUtmParams(BUSINESS_INFO.whatsappUrl)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackWhatsAppClick('menu_hero')}
@@ -521,7 +232,7 @@ const Menu: React.FC = () => {
               </div>
             </div>
 
-            {/* Right Column: Official Menu Character (Open Background, Scaled Up) */}
+            {/* Right Column: Official Menu Character */}
             <div className="lg:col-span-5 flex items-center justify-center">
               <BrandCharacterMenu className="w-72 sm:w-88 lg:w-full max-w-[390px] h-auto select-none drop-shadow-[0_8px_0_rgba(67,39,36,0.18)]" />
             </div>
@@ -591,117 +302,122 @@ const Menu: React.FC = () => {
             </div>
           )}
 
-          {/* Category Sections */}
+          {/* Category Sections with Anchors (#burgers, #loaded-fries, etc.) */}
           <div className="space-y-14">
             {Object.entries(MENU_DATA)
               .filter(([category]) => activeCategory === 'ALL' || activeCategory === category)
-              .map(([category, items]) => (
-                <div key={category} className="space-y-6">
-                  <div className="flex items-baseline justify-between gap-4 border-b border-[#432724]/20 pb-3">
-                    <h2 className="font-primary text-3xl sm:text-4xl uppercase tracking-tight text-[#432724]">
-                      {MENU_LANGUAGES[language].categories[category]}
-                    </h2>
+              .map(([category, items]) => {
+                const sectionId = MENU_CATEGORY_ANCHORS[category] || category.toLowerCase().replace(/\s+/g, '-');
+                return (
+                  <div key={category} id={sectionId} className="space-y-6 scroll-mt-24">
+                    <div className="flex items-baseline justify-between gap-4 border-b border-[#432724]/20 pb-3">
+                      <h2 className="font-primary text-3xl sm:text-4xl uppercase tracking-tight text-[#432724]">
+                        {MENU_LANGUAGES[language].categories[category]}
+                      </h2>
 
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#432724]/65 shrink-0">
-                      {items.length} {isAr ? 'أصناف' : items.length === 1 ? 'Item' : 'Items'}
-                    </span>
-                  </div>
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#432724]/65 shrink-0">
+                        {items.length} {isAr ? 'أصناف' : items.length === 1 ? 'Item' : 'Items'}
+                      </span>
+                    </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {items.map((item) => {
-                      const itemTranslation = MENU_LANGUAGES[language].items[item.name] || {
-                        name: item.name,
-                        description: item.description,
-                      };
-                      const displayName = itemTranslation.name || item.name;
-                      const displayDescription =
-                        itemTranslation.description || item.description;
-                      const badgeText = isAr ? item.badgeAr : item.badgeEn;
-                      const slug = item.name.toLowerCase().replace(/\s+/g, '_');
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {items.map((item) => {
+                        const itemTranslation = MENU_LANGUAGES[language].items[item.name] || {
+                          name: item.name,
+                          description: item.description,
+                        };
+                        const displayName = itemTranslation.name || item.name;
+                        const displayDescription =
+                          itemTranslation.description || item.description;
+                        const badgeText = isAr ? item.badgeAr : item.badgeEn;
+                        const slug = item.name.toLowerCase().replace(/\s+/g, '_');
 
-                      return (
-                        <article
-                          key={item.name}
-                          data-smash-shape="card"
-                          data-smash-stroke="card"
-                          className="smash-box bg-[#EBE5D0] p-6 sm:p-7 flex flex-col justify-between transition-transform hover:-translate-y-1"
-                        >
-                          <div>
-                            <div
-                              data-smash-shape="photo"
-                              data-smash-stroke="none"
-                              className="relative w-full aspect-4/3 smash-box bg-[#A5C7A5]/25 flex items-center justify-center p-4 mb-4"
-                            >
-                              <img
-                                src={item.image}
-                                alt={`${displayName} - Smash B Ras Al Khaimah`}
-                                width={220}
-                                height={165}
-                                className={`object-contain transform transition-transform hover:scale-105 relative z-10 ${
-                                  item.name === 'Havana' ? 'w-[82%] h-[82%]' : 'w-full h-full'
-                                }`}
-                                loading="lazy"
-                              />
-                              {badgeText && (
-                                <span
-                                  data-smash-shape="badge"
-                                  data-smash-stroke="none"
-                                  className="absolute top-4 left-4 sm:top-5 sm:left-5 z-30 bg-[#FF1C00] text-[#EBE5D0] font-bold text-[10px] uppercase px-3.5 py-1 smash-btn"
-                                >
-                                  {badgeText}
-                                </span>
+                        return (
+                          <article
+                            key={item.id}
+                            id={item.id}
+                            data-smash-shape="card"
+                            data-smash-stroke="card"
+                            className="smash-box bg-[#EBE5D0] p-6 sm:p-7 flex flex-col justify-between transition-transform hover:-translate-y-1 scroll-mt-24"
+                          >
+                            <div>
+                              <div
+                                data-smash-shape="photo"
+                                data-smash-stroke="none"
+                                className="relative w-full aspect-4/3 smash-box bg-[#A5C7A5]/25 flex items-center justify-center p-4 mb-4"
+                              >
+                                <OptimizedMenuImage
+                                  src={item.image}
+                                  alt={`${displayName} - Smash B Ras Al Khaimah`}
+                                  width={item.width}
+                                  height={item.height}
+                                  className={`object-contain transform transition-transform hover:scale-105 relative z-10 ${
+                                    item.name === 'Havana' ? 'w-[82%] h-[82%]' : 'w-full h-full'
+                                  }`}
+                                />
+                                {badgeText && (
+                                  <span
+                                    data-smash-shape="badge"
+                                    data-smash-stroke="none"
+                                    className="absolute top-4 left-4 sm:top-5 sm:left-5 z-30 bg-[#FF1C00] text-[#EBE5D0] font-bold text-[10px] uppercase px-3.5 py-1 smash-btn"
+                                  >
+                                    {badgeText}
+                                  </span>
+                                )}
+                              </div>
+
+                              <div className="flex items-baseline justify-between gap-2 mb-2">
+                                <h3 className="font-primary text-xl md:text-2xl uppercase tracking-tight text-[#432724]">
+                                  {displayName}
+                                </h3>
+                                <div className="font-primary text-lg md:text-xl font-black text-[#FF1C00] shrink-0">
+                                  {isAr
+                                    ? `${item.price} ${MENU_LANGUAGES[language].ui.aed}`
+                                    : `AED ${item.price}`}
+                                </div>
+                              </div>
+
+                              {displayDescription && (
+                                <p className="text-xs md:text-sm text-[#432724]/80 leading-relaxed mb-5">
+                                  {displayDescription}
+                                </p>
                               )}
                             </div>
 
-                            <div className="flex items-baseline justify-between gap-2 mb-2">
-                              <h3 className="font-primary text-xl md:text-2xl uppercase tracking-tight text-[#432724]">
-                                {displayName}
-                              </h3>
-                              <div className="font-primary text-lg md:text-xl font-black text-[#FF1C00] shrink-0">
-                                {isAr
-                                  ? `${item.price} ${MENU_LANGUAGES[language].ui.aed}`
-                                  : `AED ${item.price}`}
-                              </div>
-                            </div>
-
-                            {displayDescription && (
-                              <p className="text-xs md:text-sm text-[#432724]/80 leading-relaxed mb-5">
-                                {displayDescription}
-                              </p>
-                            )}
-                          </div>
-
-                          <a
-                            href={appendUtmParams(TALABAT_URL)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={() => trackTalabatClick(`menu_${slug}`)}
-                            data-smash-shape="btn"
-                            data-smash-stroke="none"
-                            className={`smash-btn w-full bg-[#FF1C00] text-[#EBE5D0] text-xs font-bold uppercase py-3 px-5 flex items-center justify-center gap-2 tap-target ${
-                              !displayDescription ? 'mt-3' : ''
-                            }`}
-                          >
-                            <img
-                              src="/icons8-talabat.svg"
-                              alt="Talabat"
-                              width={16}
-                              height={16}
-                              className="w-4 h-4 object-contain rounded"
-                            />
-                            <span>{isAr ? 'اطلب الآن عبر طلبات' : 'Order on Talabat'}</span>
-                          </a>
-                        </article>
-                      );
-                    })}
+                            <a
+                              href={appendUtmParams(BUSINESS_INFO.talabatUrl)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={() => trackTalabatClick(`menu_${slug}`)}
+                              data-smash-shape="btn"
+                              data-smash-stroke="none"
+                              className={`smash-btn w-full bg-[#FF1C00] text-[#EBE5D0] text-xs font-bold uppercase py-3 px-5 flex items-center justify-center gap-2 tap-target ${
+                                !displayDescription ? 'mt-3' : ''
+                              }`}
+                            >
+                              <img
+                                src="/icons8-talabat.svg"
+                                alt="Talabat"
+                                width={16}
+                                height={16}
+                                loading="lazy"
+                                decoding="async"
+                                className="w-4 h-4 object-contain rounded"
+                              />
+                              <span>{isAr ? 'اطلب الآن عبر طلبات' : 'Order on Talabat'}</span>
+                            </a>
+                          </article>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
           </div>
         </div>
       </section>
 
-      {/* FOOTER (Matches Home) */}
+      {/* FOOTER */}
       <footer className="bg-[#EBE5D0] text-[#432724] pt-12 pb-24 md:pb-12 px-4 md:px-8">
         <div className="max-w-6xl mx-auto space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-b-2 border-[#432724] pb-8">
@@ -711,6 +427,8 @@ const Menu: React.FC = () => {
                 alt="Smash B - Ras Al Khaimah"
                 width={56}
                 height={56}
+                loading="lazy"
+                decoding="async"
                 className="h-14 w-auto object-contain"
               />
               <p className="font-bold text-sm text-[#FF1C00] uppercase tracking-wide">
@@ -728,7 +446,9 @@ const Menu: React.FC = () => {
                 {isAr ? 'معلومات التواصل' : 'Contact & Location'}
               </h4>
               <p className="text-xs text-[#432724]/85">
-                <strong className="block text-[#432724]">{isAr ? 'سماش بي (Smash B)' : 'Smash B'}</strong>
+                <strong className="block text-[#432724]">
+                  {isAr ? 'سماش بي (Smash B)' : 'Smash B'}
+                </strong>
                 {isAr
                   ? 'بالقرب من الجامعة الأمريكية في رأس الخيمة (AURAK)، رأس الخيمة، الإمارات العربية المتحدة'
                   : 'Near American University of Ras Al Khaimah (AURAK), Ras Al Khaimah, United Arab Emirates'}
@@ -736,12 +456,12 @@ const Menu: React.FC = () => {
               <p className="text-xs text-[#432724]/85 font-mono pt-1">
                 {isAr ? 'الهاتف / واتساب:' : 'Phone / WhatsApp:'}{' '}
                 <a
-                  href={PHONE_HREF}
+                  href={BUSINESS_INFO.telephoneHref}
                   onClick={() => trackCallClick('menu_footer')}
                   dir="ltr"
                   className="inline-block underline font-bold text-[#FF1C00]"
                 >
-                  {PHONE_NUMBER}
+                  {BUSINESS_INFO.telephoneDisplay}
                 </a>
               </p>
               <p className="text-xs text-[#432724]/85">
@@ -757,7 +477,7 @@ const Menu: React.FC = () => {
               </h4>
               <div className="flex flex-col">
                 <a
-                  href="https://www.instagram.com/smashb.uae/"
+                  href={BUSINESS_INFO.profiles.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-bold uppercase hover:text-[#FF1C00] transition-colors inline-flex items-center gap-1.5 leading-relaxed"
@@ -766,7 +486,7 @@ const Menu: React.FC = () => {
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
                 <a
-                  href="https://www.tiktok.com/@smashbuae"
+                  href={BUSINESS_INFO.profiles.tiktok}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-bold uppercase hover:text-[#FF1C00] transition-colors inline-flex items-center gap-1.5 leading-relaxed"
@@ -775,7 +495,7 @@ const Menu: React.FC = () => {
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
                 <a
-                  href="https://snapchat.com/t/cbTUmbL0"
+                  href={BUSINESS_INFO.profiles.snapchat}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs font-bold uppercase hover:text-[#FF1C00] transition-colors inline-flex items-center gap-1.5 leading-relaxed"
@@ -790,18 +510,21 @@ const Menu: React.FC = () => {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#432724]/70">
             <p>
               {isAr
-                ? `© ${new Date().getFullYear()} سماش بي. جميع الحقوق محفوظة.`
-                : `© ${new Date().getFullYear()} Smash B. All rights reserved.`}
+                ? '© 2026 سماش بي. جميع الحقوق محفوظة.'
+                : '© 2026 Smash B. All rights reserved.'}
             </p>
             <div className="flex items-center gap-4">
-              <Link to={isAr ? '/ar' : '/'} className="hover:underline">
+              <Link to={homePath} className="hover:underline">
                 {isAr ? 'الرئيسية' : 'Home'}
               </Link>
-              <Link to="/menu" className="hover:underline">
+              <Link to={menuPath} className="hover:underline">
                 {isAr ? 'القائمة' : 'Menu'}
               </Link>
-              <Link to="/our-story" className="hover:underline">
+              <Link to={storyPath} className="hover:underline">
                 {isAr ? 'قصتنا' : 'Our Story'}
+              </Link>
+              <Link to={locationPath} className="hover:underline">
+                {isAr ? 'الموقع' : 'Location'}
               </Link>
             </div>
           </div>
@@ -814,7 +537,7 @@ const Menu: React.FC = () => {
         className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#EBE5D0]/98 backdrop-blur border-t border-[#432724]/25 px-3 py-2.5 shadow-[0_-4px_12px_rgba(67,39,36,0.12)] flex items-center gap-2"
       >
         <a
-          href={appendUtmParams(TALABAT_URL)}
+          href={appendUtmParams(BUSINESS_INFO.talabatUrl)}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackTalabatClick('menu_sticky_mobile')}
@@ -833,7 +556,7 @@ const Menu: React.FC = () => {
         </a>
 
         <a
-          href={appendUtmParams(WHATSAPP_URL)}
+          href={appendUtmParams(BUSINESS_INFO.whatsappUrl)}
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => trackWhatsAppClick('menu_sticky_mobile')}
@@ -846,7 +569,7 @@ const Menu: React.FC = () => {
         </a>
 
         <a
-          href={PHONE_HREF}
+          href={BUSINESS_INFO.telephoneHref}
           onClick={() => trackCallClick('menu_sticky_mobile')}
           data-smash-shape="square"
           data-smash-stroke="thin"

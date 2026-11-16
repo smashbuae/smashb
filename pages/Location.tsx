@@ -1,185 +1,487 @@
-import React, { useEffect } from 'react';
-import { motion } from 'motion/react';
-import { Link } from 'react-router-dom';
-import { MapPin, Phone, Clock, Star } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import {
+  MapPin,
+  Phone,
+  Clock,
+  Star,
+  ExternalLink,
+  Sparkles,
+  MessageCircle,
+  Navigation,
+  CheckCircle2,
+} from 'lucide-react';
 import { useLanguage } from '../LanguageContext';
-
-const LOCATION_LANGUAGES = {
-  en: {
-    backHome: "Back Home",
-    findUs: "Find Us",
-    rasAlKhaimah: "Ras Al Khaimah",
-    addressText: "Near American University of Ras Al Khaimah (AURAK)\nRas Al Khaimah, United Arab Emirates",
-    opHours: "Operating Hours",
-    opHoursText: "Daily: 1:00 PM - 12:00 AM\nSmashed daily for the late-night crave.",
-    contact: "Contact",
-    contactText: "Call: +971 56 353 5819",
-    whatsapp: "WhatsApp",
-    getDirections: "Get Directions",
-    reviewUs: "Rate Us",
-    orderTalabat: "Order on Talabat",
-  },
-  ar: {
-    backHome: "الرئيسية",
-    findUs: "موقعنا",
-    rasAlKhaimah: "رأس الخيمة",
-    addressText: "بالقرب من الجامعة الأمريكية في رأس الخيمة (AURAK)\nرأس الخيمة، الإمارات العربية المتحدة",
-    opHours: "أوقات العمل",
-    opHoursText: "يومياً: 1:00 ظهراً - 12:00 بعد منتصف الليل\nمستمرون يومياً لتلبية رغباتك في آخر الليل.",
-    contact: "تواصل معنا",
-    contactText: "الاتصال: +971 56 353 5819",
-    whatsapp: "واتساب",
-    getDirections: "احصل على الاتجاهات",
-    reviewUs: "قيّم حسابنا",
-    orderTalabat: "اطلب عبر طلبات",
-  }
-};
+import {
+  appendUtmParams,
+  trackTalabatClick,
+  trackWhatsAppClick,
+  trackCallClick,
+  trackDirectionsClick,
+  trackReviewClick,
+} from '../analytics';
+import { useSmashShapes } from '../utils/smashShapes';
+import { BUSINESS_INFO, getPairedPath } from '../data/siteConfig';
+import SeoHead from '../components/SeoHead';
 
 const Location: React.FC = () => {
-  const { language, dir } = useLanguage();
+  const { language, dir, saveLanguagePreference } = useLanguage();
+  const location = useLocation();
+  const isAr = language === 'ar';
+  const [isOpenNow, setIsOpenNow] = useState<boolean>(true);
+
+  useSmashShapes([language, isOpenNow]);
 
   useEffect(() => {
-    document.title = language === 'ar' 
-      ? "مطعم برجر قريب مني في رأس الخيمة | موقعنا والاتجاهات" 
-      : "Burger Near Me Ras Al Khaimah | Location & Directions";
-      
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute('content', language === 'ar' 
-        ? "جائع وتبحث عن برجر لذيذ وقريب منك في رأس الخيمة؟ ابحث عن سماش بي بالقرب من AURAK لتناول الطعام داخل المطعم، تيك أواي، أو توصيل سريع. اطلب الآن!" 
-        : "Hungry for a juicy burger near me in Ras Al Khaimah? Find Smash B near AURAK for dine-in, takeaway, or speedy delivery. Order online or visit our spot today!"
-      );
-    }
-  }, [language]);
+    const checkOpenStatus = () => {
+      const now = new Date();
+      const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+      const uaeDate = new Date(utc + 3600000 * 4);
+      const hours = uaeDate.getHours();
+      setIsOpenNow(hours >= 13 && hours < 24);
+    };
+
+    checkOpenStatus();
+    const interval = setInterval(checkOpenStatus, 60000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const homePath = isAr ? '/ar' : '/';
+  const menuPath = isAr ? '/ar/menu' : '/menu';
+  const storyPath = isAr ? '/ar/our-story' : '/our-story';
+  const locationPath = isAr ? '/ar/location' : '/location';
+  const switchPath = getPairedPath(location.pathname, isAr ? 'en' : 'ar');
 
   return (
-    <div className="h-screen bg-smash-brown text-smash-cream flex flex-col overflow-hidden" dir={dir}>
-      <nav className="p-4 md:p-6 flex justify-between items-center z-10 shrink-0">
-        <Link to="/" className="group">
-          <img src="/SMASHBlogo-19.svg" alt="Smash B Logo" className="h-10 md:h-16 group-hover:scale-110 transition-transform" />
-        </Link>
-        <Link to="/" className={`${language === 'ar' ? 'font-arabic-heading text-base' : 'font-primary text-xs md:text-sm'} uppercase tracking-widest border-2 border-smash-red px-4 md:px-6 py-2 rounded-full hover:bg-smash-red transition-all`}>
-          {LOCATION_LANGUAGES[language].backHome}
-        </Link>
-      </nav>
+    <div
+      className="min-h-screen bg-[#EBE5D0] text-[#432724] font-body selection:bg-[#FF1C00] selection:text-[#EBE5D0]"
+      dir={dir}
+    >
+      <SeoHead pathname={location.pathname} />
 
-      <main className="flex-1 max-w-6xl mx-auto px-6 py-4 md:py-8 w-full flex items-center overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center w-full">
-          <motion.div
-            initial={{ opacity: 0, x: dir === 'rtl' ? 30 : -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6 md:space-y-8"
-          >
-            <h1 className={`${language === 'ar' ? 'font-arabic-heading text-[55px] md:text-7xl lg:text-8xl' : 'font-primary text-4xl md:text-6xl lg:text-7xl'} text-smash-red uppercase italic tracking-tighter`}>
-              {LOCATION_LANGUAGES[language].findUs}
-            </h1>
-            
-            <div className="space-y-4 md:space-y-6">
-              <div className="flex items-start gap-4">
-                <MapPin className="text-smash-red w-6 h-6 md:w-8 md:h-8 mt-1 shrink-0" />
-                <div>
-                  <h3 className={`${language === 'ar' ? 'font-arabic-heading text-2xl' : 'font-primary text-xl md:text-2xl'} uppercase tracking-wider mb-1 md:mb-2`}>
-                    {LOCATION_LANGUAGES[language].rasAlKhaimah}
-                  </h3>
-                  <p className={`${language === 'ar' ? 'font-arabic-desc text-sm md:text-[15px]' : 'font-description text-sm md:text-base'} opacity-70 whitespace-pre-line`}>
-                    {LOCATION_LANGUAGES[language].addressText}
-                  </p>
-                </div>
-              </div>
+      {/* TOP NOTIFICATION RIBBON */}
+      <div className="w-full bg-[#FF1C00] text-[#EBE5D0] py-2 px-4 text-center font-bold text-xs md:text-sm tracking-wide flex items-center justify-center gap-2">
+        <Sparkles className="w-4 h-4 shrink-0 text-[#A5C7A5]" />
+        <span>
+          {isAr
+            ? 'برجر سماش طازج من 12 درهم • بالقرب من AURAK رأس الخيمة • مفتوح يومياً من 1 ظهراً حتى منتصف الليل'
+            : 'Fresh smash burgers from AED 12 • Near AURAK, Ras Al Khaimah • Open daily 1 PM – 12 AM'}
+        </span>
+      </div>
 
-              <div className="flex items-start gap-4">
-                <Clock className="text-smash-red w-6 h-6 md:w-8 md:h-8 mt-1 shrink-0" />
-                <div>
-                  <h3 className={`${language === 'ar' ? 'font-arabic-heading text-2xl' : 'font-primary text-xl md:text-2xl'} uppercase tracking-wider mb-1 md:mb-2`}>
-                    {LOCATION_LANGUAGES[language].opHours}
-                  </h3>
-                  <p className={`${language === 'ar' ? 'font-arabic-desc text-sm md:text-[15px]' : 'font-description text-sm md:text-base'} opacity-70 whitespace-pre-line`}>
-                    {LOCATION_LANGUAGES[language].opHoursText}
-                  </p>
-                </div>
-              </div>
+      {/* HEADER / NAVIGATION */}
+      <header className="sticky top-0 z-40 bg-[#EBE5D0]/95 backdrop-blur-sm border-b border-[#432724]/20 px-4 md:px-8 py-3.5 transition-all">
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-2">
+          <Link to={homePath} className="flex items-center gap-2 group shrink-0">
+            <img
+              src="/logos/smashb-logo-4.svg"
+              alt="Smash B Logo"
+              width={48}
+              height={48}
+              className="h-11 md:h-12 w-auto object-contain drop-shadow-[0_1.5px_0_rgba(67,39,36,0.24)] transition-transform group-hover:scale-105"
+            />
+          </Link>
 
-              <div className="flex items-start gap-4">
-                <Phone className="text-smash-red w-6 h-6 md:w-8 md:h-8 mt-1 shrink-0" />
-                <div>
-                  <h3 className={`${language === 'ar' ? 'font-arabic-heading text-2xl' : 'font-primary text-xl md:text-2xl'} uppercase tracking-wider mb-1 md:mb-2`}>
-                    {LOCATION_LANGUAGES[language].contact}
-                  </h3>
-                  <p className={`${language === 'ar' ? 'font-arabic-desc text-sm md:text-[15px]' : 'font-description text-sm md:text-base'} opacity-70 whitespace-pre-line`}>
-                    {LOCATION_LANGUAGES[language].contactText}
-                  </p>
-                </div>
-              </div>
-            </div>
+          <nav aria-label="Primary Navigation" className="flex items-center gap-1.5 sm:gap-2.5 md:gap-3">
+            <Link
+              to={homePath}
+              data-smash-shape="compact"
+              data-smash-stroke="thin"
+              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide px-2.5 sm:px-4 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] whitespace-nowrap tap-target"
+            >
+              {isAr ? 'الرئيسية' : 'Home'}
+            </Link>
 
-            <div className="flex flex-wrap gap-3 md:gap-4 pt-2">
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="https://wa.me/971563535819"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex-1 min-w-[140px] flex items-center justify-center bg-smash-red text-white ${language === 'ar' ? 'font-arabic-heading text-base' : 'font-primary text-[10px] md:text-xs'} px-4 md:px-8 py-3 md:py-4 rounded-[35px] uppercase tracking-widest border-2 border-white text-center`}
-              >
-                {LOCATION_LANGUAGES[language].whatsapp}
-              </motion.a>
+            <Link
+              to={menuPath}
+              data-smash-shape="compact"
+              data-smash-stroke="thin"
+              className="inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide px-2.5 sm:px-4 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] whitespace-nowrap tap-target"
+            >
+              {isAr ? 'القائمة' : 'Menu'}
+            </Link>
 
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="https://www.talabat.com/uae/smash-b"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex-1 min-w-[140px] flex items-center justify-center gap-3 bg-[#ff5a00] text-white ${language === 'ar' ? 'font-arabic-heading text-base' : 'font-primary text-[10px] md:text-xs'} px-4 md:px-8 py-3 md:py-4 rounded-[35px] uppercase tracking-widest border-2 border-white hover:border-[#ff5a00] transition-all text-center`}
-              >
-                <img src="/icons8-talabat.svg" alt="Talabat" className="w-10 h-10 md:w-12 md:h-12 object-contain rounded-md shrink-0" />
-                <span>{LOCATION_LANGUAGES[language].orderTalabat}</span>
-              </motion.a>
+            <Link
+              to={storyPath}
+              data-smash-shape="compact"
+              data-smash-stroke="thin"
+              className="hidden sm:inline-flex items-center justify-center text-[11px] sm:text-xs md:text-sm font-bold uppercase tracking-wide px-2.5 sm:px-4 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] whitespace-nowrap tap-target"
+            >
+              {isAr ? 'قصتنا' : 'Our Story'}
+            </Link>
 
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="https://share.google/B4R9Oj37gfchmf9mD"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`flex-1 min-w-[140px] flex items-center justify-center bg-white text-smash-red ${language === 'ar' ? 'font-arabic-heading text-base' : 'font-primary text-[10px] md:text-xs'} px-4 md:px-8 py-3 md:py-4 rounded-[35px] uppercase tracking-widest border-2 border-smash-red text-center`}
-              >
-                {LOCATION_LANGUAGES[language].getDirections}
-              </motion.a>
+            <Link
+              to={switchPath}
+              onClick={() => saveLanguagePreference(isAr ? 'en' : 'ar')}
+              aria-label="Switch Language"
+              data-smash-shape="compact"
+              data-smash-stroke="thin"
+              className="text-[11px] sm:text-xs md:text-sm font-bold uppercase px-2.5 sm:px-4 py-2 sm:py-2.5 smash-btn bg-[#EBE5D0] text-[#432724] whitespace-nowrap tap-target flex items-center justify-center gap-1"
+            >
+              <span>{isAr ? 'English' : 'العربية'}</span>
+            </Link>
 
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href="https://g.page/r/CaIBEx4A1OeZEBM/review"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 min-w-[140px] flex flex-col items-center justify-center bg-transparent text-white px-4 md:px-8 py-3 md:py-4 rounded-[35px] border-2 border-white/50 text-center gap-1 md:gap-2"
-              >
-                <div className="flex gap-1 justify-center items-center">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 md:w-5 md:h-5 fill-yellow-400 text-yellow-400" />
-                  ))}
-                </div>
-                <span className={`${language === 'ar' ? 'font-arabic-heading text-sm' : 'font-primary text-[10px] md:text-sm'} uppercase tracking-widest leading-none`}>
-                  {LOCATION_LANGUAGES[language].reviewUs}
-                </span>
-              </motion.a>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            className="h-[300px] md:h-[400px] lg:h-[500px] flex items-center justify-center relative hidden md:block"
-          >
-             <div className="w-full h-full bg-white/5 rounded-[35px] border-4 border-smash-red/20 overflow-hidden flex items-center justify-center p-12">
-               <img src="/SMASHBlogo-19.svg" alt="Smash B Brand" className="w-full max-w-[300px] drop-shadow-2xl" />
-             </div>
-          </motion.div>
+            <a
+              href={appendUtmParams(BUSINESS_INFO.talabatUrl)}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackTalabatClick('location_header')}
+              data-smash-shape="btn"
+              data-smash-stroke="none"
+              className="hidden md:inline-flex items-center gap-2 bg-[#FF1C00] text-[#EBE5D0] font-bold text-xs uppercase px-5 py-2.5 smash-btn tap-target"
+            >
+              <span>{isAr ? 'اطلب عبر طلبات' : 'Order on Talabat'}</span>
+            </a>
+          </nav>
         </div>
-      </main>
+      </header>
+
+      {/* LOCATION HERO & DETAILS */}
+      <section className="py-10 md:py-16 px-4 md:px-8 border-b border-[#432724]/15">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="lg:col-span-6 space-y-6">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <span
+                  data-smash-shape="badge"
+                  data-smash-stroke="none"
+                  className={`inline-flex items-center gap-1.5 px-4 py-1.5 text-xs font-bold smash-btn ${
+                    isOpenNow
+                      ? 'bg-[#A5C7A5] text-[#432724]'
+                      : 'bg-[#432724]/10 text-[#432724]'
+                  }`}
+                >
+                  <span
+                    className={`w-2 h-2 rounded-full ${
+                      isOpenNow ? 'bg-[#FF1C00]' : 'bg-[#432724]/50'
+                    }`}
+                  />
+                  {isOpenNow
+                    ? isAr
+                      ? 'مفتوح الآن • حتى 12:00 ليلاً'
+                      : 'Open Now • Closes 12:00 AM'
+                    : isAr
+                      ? 'مغلق الآن • يفتح 1:00 ظهراً'
+                      : 'Closed Now • Opens 1:00 PM'}
+                </span>
+
+                <span
+                  data-smash-shape="badge"
+                  data-smash-stroke="none"
+                  className="inline-flex items-center gap-1 px-4 py-1.5 text-xs font-black uppercase tracking-wider bg-[#FF1C00] text-[#EBE5D0] smash-btn"
+                >
+                  {isAr ? 'رأس الخيمة، الإمارات' : 'Ras Al Khaimah, UAE'}
+                </span>
+              </div>
+
+              <h1 className="font-primary text-4xl sm:text-5xl md:text-6xl leading-[1.05] tracking-tight uppercase text-[#432724]">
+                {isAr ? (
+                  <>
+                    موقع <span className="text-[#FF1C00]">سماش بي</span> في رأس الخيمة
+                  </>
+                ) : (
+                  <>
+                    Find <span className="text-[#FF1C00]">Smash B</span> near AURAK
+                  </>
+                )}
+              </h1>
+
+              <p className="text-sm md:text-base text-[#432724]/90 leading-relaxed">
+                {isAr
+                  ? 'يقع فرعنا الحالي بالقرب من الجامعة الأمريكية في رأس الخيمة (AURAK). استمتع بتناول الطعام بالمطعم، الاستلام السريع، الطلب عبر واتساب أو التوصيل عبر طلبات يومياً من 1:00 ظهراً حتى 12:00 منتصف الليل.'
+                  : 'Our active outlet is located near the American University of Ras Al Khaimah (AURAK). Visit us for dine-in or takeaway, message on WhatsApp, or order delivery via Talabat daily from 1:00 PM to 12:00 AM.'}
+              </p>
+
+              <div className="space-y-4">
+                <div
+                  data-smash-shape="wide"
+                  data-smash-stroke="thin"
+                  className="flex items-start gap-3 p-4 sm:p-5 smash-wide-box bg-[#EBE5D0]"
+                >
+                  <MapPin className="w-5 h-5 text-[#FF1C00] shrink-0 mt-0.5" />
+                  <div>
+                    <h2 className="font-bold text-sm uppercase text-[#432724]">
+                      {isAr ? 'العنوان — رأس الخيمة' : 'Address — Ras Al Khaimah'}
+                    </h2>
+                    <p className="text-xs md:text-sm text-[#432724]/85">
+                      {isAr
+                        ? 'بالقرب من الجامعة الأمريكية في رأس الخيمة (AURAK)، رأس الخيمة، الإمارات العربية المتحدة'
+                        : 'Near American University of Ras Al Khaimah (AURAK), Ras Al Khaimah, United Arab Emirates'}
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  data-smash-shape="wide"
+                  data-smash-stroke="thin"
+                  className="flex items-start gap-3 p-4 sm:p-5 smash-wide-box bg-[#EBE5D0]"
+                >
+                  <Clock className="w-5 h-5 text-[#FF1C00] shrink-0 mt-0.5" />
+                  <div>
+                    <h2 className="font-bold text-sm uppercase text-[#432724]">
+                      {isAr ? 'ساعات العمل' : 'Operating Hours'}
+                    </h2>
+                    <p className="text-xs md:text-sm text-[#432724]/85">
+                      {isAr
+                        ? 'يومياً: 1:00 ظهراً – 12:00 منتصف الليل (توقيت الإمارات)'
+                        : 'Daily: 1:00 PM – 12:00 AM Midnight (Smashed daily for the late-night crave.)'}
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  data-smash-shape="wide"
+                  data-smash-stroke="thin"
+                  className="flex items-start gap-3 p-4 sm:p-5 smash-wide-box bg-[#EBE5D0]"
+                >
+                  <Phone className="w-5 h-5 text-[#FF1C00] shrink-0 mt-0.5" />
+                  <div>
+                    <h2 className="font-bold text-sm uppercase text-[#432724]">
+                      {isAr ? 'الهاتف والواتساب' : 'Phone & WhatsApp'}
+                    </h2>
+                    <p className="text-xs md:text-sm text-[#432724]/85 font-mono">
+                      <a
+                        href={BUSINESS_INFO.telephoneHref}
+                        onClick={() => trackCallClick('location_info')}
+                        dir="ltr"
+                        className="inline-block underline font-bold text-[#FF1C00]"
+                      >
+                        {BUSINESS_INFO.telephoneDisplay}
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <a
+                  href={appendUtmParams(BUSINESS_INFO.mapsShortUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackDirectionsClick('location_primary')}
+                  data-smash-shape="btn"
+                  data-smash-stroke="none"
+                  className="smash-btn bg-[#FF1C00] text-[#EBE5D0] font-bold text-xs md:text-sm uppercase px-6 py-3.5 flex items-center justify-center gap-2 tap-target"
+                >
+                  <Navigation className="w-4 h-4" />
+                  <span>{isAr ? 'احصل على الاتجاهات' : 'Get Directions'}</span>
+                </a>
+
+                <a
+                  href={appendUtmParams(BUSINESS_INFO.talabatUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackTalabatClick('location_talabat')}
+                  data-smash-shape="btn"
+                  data-smash-stroke="none"
+                  className="smash-btn bg-[#FF1C00] text-[#EBE5D0] font-bold text-xs md:text-sm uppercase px-6 py-3.5 flex items-center justify-center gap-2 tap-target"
+                >
+                  <img
+                    src="/icons8-talabat.svg"
+                    alt="Talabat"
+                    width={18}
+                    height={18}
+                    className="w-4 h-4 object-contain rounded shrink-0"
+                  />
+                  <span>{isAr ? 'اطلب عبر طلبات' : 'Order on Talabat'}</span>
+                </a>
+
+                <a
+                  href={appendUtmParams(BUSINESS_INFO.whatsappUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackWhatsAppClick('location_whatsapp')}
+                  data-smash-shape="btn"
+                  data-smash-stroke="none"
+                  className="smash-btn bg-[#A5C7A5] text-[#432724] font-bold text-xs md:text-sm uppercase px-6 py-3.5 flex items-center justify-center gap-2 tap-target"
+                >
+                  <MessageCircle className="w-4 h-4 text-[#432724]" />
+                  <span>{isAr ? 'طلب عبر واتساب' : 'WhatsApp Order'}</span>
+                </a>
+
+                <a
+                  href={appendUtmParams(BUSINESS_INFO.writeReviewUrl)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackReviewClick('location_rate_us')}
+                  data-smash-shape="btn"
+                  data-smash-stroke="thin"
+                  className="smash-btn bg-[#EBE5D0] text-[#432724] font-bold text-xs md:text-sm uppercase px-6 py-3.5 flex items-center justify-center gap-2 tap-target"
+                >
+                  <Star className="w-4 h-4 text-[#FF1C00]" />
+                  <span>{isAr ? 'قيّمنا على Google' : 'Rate Us on Google'}</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Right Column: Google Maps Embed + Al Dhait Expansion Note */}
+            <div className="lg:col-span-6 space-y-6">
+              <div
+                data-smash-shape="card"
+                data-smash-stroke="card"
+                className="smash-box bg-[#EBE5D0] p-4 sm:p-5 space-y-3"
+              >
+                <div className="flex items-center justify-between gap-2 px-1">
+                  <h2 className="font-primary text-lg uppercase text-[#432724]">
+                    {isAr ? 'خريطة الموقع' : 'Map — Near AURAK'}
+                  </h2>
+                  <a
+                    href={appendUtmParams(BUSINESS_INFO.mapsShortUrl)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackDirectionsClick('location_map_header')}
+                    className="text-xs font-bold uppercase text-[#FF1C00] hover:underline inline-flex items-center gap-1"
+                  >
+                    <span>{isAr ? 'فتح الخريطة' : 'Open Map'}</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+
+                <div className="w-full aspect-4/3 overflow-hidden border border-[#432724]/25 bg-[#A5C7A5]/20">
+                  <iframe
+                    title={
+                      isAr
+                        ? 'موقع سماش بي بالقرب من AURAK رأس الخيمة'
+                        : 'Smash B location near AURAK in Ras Al Khaimah'
+                    }
+                    src={BUSINESS_INFO.mapsEmbedUrl}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="w-full h-full border-0"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+
+              {/* Quick Facts Block (GEO plain-text summary) */}
+              <div
+                data-smash-shape="card"
+                data-smash-stroke="card"
+                className="smash-box bg-[#A5C7A5]/25 p-6 space-y-3"
+              >
+                <h2 className="font-primary text-xl uppercase tracking-tight text-[#432724]">
+                  {isAr ? 'معلومات سريعة عن سماش بي' : 'Smash B Key Facts'}
+                </h2>
+                <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 text-xs md:text-sm">
+                  <div>
+                    <dt className="font-bold uppercase text-[#432724]/70">{isAr ? 'الاسم' : 'Name'}</dt>
+                    <dd className="font-semibold text-[#432724]">{isAr ? 'سماش بي (Smash B)' : 'Smash B'}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-bold uppercase text-[#432724]/70">{isAr ? 'المطبخ' : 'Cuisine'}</dt>
+                    <dd className="font-semibold text-[#432724]">
+                      {isAr ? 'برجر سماش، دجاج مقرمش، لودد فرايز' : 'Smash Burgers, Crispy Chicken, Loaded Fries'}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="font-bold uppercase text-[#432724]/70">{isAr ? 'المعلم القريب' : 'Landmark'}</dt>
+                    <dd className="font-semibold text-[#432724]">
+                      {isAr ? 'قرب AURAK، رأس الخيمة' : 'Near AURAK, Ras Al Khaimah'}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="font-bold uppercase text-[#432724]/70">{isAr ? 'ساعات العمل' : 'Hours'}</dt>
+                    <dd className="font-semibold text-[#432724]">{BUSINESS_INFO.hours[isAr ? 'displayAr' : 'displayEn']}</dd>
+                  </div>
+                  <div>
+                    <dt className="font-bold uppercase text-[#432724]/70">{isAr ? 'الأسعار' : 'Prices'}</dt>
+                    <dd className="font-semibold text-[#432724]">
+                      {isAr ? 'البرجر من 12 درهم (10–25 درهم)' : 'Burgers from AED 12 (AED 10–25)'}
+                    </dd>
+                  </div>
+                  <div>
+                    <dt className="font-bold uppercase text-[#432724]/70">{isAr ? 'الحلال والخدمة' : 'Halal & Service'}</dt>
+                    <dd className="font-semibold text-[#432724]">
+                      {isAr ? 'حلال 100% • صالة، تيك أواي، توصيل' : '100% Halal • Dine-in, Takeaway, Delivery'}
+                    </dd>
+                  </div>
+                </dl>
+                <div className="pt-1 flex flex-wrap gap-3 text-xs font-bold text-[#432724]/85">
+                  <span className="inline-flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#FF1C00]" />
+                    {isAr ? 'الفرع الثاني: الظيت (قريباً)' : 'Second branch: Al Dhait (Opening Soon)'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-[#EBE5D0] text-[#432724] pt-12 pb-24 md:pb-12 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#432724]/75">
+          <p>
+            {isAr
+              ? '© 2026 سماش بي. جميع الحقوق محفوظة.'
+              : '© 2026 Smash B. All rights reserved.'}
+          </p>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link to={homePath} className="hover:underline">
+              {isAr ? 'الرئيسية' : 'Home'}
+            </Link>
+            <Link to={menuPath} className="hover:underline">
+              {isAr ? 'القائمة' : 'Menu'}
+            </Link>
+            <Link to={storyPath} className="hover:underline">
+              {isAr ? 'قصتنا' : 'Our Story'}
+            </Link>
+            <Link to={locationPath} className="hover:underline">
+              {isAr ? 'الموقع' : 'Location'}
+            </Link>
+          </div>
+        </div>
+      </footer>
+
+      {/* STICKY ORDER BAR ON MOBILE */}
+      <aside
+        aria-label="Quick Order Bar"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#EBE5D0]/98 backdrop-blur border-t border-[#432724]/25 px-3 py-2.5 shadow-[0_-4px_12px_rgba(67,39,36,0.12)] flex items-center gap-2"
+      >
+        <a
+          href={appendUtmParams(BUSINESS_INFO.talabatUrl)}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackTalabatClick('location_sticky_mobile')}
+          data-smash-shape="btn"
+          data-smash-stroke="none"
+          className="flex-[1.35] smash-btn bg-[#FF1C00] text-[#EBE5D0] font-bold text-[11px] sm:text-xs uppercase py-3 px-4 flex items-center justify-center gap-1.5 whitespace-nowrap tap-target"
+        >
+          <img
+            src="/icons8-talabat.svg"
+            alt="Talabat"
+            width={18}
+            height={18}
+            className="w-4 h-4 object-contain rounded shrink-0"
+          />
+          <span>{isAr ? 'اطلب عبر طلبات' : 'Order on Talabat'}</span>
+        </a>
+
+        <a
+          href={appendUtmParams(BUSINESS_INFO.whatsappUrl)}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => trackWhatsAppClick('location_sticky_mobile')}
+          data-smash-shape="btn"
+          data-smash-stroke="none"
+          className="flex-1 smash-btn bg-[#A5C7A5] text-[#432724] font-bold text-[11px] sm:text-xs uppercase py-3 px-4 flex items-center justify-center gap-1.5 whitespace-nowrap tap-target"
+        >
+          <MessageCircle className="w-4 h-4 text-[#432724] shrink-0" />
+          <span>{isAr ? 'واتساب' : 'WhatsApp'}</span>
+        </a>
+
+        <a
+          href={BUSINESS_INFO.telephoneHref}
+          onClick={() => trackCallClick('location_sticky_mobile')}
+          data-smash-shape="square"
+          data-smash-stroke="thin"
+          className="w-11 h-11 smash-box bg-[#EBE5D0] text-[#FF1C00] flex items-center justify-center shrink-0 tap-target"
+          aria-label="Call Smash B"
+        >
+          <Phone className="w-4 h-4 text-[#FF1C00]" />
+        </a>
+      </aside>
     </div>
   );
 };
